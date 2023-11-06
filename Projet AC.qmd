@@ -48,8 +48,7 @@ Data_one : Pour délimiter les variables, et pour pouvoir enlever les ? de la ba
 
 ```{r}
 
-player1 <- read.csv("",
-                    header = TRUE,sep = ";" )
+skill <- read.csv("data/skill.csv", header = TRUE,sep = ";" )
 player2 <- fromJSON(file="2017Bundesliga.json")
 
 Data_One <- read_delim("/Users/lucamarini/Documents/GitHub/2021-2022 Football Player Stats.csv", delim = ";", escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"), 
