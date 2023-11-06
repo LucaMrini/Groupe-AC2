@@ -1,0 +1,41 @@
+# 1 Introduction
+
+```{r, echo = FALSE, message = FALSE}
+source(here::here("scripts/setup.R"))
+```
+
+## 1.1 Overview and Motivation
+
+<font size="3">
+
+The choice of sport, and football in particular, was a natural one. With football being the best-known and most practiced sport, it was not surprising that everyone in our group was at least a little interested in it. Moreover, one of our members has been passionate about the sport since childhood. Having played in clubs for over 10 years and watched a lot of matches every week, he thought it would be beneficial for a project of this scale to put his knowledge to good use in a subject that has always interested him thus combining passion with academic work: Data in the world of sport.
+
+Nowadays, data has taken on an enormous importance in this sport, allowing some of the more economically modest teams to maintain a certain level by picking interesting players in lower leagues and, of course, at a lower cost. There are many examples of this: Toulouse FC in France and Brentford FC in England to name but a few. The fact that you can use statistics to compensate for a lack of resources is such an interesting subject. Another inspiration for our subject comes from outside football. The presence of data in sport has also enabled the world of cinema to bring out "Moneyball", starring Brad Pitt, showing how the Oakland Athletics baseball team managed to build a highly competitive team despite having more modest resources than the other big franchises, thanks to a method known as sabermetrics.
+
+The fact that we have a film that in some way demonstrates the process used to improve a team through statistics is a real plus, and has enabled us to ask ourselves the following question: what common characteristics do the best players in the striker's position have, for example ? The existence of websites like "fantasy football leagues" or sports betting sites, in a way, necessitates having databases of various statistics related to player performance, such as the number of shots on target, successful passes, etc. Therefore, it is an advantage because we have access to a plethora of different databases containing various statistics, which alleviates some of the burden of searching for a sufficiently large database for this project.
+
+</font>
+
+## 1.2 Project Objectives
+
+<font size="3">
+
+Working on player performance statistics, it is interesting to see which statistics are important for different positions and especially between different leagues. From experience, we can say that, for example, English football is much more physical than the German league. Does it necessarily mean that our striker needs to be over 1.90 meters tall and have a certain weight to score a lot of goals? Additionally, of course, each team plays with a different system and strategy. Nevertheless, could we extract meaningful statistics within a position that in some way show a need to excel in a specific statistic? These kinds of questions set our goals and also allow us to put ourselves in the shoes of a data analyst within a club, demonstrating the complexity of the work but, more importantly, the ability to study the process by which a player is recruited based on their statistics and whether there is a way to predict their individual success and, beyond that, their importance in the collective success of their team. We decided to focus on a key position (striker), and on the characteristics chosen to be 'limited' because, as an outsider, we obviously don't have all the possible factors influencing performance that a real data analyst would have, so this allows us to imagine an opening for future work due to the enormity of the resources in this area and it obviously shows the complexity of such a profession. Thus, the objective would be to identify the most significant statistics for a key position, allowing us to visualize the crucial skills required to maximize a player's potential success during a transfer. The advantage would then be to find a way to predict this success. In terms of visualization, it would be genuinely interesting but not mandatory to find a means to visualize these statistics using a graph more easily. We have thought about this and are interested in using plotly.js or the fmsb package, where we have seen some very intriguing ideas for achieving our project's goals.
+
+</font>
+
+## 1.3 Research questions
+
+<font size="3">
+
+-   What physical factors influence the performance of a forward, and to what extent?
+
+-   Among the top goal scorers in the top 5 leagues, what are the common factors and statistics that are significant?
+
+-   What specific statistics consistently distinguish Ballon d'Or winners from other top players, and how have these trends evolved over the past decade?
+
+-   How different cultural and economic indicators, such as a footballer's nationality, his country's GDP or his club revenue influence his individual performance and the overall performance of his team?
+
+-   How do different factors outside physicals, such as playing style, or nationality, influence the performance and goal-scoring abilities of forwards in professional football leagues, and do these factors vary by league?
+
+</font>

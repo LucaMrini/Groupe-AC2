@@ -12,9 +12,9 @@ Quarto enables you to weave together content and executable code into a finished
 
 ```{r include=FALSE}
 
-# path to doc Github
-# les caratères ???
-# BDD partagées --> passage 
+
+
+
 # Json 
 ```
 
@@ -23,7 +23,13 @@ Quarto enables you to weave together content and executable code into a finished
 We used the different packages to do ......
 
 ```{r include = FALSE}
-#install.packages(c("dplyr","stingr","knitr","readr","rjson"))
+packages <- c(
+  "dplyr", # for the project's organization
+  "tidyverse", # for wrangling
+  "ggrepel", "gghighlight", "patchwork", "maps", "scales",
+  "knitr","readr" # for plotting
+)
+purrr::walk(packages, library, character.only = TRUE)
 #tinytex::install_tinytex()
 
 ```
@@ -49,7 +55,7 @@ Data_one : Pour délimiter les variables, et pour pouvoir enlever les ? de la ba
 ```{r}
 
 skill <- read.csv("data/skill.csv", header = TRUE,sep = ";" )
-player2 <- fromJSON(file="2017Bundesliga.json")
+player2 <- jsonlite::fromJSON(txt ="Football_Players/2017LaLiga.json")
 
 Data_One <- read_delim("/Users/lucamarini/Documents/GitHub/2021-2022 Football Player Stats.csv", delim = ";", escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"), 
                        trim_ws = TRUE) 

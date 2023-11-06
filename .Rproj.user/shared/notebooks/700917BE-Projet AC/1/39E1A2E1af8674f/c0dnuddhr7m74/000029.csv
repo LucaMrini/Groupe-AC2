@@ -1,0 +1,6 @@
+"0","player2 <- jsonlite::fromJSON(txt =""Football_Players/2017LaLiga.json"")
+"
+"2","Error in parse_con(txt, bigint_as_char) : parse error: trailing garbage
+          .0,""CrsPA"":2.0,""Prog"":75.0}} {""_id"":{""$oid"":""61eda24f19e7e44
+                     (right here) ------^
+"
