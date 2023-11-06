@@ -49,6 +49,7 @@ Data_One <- read_delim("/Users/lucamarini/Documents/GitHub/2021-2022 Football Pl
   Data_One <- Data_One %>%
   filter(Min >= 180) 
   
+  Salut
 ```
 
 ## Running Code
@@ -72,7 +73,7 @@ The `echo: false` option disables the printing of code (only output is displayed
 
 ```
 
-# I Database et cleaning 
+# I Database et cleaning
 
 Titre intro : .....
 
@@ -80,13 +81,13 @@ Titre intro : .....
 
 ```
 
-## Problems and solutions 
+## Problems and solutions
 
 1.  Special characters not appearing
 
     While we used the database Player 1 we saw that special characters like : x y z were not appearing in the r markdown while it appeared into the base document ......
 
-    Solution : we first tried to add "file encoding= "UTF-8" to the read.csv of the document without success
+    Solution : we first tried to add "file encoding="UTF-8" to the read.csv of the document without success
 
 ```{r}
 #Corrective special characters 
