@@ -1,0 +1,106 @@
+---
+title: "Notre titre"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Packages
+
+We used the different packages to do ......
+
+```{r include = FALSE}
+#install.packages(c("dplyr","stingr","knitr","readr"))
+#tinytex::install_tinytex()
+
+```
+
+## Library
+
+Pour nous mais ne devra pas apparaître pour le projet
+
+```{r include = FALSE}
+#library(c(knitr,readr))
+```
+
+## Databases
+
+Here are the databases that we used :
+
+Player 1 : contains ..... that we used into our final database for ......
+
+player 2 : contains ......
+
+Data_one : Pour délimiter les variables, et pour pouvoir enlever les ? de la base de données
+
+```{r}
+
+player1 <- read.csv("/Users/lucamarini/Documents/GitHub/2021-2022 Football Player Stats.csv",
+                    header = TRUE,sep = ";" )
+player2 <- read.csv("/Users/lucamarini/Documents/GitHub/2021-2022 Football Player Stats 2.csv",
+               header = TRUE,sep = ";" )
+Data_One <- read_delim("/Users/lucamarini/Documents/GitHub/2021-2022 Football Player Stats.csv", delim = ";", escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"), 
+                       trim_ws = TRUE) 
+  Data_One <- Data_One %>%
+  filter(MP >= 9) 
+  Data_One <- Data_One %>%
+  filter(Min >= 180) 
+  
+```
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+
+```
+
+# I Database et cleaning 
+
+Titre intro : .....
+
+```{r}
+
+```
+
+## Problems and solutions 
+
+1.  Special characters not appearing
+
+    While we used the database Player 1 we saw that special characters like : x y z were not appearing in the r markdown while it appeared into the base document ......
+
+    Solution : we first tried to add "file encoding= "UTF-8" to the read.csv of the document without success
+
+```{r}
+#Corrective special characters 
+
+#player1 <- read.csv("/Users/lucamarini/Documents/GitHub/
+#2021-2022 Football Player Stats.csv",
+#                 header = TRUE,sep = ";" )
+
+```
+
+We then used the following method ......
+
+| Col1 | Col2 | Col3 |
+|------|------|------|
+|      |      |      |
+|      |      |      |
+|      |      |      |
