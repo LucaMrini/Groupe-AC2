@@ -1,0 +1,3 @@
+tibble(Variables = c("**ID**","**Name**","**Sex**", "**Age**", "**Height**", "**Weight**", "**Team**", "**NOC**", "**Games**", "**Year**", "**Season**", "**City**", "**Sport**", "**Event**", "**Medal**"), Meaning = c("Unique ID per athlete","Name of athlete", "Sex of athlete", "Age of athlete", "Height of athlete", "Weight of athlete", "Team for which the athlete competed", "3-letter country code name", "Season and year of specific game", "Year the games were held", "Season the games were held (summer/winter)", "City in which the games were held", "Sport in which the athlete competed", "Specific event in which the athlete competed", "Medals obtained by athlete in the event (i.e., Gold, Silver, Bronze, NA)"))%>%
+  kbl()%>%
+  kable_styling(position = "center")

@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/Groupe-AC2/Projet AC.qmd",
     "project_path": "Projet AC.qmd",
     "type": "quarto_markdown",
-    "hash": "3382304613",
+    "hash": "692372595",
     "contents": "",
     "dirty": true,
     "created": 1699275134132.0,
@@ -16,16 +16,17 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "653:402",
-        "cursorPosition": "36,0",
-        "scrollLine": "0"
+        "rmdVisualModeLocation": "3083:2198",
+        "cursorPosition": "99,0",
+        "scrollLine": "0",
+        "docOutlineSize": "110"
     },
     "folds": "",
-    "lastKnownWriteTime": 1699275490,
+    "lastKnownWriteTime": 1699436557,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1699278937639,
+    "last_content_update": 1699437293739,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -6,6 +6,7 @@ source(here::here("scripts/setup.R"))
 
 ## 1.1 Overview and Motivation
 
+        
 <font size="3">
 
 The choice of sport, and football in particular, was a natural one. With football being the best-known and most practiced sport, it was not surprising that everyone in our group was at least a little interested in it. Moreover, one of our members has been passionate about the sport since childhood. Having played in clubs for over 10 years and watched a lot of matches every week, he thought it would be beneficial for a project of this scale to put his knowledge to good use in a subject that has always interested him thus combining passion with academic work: Data in the world of sport.
@@ -15,6 +16,7 @@ Nowadays, data has taken on an enormous importance in this sport, allowing some 
 The fact that we have a film that in some way demonstrates the process used to improve a team through statistics is a real plus, and has enabled us to ask ourselves the following question: what common characteristics do the best players in the striker's position have, for example ? The existence of websites like "fantasy football leagues" or sports betting sites, in a way, necessitates having databases of various statistics related to player performance, such as the number of shots on target, successful passes, etc. Therefore, it is an advantage because we have access to a plethora of different databases containing various statistics, which alleviates some of the burden of searching for a sufficiently large database for this project.
 
 </font>
+
 
 ## 1.2 Project Objectives
 
