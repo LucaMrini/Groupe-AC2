@@ -1,0 +1,6 @@
+"0","tibble(Variables = c(""Year"",""Player"",""Country"",""Team"",""Age"",""Height"",""Weight"",""PreferredFoot"",""PreferredPositions""),"
+"0","       Meaning = c(""Birthdate of the player"",""Name of the player"",""Country of origin of the player "",""Team of the player"",""Age of the player"",""Height of the player"",""Weight of the player"",""Preferred foot of the player"",""Preferred posiiton of the player""))%>%"
+"0","   kbl()%>%"
+"0","  kable_styling(position = ""center"")%>%"
+"0","  column_spec(1:2, color = ""black"")%>%"
+"0","row_spec(0, background = ""black"")"

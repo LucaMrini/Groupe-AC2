@@ -4,8 +4,6 @@
 source(here::here("scripts/setup.R"))
 ```
 
-Sources :
-
 # 2.1 Raw datasets
 
 ##       2.1.1 Kaggle : football player stats 2021-2022
@@ -75,11 +73,25 @@ Source :
 
 Explanations/steps :
 
+At first we used dplyr to filter the years from 2012 to 2022, keeping the last 20 Ballon d'Or winners (there was none in 2020) to create a list with only the winners, we renamed Luka Modrić because his name didn't register because of the "ć".
+
+Next, we utilized dplyr to update the variable in the "Player" column we did load a different database *"precision"* to later create columns and variables, then in order to have a common column for adding variables later we load a new database *"precision"*.
+
+We integrated a third databse "precision" to fill in the last NA values. We renamed the column "Player" as "Fullname" to ensure it has the same column names as those we aim to extract. Add missing columns such as Age, Height, and Weight by joining the databases.
+
+Now, we used dplyr::left_join to join the data frames using the "Player" column as a common key, we filled in the NAs with values from the third database and kept only the columns of interest.
+
+We calculated the age from the birth date and utilized the sub function to extract the year.
+
+We removed the "BirthDate" column,created the Age column ,replaced missing values in "Height" with values from "height" and did the same for other columns.
+
+Afterward, we kept only the columns of interest and removed NAs from Age, since values are only missing for the player Kaka, used ifelse to replace them only for him. Lastly we standardized and reorganized the columns.
+
 Problems and solutions :
 
 ```{r}
-tibble(Variables = c(),
-       Meaning = c())%>%
+tibble(Variables = c("Year","Player","Country","Team","Age","Height","Weight","PreferredFoot","PreferredPositions"),
+       Meaning = c("Birthdate of the player","Name of the player","Country of origin of the player ","Team of the player","Age of the player","Height of the player","Weight of the player","Preferred foot of the player","Preferred posiiton of the player"))%>%
    kbl()%>%
   kable_styling(position = "center")%>%
   column_spec(1:2, color = "black")%>%
