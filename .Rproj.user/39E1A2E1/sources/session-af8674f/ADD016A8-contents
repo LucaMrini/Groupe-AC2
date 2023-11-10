@@ -1,0 +1,26 @@
+# 2 Data
+
+```{r, echo = FALSE, message = FALSE}
+source(here::here("scripts/setup.R"))
+```
+
+-   Sources
+
+    # 2.1 Raw datasets
+
+## 2.1.1 Kaggle : football player stats 2021-2022
+
+```{r}
+tibble(Variables = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "Mp", "Min", "Goals", "SoT%", "G/Sh", "ShoDist", "PasTotAtt","PasTotCmp%", "Assists","PPA","CrsPA","SCA","GCA","GcaDrib","Press%","DriAtt","DriSucc%","Fld","AERwon%"), Meaning = c("Rank of the player","Player's name","Player's nation","Position","Squad's name","League that squad occupies","Year of birth","Matches played","Minutes played","Goals scored or allowed","Shots on target percentage (Does not include penalty kicks)","Goals per shot","Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)","Passes attempted","Pass completion percentage","Assists","Completed passes into the 18-yard box","Completed crosses into the 18-yard box","Shot-creating actions","Goal-creating actions","Successful dribbles that lead to a goal"," Percentage of time the squad gained possession withing five seconds of applying pressure","Dribbles attempted","Percentage of dribbles completed successfully","Fouls drawn","AerWon% : Percentage of aerials won"))%>%
+  kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+## 2.1.2
+
+-   Description
+-   Wrangling/cleaning
+-   Spotting mistakes and missing data (could be part of EDA too)
+-   Listing anomalies and outliers (could be part of EDA too)
