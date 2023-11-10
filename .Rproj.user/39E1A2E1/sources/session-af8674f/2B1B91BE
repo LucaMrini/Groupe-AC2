@@ -1,12 +1,12 @@
 {
-    "id": "A7702F1C",
+    "id": "2B1B91BE",
     "path": "~/Documents/GitHub/Groupe-AC2/data.qmd",
     "project_path": "data.qmd",
     "type": "quarto_markdown",
     "hash": "0",
     "contents": "",
-    "dirty": false,
-    "created": 1699455242466.0,
+    "dirty": true,
+    "created": 1699611391397.0,
     "source_on_save": false,
     "relative_order": 5,
     "properties": {
@@ -18,14 +18,14 @@
         "rmdVisualWrapConfigured": "true",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "142:0"
+        "rmdVisualModeLocation": "2:166"
     },
     "folds": "",
-    "lastKnownWriteTime": 1699455396,
+    "lastKnownWriteTime": 1699611248,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1699455396911,
+    "last_content_update": 1699611393488,
     "read_only": false,
     "read_only_alternatives": []
 }

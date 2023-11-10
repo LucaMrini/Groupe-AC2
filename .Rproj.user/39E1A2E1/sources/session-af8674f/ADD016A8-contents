@@ -85,7 +85,7 @@ We calculated the age from the birth date and utilized the sub function to extra
 
 We removed the "BirthDate" column,created the Age column ,replaced missing values in "Height" with values from "height" and did the same for other columns.
 
-Afterward, we kept only the columns of interest and removed NAs from Age, since values are only missing for the player Kaka, used ifelse to replace them only for him. Lastly we standardized and reorganized the columns.
+Afterward, we kept only the columns of interest and removed NAs from Age, since values are only missing for the player Kaka, ifelse was used to replace them for him only . Lastly we standardized and reorganized the columns.
 
 Problems and solutions :
 

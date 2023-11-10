@@ -6,7 +6,7 @@ source(here::here("scripts/setup.R"))
 
 # 2.1 Raw datasets
 
-##       2.1.1 Kaggle : football player stats 2021-2022
+## 2.1.1 Kaggle : football player stats 2021-2022
 
 Ex :
 
@@ -21,7 +21,7 @@ row_spec(0, background = "black")
 
 Source : <https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats>
 
-## 2.1.2 Fifa.csv 
+## 2.1.2 Fifa.csv
 
 Ex :
 
@@ -37,7 +37,7 @@ row_spec(0, background = "black")
 
 Source :
 
-##       2.1.3 Ballon d'or winners 
+## 2.1.3 Ballon d'or winners
 
 Ex :
 
@@ -52,7 +52,7 @@ row_spec(0, background = "black")
 
 Source :
 
-##       2.1.4 2021
+## 2.1.4 2021
 
 Ex :
 
@@ -67,9 +67,9 @@ row_spec(0, background = "black")
 
 Source :
 
-# 2.2 Data wrangling and cleaning 
+# 2.2 Data wrangling and cleaning
 
-##         2.2.1  Ballon d'or winners clean
+## 2.2.1 Ballon d'or winners clean
 
 Explanations/steps :
 
