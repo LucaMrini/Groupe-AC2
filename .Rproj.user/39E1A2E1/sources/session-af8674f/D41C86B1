@@ -1,0 +1,31 @@
+{
+    "id": "D41C86B1",
+    "path": "~/Documents/GitHub/Groupe-AC2/data.qmd",
+    "project_path": "data.qmd",
+    "type": "quarto_markdown",
+    "hash": "2534002093",
+    "contents": "",
+    "dirty": false,
+    "created": 1699611470876.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "3,0",
+        "scrollLine": "21",
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "9199:3834.5"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1699820187,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1699876876487,
+    "read_only": false,
+    "read_only_alternatives": []
+}

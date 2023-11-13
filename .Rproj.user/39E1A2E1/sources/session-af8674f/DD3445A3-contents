@@ -1,0 +1,92 @@
+library(readr)
+library(stringr)
+library(dplyr)
+# Pour délimiter les variables, et pour pouvoir enlever les ? de la base de données
+Data_One <- read_delim("data/skill.csv", 
+                       delim = ";", escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"), 
+                       trim_ws = TRUE)
+data_fifa_21 <-
+
+
+
+
+# Ici, je ne garde que les joueurs ayant disputé au moins 9 matches durant la saison pour ne pas biaiser les résultats 
+# Ici, même chose qu'au dessus mais avec les minutes
+#Pour ne garder que les joueurs offensives donc qui commencent par Forward donc F
+Data_One <- Data_One %>%
+  filter(MP >= 9) %>%
+  filter(Min >= 180) %>%
+  filter(str_detect(Pos, "^F"))
+
+# Solution complexe mais comme on arrive pas à changer les ć, on cherche tous les noms des joueurs qui posent problèmes et les renomons
+# un par un, il n'yen a pas énormément
+Data_One$Contient_question <- grepl("\\?", Data_One$Player)
+Joueurs_avec_question <- Data_One[Data_One$Contient_question, ]
+
+# Remplacer Edin Dzeko
+# Renommer "Edin D?eko" en "Edin Džeko"
+Data_One$Player <- sub("Edin D\\?eko", "Edin Džeko", Data_One$Player)
+# Renommer "Alfre? Finnbogason" en "Alfreð Finnbogason"
+Data_One$Player <- sub("Alfre\\? Finnbogason", "Alfreð Finnbogason", Data_One$Player)
+# Renommer "Albert Gu?mundsson" en "Albert Guðmundsson"
+Data_One$Player <- sub("Albert Gu\\?mundsson", "Albert Guðmundsson", Data_One$Player)
+# Renommer "Josip Ili?i?" en "Josip Iličić"
+Data_One$Player <- sub("Josip Ili\\?i\\?", "Josip Iličić", Data_One$Player)
+# Renommer "Krzysztof Pi?tek" en "Krzysztof Piątek"
+Data_One$Player <- sub("Krzysztof Pi\\?tek", "Krzysztof Piątek", Data_One$Player)
+# Renommer "Przemys?aw P?acheta" en "Przemysław Płacheta"
+Data_One$Player <- sub("Przemys\\?aw P\\?acheta", "Przemysław Płacheta", Data_One$Player)
+# Renommer "Du  an Vlahovi?" en "Dušan Vlahović"
+Data_One$Player <- sub("Du  an Vlahovi\\?", "Dušan Vlahović", Data_One$Player)
+# Renommer "Nikola Vla?i?" en "Nikola Vlašić"
+Data_One$Player <- sub("Nikola Vla\\?i\\?", "Nikola Vlašić", Data_One$Player)
+# Renommer "Mat?j Vydra" en "Matěj Vydra"
+Data_One$Player <- sub("Mat\\?j Vydra", "Matěj Vydra", Data_One$Player)
+# Renommer "Milan ?uri?" en "Milan Đurić"
+Data_One$Player <- sub("Milan \\?uri\\?", "Milan Đurić", Data_One$Player)
+# Renommer et ajouter aux derniers auquel il manquait le ć
+Data_One$Player <- gsub("\\?", "ć", Data_One$Player)
+
+datatest = subset(Data_One, select = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "MP", "Min", 
+                                           "Goals", "SoT%", "G/Sh", "ShoDist", "PasTotAtt","PasTotCmp%",
+                                       "Assists","PPA","CrsPA","SCA","GCA","GcaDrib","Press%","DriAtt",
+                                       "DriSucc%","Fld","AerWon%"))
+data_fifa_21 <- data_fifa_21 %>%
+rename(Player = Name) %>%
+  select(Player,Height,Weight)
+playerclean<-left_join(datatest,data_fifa_21,by = "Player") %>%
+  drop_na()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Afin d'isoler les attaquants de Premier League
+Premier_League_Joueurs <- data1 %>%
+  filter(Comp == "Premier League")
+# Afin d'isoler les attaquants de Bundesliga
+Bundesliga_Joueurs <- Data_One %>%
+  filter(Comp == "Bundesliga")
+# Afin d'isoler les attaquants de Ligue 1
+Ligue_1_Joueurs <- Data_One %>%
+  filter(Comp == "Ligue 1")
+# Afin d'isoler les attaquants de Série A
+Serie_A_Joueurs <- Data_One %>%
+  filter(Comp == "Serie A")
+# Afin d'isoler les attaquants de La Liga
+La_Liga_Joueurs <- Data_One %>%
+  filter(Comp == "La Liga")
+

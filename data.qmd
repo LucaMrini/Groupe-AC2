@@ -1,32 +1,182 @@
 # 2 Data
 
+#questions #render ne marche pas à cause "row_spec" use LateX ?
+
 ```{r, echo = FALSE, message = FALSE}
 source(here::here("scripts/setup.R"))
 ```
 
 # 2.1 Raw datasets
 
-##       2.1.1 Kaggle : football player stats 2021-2022
+## 2.1.1 Kaggle : football player stats 2021-2022
 
-Ex :
+Ex : This is the dataset where we get the majority of our information for our analysis
 
-```{r}
-tibble(Variables = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "Mp", "Min", "Goals", "SoT%", "G/Sh", "ShoDist", "PasTotAtt","PasTotCmp%", "Assists","PPA","CrsPA","SCA","GCA","GcaDrib","Press%","DriAtt","DriSucc%","Fld","AERwon%"), Meaning = c("Rank of the player","Player's name","Player's nation","Position","Squad's name","League that squad occupies","Year of birth","Matches played","Minutes played","Goals scored or allowed","Shots on target percentage (Does not include penalty kicks)","Goals per shot","Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)","Passes attempted","Pass completion percentage","Assists","Completed passes into the 18-yard box","Completed crosses into the 18-yard box","Shot-creating actions","Goal-creating actions","Successful dribbles that lead to a goal"," Percentage of time the squad gained possession withing five seconds of applying pressure","Dribbles attempted","Percentage of dribbles completed successfully","Fouls drawn","AerWon% : Percentage of aerials won"))%>%
+\--\> Basis for clean ds
+
+\--\> we will use the data : ....
+
+\--\>
+
+```{r football player stats 2021-2022}
+tibble(Variables = c("Rk","Player","Nation","Pos","Squad","Comp","Age","Born","MP","Starts","Min","90s","Goals","Shots","SoT","SoT%","G/Sh","G/SoT","ShoDist","ShoFK","ShoPK","PKatt","PasTotCmp","PasTotAtt","PasTotCmp%","PasTotDist","PasTotPrgDist","PasShoCmp","PasShoAtt","PasShoCmp%","PasMedCmp","PasMedAtt","PasMedCmp%","PasLonCmp","PasLonAtt","PasLonCmp%","Assists","PasAss","Pas3rd","PPA","CrsPA","PasProg","PasAtt","PasLive","PasDead","PasFK","TB","PasPress","Sw","PasCrs","CK","CkIn","CkOut","CkStr","PasGround","PasLow","PasHigh","PaswLeft","PaswRight","PaswHead","TI","PaswOther","PasCmp","PasOff","PasOut","PasInt","PasBlocks","SCA","ScaPassLive","ScaPassDead","ScaDrib","ScaSh","ScaFld","ScaDef","GCA","GcaPassLive","GcaPassDead","GcaDrib","GcaSh","GcaFld","GcaDef","Tkl","TklWon","TklDef3rd","TklMid3rd","TklAtt3rd","TklDri","TlDriAtt","TklDri%","TklDriPast","Press","PresSucc","Press%","PresDef3rd","PresMid3rd","PresAtt3rd","Blocks","BlkSh","BlkShSv","BlkPass","Int","Tkl+Int","Clr","Err","Touches","TouDefPen","TouDef3rd","TouMid3rd","TouAtt3rd","TouAttPen","TouLive","DriSucc","DriAtt","DriSucc%","DriPast","DriMegs","Carries","CarTotDist","CarPrgDist","CarProg","Car3rd","CPA","CarMis","CarDis","RecTarg","Rec","Rec%","RecProg","CrdY","CrdR","2CrdY","Fls","Fld","Off","Crs","TklW","PKwon","PKcon","OG","Recov","AerWon","AerLost","AerWon%"), Meaning = c("Rank","Player name",
+"Player nation",
+"Position",
+"Squad’s name",
+"League that squad occupies",
+"Player age",
+"Year of birth",
+"Matches played",
+"Matches started",
+"Minutes played",
+"Minutes played divided by 90",
+"Goals scored or allowed",
+"Shots total (Does not include penalty kicks)",
+"Shots on target (Does not include penalty kicks)",
+"Shots on target percentage (Does not include penalty kicks)",
+"Goals per shot",
+"Goals per shot on target (Does not include penalty kicks)",
+"Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)",
+"Shots from free kicks",
+"Penalty kicks made",
+"Penalty kicks attempted",
+"Passes completed",
+"Passes attempted",
+"Pass completion percentage",
+"Total distance, in yards, that completed passes have traveled in any direction",
+"Total distance, in yards, that completed passes have traveled towards the opponent goal",
+"Passes completed (Passes between 5 and 15 yards)",
+"Passes attempted (Passes between 5 and 15 yards)",
+"Pass completion percentage (Passes between 5 and 15 yards)",
+"Passes completed (Passes between 15 and 30 yards)",
+"Passes attempted (Passes between 15 and 30 yards)",
+"Pass completion percentage (Passes between 15 and 30 yards)",
+"Passes completed (Passes longer than 30 yards)",
+"Passes attempted (Passes longer than 30 yards)",
+"Pass completion percentage (Passes longer than 30 yards)",
+"Assists",
+"Passes that directly lead to a shot (assisted shots)",
+"Completed passes that enter the 1/3 of the pitch closest to the goal",
+"Completed passes into the 18-yard box",
+"Completed crosses into the 18-yard box",
+"Completed passes that move the ball towards the opponent goal at least 10 yards from its furthest point in the last six passes, or any completed pass into the penalty area",
+"Passes attempted",
+"Live-ball passes",
+"Dead-ball passes",
+"Passes attempted from free kicks",
+"Completed pass sent between back defenders into open space",
+"Passes made while under pressure from opponent",
+"Passes that travel more than 40 yards of the width of the pitch",
+"Crosses",
+"Corner kicks",
+"Inswinging corner kicks",
+"Outswinging corner kicks",
+"Straight corner kicks",
+"Ground passes",
+"Passes that leave the ground, but stay below shoulder-level",
+"Passes that are above shoulder-level at the peak height",
+"Passes attempted using left foot",
+"Passes attempted using right foot",
+"Passes attempted using head",
+"Throw-Ins taken",
+"Passes attempted using body parts other than the player head or feet",
+"Passes completed",
+"Offsides",
+"Out of bounds",
+"Intercepted",
+"Blocked by the opponent who was standing in its path",
+"Shot-creating actions",
+"Completed live-ball passes that lead to a shot attempt",
+"Completed dead-ball passes that lead to a shot attempt",
+"Successful dribbles that lead to a shot attempt",
+"Shots that lead to another shot attempt",
+"Fouls drawn that lead to a shot attempt",
+"Defensive actions that lead to a shot attempt",
+"Goal-creating actions",
+"Completed live-ball passes that lead to a goal",
+"Completed dead-ball passes that lead to a goal",
+"Successful dribbles that lead to a goal",
+"Shots that lead to another goal-scoring shot",
+"Fouls drawn that lead to a goal",
+"Defensive actions that lead to a goal",
+"Number of players tackled",
+"Tackles in which the tackler team won possession of the ball",
+"Tackles in defensive 1/3",
+"Tackles in middle 1/3",
+"Tackles in attacking 1/3",
+"Number of dribblers tackled",
+"Number of times dribbled past plus number of tackles",
+"Percentage of dribblers tackled",
+"Number of times dribbled past by an opposing player",
+"Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball",
+"Number of times the squad gained possession within five seconds of applying pressure",
+"Percentage of time the squad gained possession within five seconds of applying pressure",
+"Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the defensive 1/3",
+"Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the middle 1/3",
+"Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the attacking 1/3",
+"Number of times blocking the ball by standing in its path",
+"Number of times blocking a shot by standing in its path",
+"Number of times blocking a shot that was on target, by standing in its path",
+"Number of times blocking a pass by standing in its path",
+"Interceptions",
+"Number of players tackled plus number of interceptions",
+"Clearances",
+"Mistakes leading to an opponent shot",
+"Number of times a player touched the ball. Note: Receiving a pass, then dribbling, then sending a pass counts as one touch",
+"Touches in defensive penalty area",
+"Touches in defensive 1/3",
+"Touches in middle 1/3",
+"Touches in attacking 1/3",
+"Touches in attacking penalty area",
+"Live-ball touches. Does not include corner kicks, free kicks, throw-ins, kick-offs, goal kicks or penalty kicks.",
+"Dribbles completed successfully",
+"Dribbles attempted",
+"Percentage of dribbles completed successfully",
+"Number of players dribbled past",
+"Number of times a player dribbled the ball through an opposing player legs",
+"Number of times the player controlled the ball with their feet",
+"Total distance, in yards, a player moved the ball while controlling it with their feet, in any direction",
+"Total distance, in yards, a player moved the ball while controlling it with their feet towards the opponent goal",
+"Carries that move the ball towards the opponent goal at least 5 yards, or any carry into the penalty area",
+"Carries that enter the 1/3 of the pitch closest to the goal",
+"Carries into the 18-yard box",
+"Number of times a player failed when attempting to gain control of a ball",
+"Number of times a player loses control of the ball after being tackled by an opposing player",
+"Number of times a player was the target of an attempted pass",
+"Number of times a player successfully received a pass",
+"Percentage of time a player successfully received a pass",
+"Completed passes that move the ball towards the opponent goal at least 10 yards from its furthest point in the last six passes, or any completed pass into the penalty area",
+"Yellow cards",
+"Red cards",
+"Second yellow card",
+"Fouls committed",
+"Fouls drawn",
+"Offsides",
+"Crosses",
+"Tackles in which the tackler team won possession of the ball",
+"Penalty kicks won",
+"Penalty kicks conceded",
+"Own goals",
+"Number of loose balls recovered",
+"Aerials won",
+"Aerials lost",
+"Percentage of aerials won"))%>%
   kbl()%>%
   kable_styling(position = "center")%>%
   column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
-
+  row_spec(0, background = "black")
 ```
 
 Source : <https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats>
 
-## 2.1.2 Fifa.csv 
+## 2.1.2 Fifa.csv
 
-Ex :
+Ex : Used to complete informations --\> height, weight
 
-```{r}
-tibble(Variables = c(),
+\--\> other offensive infos
+
+```{r Fifa.csv}
+tibble(Variables = c("id","Fullname","current_rating","potential_rating","height","weight","preferred_foot","birth_date","preferred_positions","work_rate","weak_foot","skill_moves","value","wage","ball_control","dribbling","marking","tackling","aggression","composure","reaction","crossing","short_pass","long_pass","acceleration","stamina","strength","spring_speed","heading","shot_power","finishing","long_shots","FK_Acc.","reflexes","handling","gk_positioning","gk_diving"),
        Meaning = c())%>%
    kbl()%>%
   kable_styling(position = "center")%>%
@@ -35,14 +185,29 @@ row_spec(0, background = "black")
        
 ```
 
-Source :
+Source : <https://www.kaggle.com/datasets/daguizer/fifa-2021-to-2005-complete-player-attributes>
 
-##       2.1.3 Ballon d'or winners 
+## 2.1.3 **Ballon D'or-Golden Ball Winners**
+
+Ex : From this data set we extracted some of the info for .....
+
+```{r Ballon dor winners}
+tibble(Variables = c("Year","Rank","Player","Country","Team","Points","Source"),
+       Meaning = c("Year of assignment","winner,second,third","Player first and last Name","Country of birth/acquired citizenship","Football team at the time the prize was assigned","Score obtained","Source of the data"))%>%
+   kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+Source : <https://www.kaggle.com/datasets/marcellopaolo/ballon-dor-golden-ball-winners?select=BallonDor-GoldenBall_Winners_v2.csv>
+
+## 2.1.4 **FIFA Players & Stats**
 
 Ex :
 
-```{r}
-tibble(Variables = c(),
+```{r 2021}
+tibble(Variables = c("ID","Name","Natinality","Overal","Potential","Height","Weight","PreferredFoot","BirthDate","Age","PreferredPositions","PlayerWorkRate","WeakFoot","SkillMoves","Value","Wage","Nation","Nation_Position","Nation_KitNumber","Club","Club_Position","Club_KitNumber","Club_JoinedClub","Club_ContractLength","BallControl","Dribbling","Marking","SlideTackle","StandTackle","Aggression","Reactions","AttPosition","Interceptions","Vision","Composure","Crossing","ShortPass","LongPass","Acceleration","Stamina","Strength","Balance","SprintSpeed","Agility","Jumping","Heading","ShotPower","Finishing","LongShots","Curve","FKAcc","Penalties","Volleys","GKPositioning","GKDiving","GKHandling","GKKicking","GKReflexes","Traits","Specialities"),
        Meaning = c())%>%
    kbl()%>%
   kable_styling(position = "center")%>%
@@ -50,26 +215,88 @@ tibble(Variables = c(),
 row_spec(0, background = "black")
 ```
 
-Source :
+Source : <https://www.kaggle.com/datasets/justdhia/fifa-players?select=2021.csv>
 
-##       2.1.4 2021
+## 2.1.5 **World Population Dataset**
 
 Ex :
 
-```{r}
-tibble(Variables = c(),
-       Meaning = c())%>%
+```{r World Population Dataset}
+tibble(Variables = c("Rank","CCA3","Country/Territory","Capital","Continent","2022 Population","2020 Population","2015 Population","2010 Population","2000 Population","1990 Population","1980 Population","1970 Population","Area (km²)","Density (per km²)","Growth Rate","World Population Percentage"),
+       Meaning = c("Rank by Population","3 Digit Country/Territories Code","Name of the Country/Territories",
+"Name of the Capital","Name of the Continent","Population of the Country/Territories in the year 2022","Population of the Country/Territories in the year 2020","Population of the Country/Territories in the year 2015","Population of the Country/Territories in the year 2010","Population of the Country/Territories in the year 2000","Population of the Country/Territories in the year 1980","Population of the Country/Territories in the year 1970","Area size of the Country/Territories in square kilometer","Population Density per square kilometer","Population Growth Rate by Country/Territories","The population percentage by each Country/Territories"))%>%
    kbl()%>%
   kable_styling(position = "center")%>%
   column_spec(1:2, color = "black")%>%
 row_spec(0, background = "black")
 ```
 
-Source :
+Source : <https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset>
 
-# 2.2 Data wrangling and cleaning 
+## 2.1.6  **GDP By Country 1999 - 2022**
 
-##         2.2.1  Ballon d'or winners clean
+Ex :
+
+```{r GDP By Country 1999 - 2022}
+tibble(Variables = c("Country","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022"),
+       Meaning = c("Name of the country","population in 1999","Population in 1999",
+"Population in 2000","Population in 2001","Population in 2002","Population in 2003","Population in 2004","Population in 2005","Population in 2006","Population in 2007","Population in 2008","Population in 2009","Population in 2010","Population in 2011","Population in 2012","Population in 2013","Population in 2014","Population in 2015","Population in 2016","Population in 2017","Population in 2018","Population in 2019","Population in 2020","Population in 2021","Population in 2022"))%>%
+   kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+Source : <https://www.kaggle.com/code/alejopaullier/gdp-by-country-1999-2022>
+
+## 2.1.7  **Revenue of the Big Five soccer leagues in Europe from 2012/13 to 2021/22, with a forecast to 2023/24, by league**
+
+Ex : Dataset done from a webpage on statista that forecasts the revenue of the five biggest leagues from 2012 to 2022.
+
+```{r Revenue of the Big Five soccer}
+tibble(Variables = c("Date","Bundesliga","LaLiga","SerieA","Ligue1","Premierleague"),
+       Meaning = c("Date","revenue Bundesliga","revenue La Liga","revenue Serie A","revenue Ligue 1","revenue Premier league"))%>%
+   kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+Source : <https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/>
+
+## 2.1.8 : **Revenue from broadcasting rights of European soccer leagues from in 2019/20**
+
+Ex : Dataset made from scratches from Statista to create our own db
+
+```{r broadcasting}
+tibble(Variables = c("country","revenue"),
+       Meaning = c("country","revenue calculated in mio"))%>%
+   kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+Source : <https://www.statista.com/statistics/627306/broadcasting-big-five-european-football-league-revenues/>
+
+## 2.1.9 : **Number of soccer players playing in professional leagues worldwide as of May 2021, by nation of origin**
+
+Ex :
+
+```{r Number of soccer players }
+tibble(Variables = c("country","number"),
+       Meaning = c("country of origin","Number of players of that origin"))%>%
+   kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+Source : <https://www.statista.com/statistics/1080755/foreign-players-european-soccer-nation/>
+
+# 2.2 Data wrangling and cleaning
+
+## 2.2.1 Ballon d'or winners clean
 
 Explanations/steps :
 
@@ -89,10 +316,42 @@ Afterward, we kept only the columns of interest and removed NAs from Age, since 
 
 Problems and solutions :
 
-```{r}
+```{r Ballon dor winners clean}
 tibble(Variables = c("Year","Player","Country","Team","Age","Height","Weight","PreferredFoot","PreferredPositions"),
-       Meaning = c("Birthdate of the player","Name of the player","Country of origin of the player ","Team of the player","Age of the player","Height of the player","Weight of the player","Preferred foot of the player","Preferred posiiton of the player"))%>%
+Meaning = c("Birthdate of the player","Name of the player","Country of origin of the player ","Team of the player","Age of the player","Height of the player","Weight of the player","Preferred foot of the player","Preferred posiiton of the player")) %>%
    kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+## 2.2.2 Data of players clean
+
+Explanations : The basis of this data set is the "football player stats 2021-2022" one.
+
+From there we first selected only the players that played at least 9 matches with at least 180 minutes, then we chose only the player in the forward position by selecting position starting by "F" for forward. Then we encountered a problem with players that had unique characters in their name like "ž" or "ð" so we integrated them by hand .
+
+Then we subsetted the data base selecting only the data of interest and adding the data weight and height by renaming, selecting and in the end left_join this subset. Finally we Removed the Na with the drop_na function.
+
+Problems : At first the special characters appeared as a diamond with a ? inside, we tried different types of encoding like UTF-8 or latin1 but the one that worked was "ISO-8859-1". Most of the characters appeared but some still didn't so we added them by hand since there were only 10.
+
+Example :
+
+```{r Data of players clean}
+tibble(Variables = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "Mp", "Min", "Goals", "SoT%", "G/Sh", "ShoDist", "PasTotAtt","PasTotCmp%", "Assists","PPA","CrsPA","SCA","GCA","GcaDrib","Press%","DriAtt","DriSucc%","Fld","AERwon%","Height","Weight"), Meaning = c("Rank of the player","Player's name","Player's nation","Position","Squad's name","League that squad occupies","Year of birth","Matches played","Minutes played","Goals scored or allowed","Shots on target percentage (Does not include penalty kicks)","Goals per shot","Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)","Passes attempted","Pass completion percentage","Assists","Completed passes into the 18-yard box","Completed crosses into the 18-yard box","Shot-creating actions","Goal-creating actions","Successful dribbles that lead to a goal"," Percentage of time the squad gained possession withing five seconds of applying pressure","Dribbles attempted","Percentage of dribbles completed successfully","Fouls drawn","Percentage of aerials won","Height of the player","Weight of the player"))%>%
+  kbl()%>%
+  kable_styling(position = "center")%>%
+  column_spec(1:2, color = "black")%>%
+row_spec(0, background = "black")
+```
+
+## 2.2.3Data Clubs and others clean 
+
+ex :
+
+```{r data clubs}
+tibble(Variables = c(	"Player",	"Nation",	"GDP",	"Population",	" Pro Players ",	"Comp"	,"Revenue Comp/league",	"TV Rights Comp",	"Squad",	"TV Rights Squad",	"Squad mv",	"SShirts Squad"), Meaning = c("Name of player","Nationality of player","GDP of Nation","ation's Population","Registered Pro Players by Nation","competition's name","Revenue of competition/league","revenue of tv rights by comp/league","Squad's name","revenue of TV Rights Squad","Squad market value","Sponsorship Shirts Squad"))%>%
+  kbl()%>%
   kable_styling(position = "center")%>%
   column_spec(1:2, color = "black")%>%
 row_spec(0, background = "black")

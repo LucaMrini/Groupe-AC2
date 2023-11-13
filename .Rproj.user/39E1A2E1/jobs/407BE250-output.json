@@ -1,4 +1,0 @@
-[2,"\n"]
-[1,"\n\nprocessing file: data.qmd\n\r  |                                                          \r  |                                                    |   0%\r  |                                                          \r  |....                                                |   8%                  \r  |                                                          \r  |........                                            |  15% [unnamed-chunk-1]"]
-[1,"\nQuitting from lines 4-5 [unnamed-chunk-1] (data.qmd)\n"]
-[1,"Error in `file()`:\n! cannot open the connection\nBacktrace:\n 1. base::source(here::here(\"scripts/setup.R\"))\n 2. base::file(filename, \"r\", encoding = encoding)\n\r                                                                                                            \nExecution halted\n"]

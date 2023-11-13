@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;background-color: black !important;"> Variables </th>
+   <th style="text-align:left;background-color: black !important;"> Meaning </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Rk </td>
+   <td style="text-align:left;color: black !important;"> Rank </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Player </td>
+   <td style="text-align:left;color: black !important;"> Player name </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Nation </td>
+   <td style="text-align:left;color: black !important;"> Player nation </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Pos </td>
+   <td style="text-align:left;color: black !important;"> Position </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Squad </td>
+   <td style="text-align:left;color: black !important;"> Squad’s name </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Comp </td>
+   <td style="text-align:left;color: black !important;"> League that squad occupies </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Age </td>
+   <td style="text-align:left;color: black !important;"> Player age </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Born </td>
+   <td style="text-align:left;color: black !important;"> Year of birth </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> MP </td>
+   <td style="text-align:left;color: black !important;"> Matches played </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Starts </td>
+   <td style="text-align:left;color: black !important;"> Matches started </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Min </td>
+   <td style="text-align:left;color: black !important;"> Minutes played </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> 90s </td>
+   <td style="text-align:left;color: black !important;"> Minutes played divided by 90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Goals </td>
+   <td style="text-align:left;color: black !important;"> Goals scored or allowed </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Shots </td>
+   <td style="text-align:left;color: black !important;"> Shots total (Does not include penalty kicks) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> SoT </td>
+   <td style="text-align:left;color: black !important;"> Shots on target (Does not include penalty kicks) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> SoT% </td>
+   <td style="text-align:left;color: black !important;"> Shots on target percentage (Does not include penalty kicks) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> G/Sh </td>
+   <td style="text-align:left;color: black !important;"> Goals per shot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> G/SoT </td>
+   <td style="text-align:left;color: black !important;"> Goals per shot on target (Does not include penalty kicks) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ShoDist </td>
+   <td style="text-align:left;color: black !important;"> Average distance, in yards, from goal of all shots taken (Does not include penalty kicks) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ShoFK </td>
+   <td style="text-align:left;color: black !important;"> Shots from free kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ShoPK </td>
+   <td style="text-align:left;color: black !important;"> Penalty kicks made </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PKatt </td>
+   <td style="text-align:left;color: black !important;"> Penalty kicks attempted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasTotCmp </td>
+   <td style="text-align:left;color: black !important;"> Passes completed </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasTotAtt </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasTotCmp% </td>
+   <td style="text-align:left;color: black !important;"> Pass completion percentage </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasTotDist </td>
+   <td style="text-align:left;color: black !important;"> Total distance, in yards, that completed passes have traveled in any direction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasTotPrgDist </td>
+   <td style="text-align:left;color: black !important;"> Total distance, in yards, that completed passes have traveled towards the opponent goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasShoCmp </td>
+   <td style="text-align:left;color: black !important;"> Passes completed (Passes between 5 and 15 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasShoAtt </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted (Passes between 5 and 15 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasShoCmp% </td>
+   <td style="text-align:left;color: black !important;"> Pass completion percentage (Passes between 5 and 15 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasMedCmp </td>
+   <td style="text-align:left;color: black !important;"> Passes completed (Passes between 15 and 30 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasMedAtt </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted (Passes between 15 and 30 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasMedCmp% </td>
+   <td style="text-align:left;color: black !important;"> Pass completion percentage (Passes between 15 and 30 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasLonCmp </td>
+   <td style="text-align:left;color: black !important;"> Passes completed (Passes longer than 30 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasLonAtt </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted (Passes longer than 30 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasLonCmp% </td>
+   <td style="text-align:left;color: black !important;"> Pass completion percentage (Passes longer than 30 yards) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Assists </td>
+   <td style="text-align:left;color: black !important;"> Assists </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasAss </td>
+   <td style="text-align:left;color: black !important;"> Passes that directly lead to a shot (assisted shots) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Pas3rd </td>
+   <td style="text-align:left;color: black !important;"> Completed passes that enter the 1/3 of the pitch closest to the goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PPA </td>
+   <td style="text-align:left;color: black !important;"> Completed passes into the 18-yard box </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CrsPA </td>
+   <td style="text-align:left;color: black !important;"> Completed crosses into the 18-yard box </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasProg </td>
+   <td style="text-align:left;color: black !important;"> Completed passes that move the ball towards the opponent goal at least 10 yards from its furthest point in the last six passes, or any completed pass into the penalty area </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasAtt </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasLive </td>
+   <td style="text-align:left;color: black !important;"> Live-ball passes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasDead </td>
+   <td style="text-align:left;color: black !important;"> Dead-ball passes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasFK </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted from free kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TB </td>
+   <td style="text-align:left;color: black !important;"> Completed pass sent between back defenders into open space </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasPress </td>
+   <td style="text-align:left;color: black !important;"> Passes made while under pressure from opponent </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Sw </td>
+   <td style="text-align:left;color: black !important;"> Passes that travel more than 40 yards of the width of the pitch </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasCrs </td>
+   <td style="text-align:left;color: black !important;"> Crosses </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CK </td>
+   <td style="text-align:left;color: black !important;"> Corner kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CkIn </td>
+   <td style="text-align:left;color: black !important;"> Inswinging corner kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CkOut </td>
+   <td style="text-align:left;color: black !important;"> Outswinging corner kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CkStr </td>
+   <td style="text-align:left;color: black !important;"> Straight corner kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasGround </td>
+   <td style="text-align:left;color: black !important;"> Ground passes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasLow </td>
+   <td style="text-align:left;color: black !important;"> Passes that leave the ground, but stay below shoulder-level </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasHigh </td>
+   <td style="text-align:left;color: black !important;"> Passes that are above shoulder-level at the peak height </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PaswLeft </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted using left foot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PaswRight </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted using right foot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PaswHead </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted using head </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TI </td>
+   <td style="text-align:left;color: black !important;"> Throw-Ins taken </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PaswOther </td>
+   <td style="text-align:left;color: black !important;"> Passes attempted using body parts other than the player head or feet </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasCmp </td>
+   <td style="text-align:left;color: black !important;"> Passes completed </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasOff </td>
+   <td style="text-align:left;color: black !important;"> Offsides </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasOut </td>
+   <td style="text-align:left;color: black !important;"> Out of bounds </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasInt </td>
+   <td style="text-align:left;color: black !important;"> Intercepted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PasBlocks </td>
+   <td style="text-align:left;color: black !important;"> Blocked by the opponent who was standing in its path </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> SCA </td>
+   <td style="text-align:left;color: black !important;"> Shot-creating actions </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ScaPassLive </td>
+   <td style="text-align:left;color: black !important;"> Completed live-ball passes that lead to a shot attempt </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ScaPassDead </td>
+   <td style="text-align:left;color: black !important;"> Completed dead-ball passes that lead to a shot attempt </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ScaDrib </td>
+   <td style="text-align:left;color: black !important;"> Successful dribbles that lead to a shot attempt </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ScaSh </td>
+   <td style="text-align:left;color: black !important;"> Shots that lead to another shot attempt </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ScaFld </td>
+   <td style="text-align:left;color: black !important;"> Fouls drawn that lead to a shot attempt </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ScaDef </td>
+   <td style="text-align:left;color: black !important;"> Defensive actions that lead to a shot attempt </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GCA </td>
+   <td style="text-align:left;color: black !important;"> Goal-creating actions </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GcaPassLive </td>
+   <td style="text-align:left;color: black !important;"> Completed live-ball passes that lead to a goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GcaPassDead </td>
+   <td style="text-align:left;color: black !important;"> Completed dead-ball passes that lead to a goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GcaDrib </td>
+   <td style="text-align:left;color: black !important;"> Successful dribbles that lead to a goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GcaSh </td>
+   <td style="text-align:left;color: black !important;"> Shots that lead to another goal-scoring shot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GcaFld </td>
+   <td style="text-align:left;color: black !important;"> Fouls drawn that lead to a goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GcaDef </td>
+   <td style="text-align:left;color: black !important;"> Defensive actions that lead to a goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Tkl </td>
+   <td style="text-align:left;color: black !important;"> Number of players tackled </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklWon </td>
+   <td style="text-align:left;color: black !important;"> Tackles in which the tackler team won possession of the ball </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklDef3rd </td>
+   <td style="text-align:left;color: black !important;"> Tackles in defensive 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklMid3rd </td>
+   <td style="text-align:left;color: black !important;"> Tackles in middle 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklAtt3rd </td>
+   <td style="text-align:left;color: black !important;"> Tackles in attacking 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklDri </td>
+   <td style="text-align:left;color: black !important;"> Number of dribblers tackled </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TlDriAtt </td>
+   <td style="text-align:left;color: black !important;"> Number of times dribbled past plus number of tackles </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklDri% </td>
+   <td style="text-align:left;color: black !important;"> Percentage of dribblers tackled </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklDriPast </td>
+   <td style="text-align:left;color: black !important;"> Number of times dribbled past by an opposing player </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Press </td>
+   <td style="text-align:left;color: black !important;"> Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PresSucc </td>
+   <td style="text-align:left;color: black !important;"> Number of times the squad gained possession within five seconds of applying pressure </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Press% </td>
+   <td style="text-align:left;color: black !important;"> Percentage of time the squad gained possession within five seconds of applying pressure </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PresDef3rd </td>
+   <td style="text-align:left;color: black !important;"> Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the defensive 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PresMid3rd </td>
+   <td style="text-align:left;color: black !important;"> Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the middle 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PresAtt3rd </td>
+   <td style="text-align:left;color: black !important;"> Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the attacking 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Blocks </td>
+   <td style="text-align:left;color: black !important;"> Number of times blocking the ball by standing in its path </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> BlkSh </td>
+   <td style="text-align:left;color: black !important;"> Number of times blocking a shot by standing in its path </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> BlkShSv </td>
+   <td style="text-align:left;color: black !important;"> Number of times blocking a shot that was on target, by standing in its path </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> BlkPass </td>
+   <td style="text-align:left;color: black !important;"> Number of times blocking a pass by standing in its path </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Int </td>
+   <td style="text-align:left;color: black !important;"> Interceptions </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Tkl+Int </td>
+   <td style="text-align:left;color: black !important;"> Number of players tackled plus number of interceptions </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Clr </td>
+   <td style="text-align:left;color: black !important;"> Clearances </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Err </td>
+   <td style="text-align:left;color: black !important;"> Mistakes leading to an opponent shot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Touches </td>
+   <td style="text-align:left;color: black !important;"> Number of times a player touched the ball. Note: Receiving a pass, then dribbling, then sending a pass counts as one touch </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TouDefPen </td>
+   <td style="text-align:left;color: black !important;"> Touches in defensive penalty area </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TouDef3rd </td>
+   <td style="text-align:left;color: black !important;"> Touches in defensive 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TouMid3rd </td>
+   <td style="text-align:left;color: black !important;"> Touches in middle 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TouAtt3rd </td>
+   <td style="text-align:left;color: black !important;"> Touches in attacking 1/3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TouAttPen </td>
+   <td style="text-align:left;color: black !important;"> Touches in attacking penalty area </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TouLive </td>
+   <td style="text-align:left;color: black !important;"> Live-ball touches. Does not include corner kicks, free kicks, throw-ins, kick-offs, goal kicks or penalty kicks. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> DriSucc </td>
+   <td style="text-align:left;color: black !important;"> Dribbles completed successfully </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> DriAtt </td>
+   <td style="text-align:left;color: black !important;"> Dribbles attempted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> DriSucc% </td>
+   <td style="text-align:left;color: black !important;"> Percentage of dribbles completed successfully </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> DriPast </td>
+   <td style="text-align:left;color: black !important;"> Number of players dribbled past </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> DriMegs </td>
+   <td style="text-align:left;color: black !important;"> Number of times a player dribbled the ball through an opposing player legs </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Carries </td>
+   <td style="text-align:left;color: black !important;"> Number of times the player controlled the ball with their feet </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CarTotDist </td>
+   <td style="text-align:left;color: black !important;"> Total distance, in yards, a player moved the ball while controlling it with their feet, in any direction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CarPrgDist </td>
+   <td style="text-align:left;color: black !important;"> Total distance, in yards, a player moved the ball while controlling it with their feet towards the opponent goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CarProg </td>
+   <td style="text-align:left;color: black !important;"> Carries that move the ball towards the opponent goal at least 5 yards, or any carry into the penalty area </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Car3rd </td>
+   <td style="text-align:left;color: black !important;"> Carries that enter the 1/3 of the pitch closest to the goal </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CPA </td>
+   <td style="text-align:left;color: black !important;"> Carries into the 18-yard box </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CarMis </td>
+   <td style="text-align:left;color: black !important;"> Number of times a player failed when attempting to gain control of a ball </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CarDis </td>
+   <td style="text-align:left;color: black !important;"> Number of times a player loses control of the ball after being tackled by an opposing player </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> RecTarg </td>
+   <td style="text-align:left;color: black !important;"> Number of times a player was the target of an attempted pass </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Rec </td>
+   <td style="text-align:left;color: black !important;"> Number of times a player successfully received a pass </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Rec% </td>
+   <td style="text-align:left;color: black !important;"> Percentage of time a player successfully received a pass </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> RecProg </td>
+   <td style="text-align:left;color: black !important;"> Completed passes that move the ball towards the opponent goal at least 10 yards from its furthest point in the last six passes, or any completed pass into the penalty area </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CrdY </td>
+   <td style="text-align:left;color: black !important;"> Yellow cards </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> CrdR </td>
+   <td style="text-align:left;color: black !important;"> Red cards </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> 2CrdY </td>
+   <td style="text-align:left;color: black !important;"> Second yellow card </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Fls </td>
+   <td style="text-align:left;color: black !important;"> Fouls committed </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Fld </td>
+   <td style="text-align:left;color: black !important;"> Fouls drawn </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Off </td>
+   <td style="text-align:left;color: black !important;"> Offsides </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Crs </td>
+   <td style="text-align:left;color: black !important;"> Crosses </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> TklW </td>
+   <td style="text-align:left;color: black !important;"> Tackles in which the tackler team won possession of the ball </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PKwon </td>
+   <td style="text-align:left;color: black !important;"> Penalty kicks won </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PKcon </td>
+   <td style="text-align:left;color: black !important;"> Penalty kicks conceded </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> OG </td>
+   <td style="text-align:left;color: black !important;"> Own goals </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Recov </td>
+   <td style="text-align:left;color: black !important;"> Number of loose balls recovered </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> AerWon </td>
+   <td style="text-align:left;color: black !important;"> Aerials won </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> AerLost </td>
+   <td style="text-align:left;color: black !important;"> Aerials lost </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> AerWon% </td>
+   <td style="text-align:left;color: black !important;"> Percentage of aerials won </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
