@@ -181,7 +181,7 @@ tibble(Variables = c("id","Fullname","current_rating","potential_rating","height
    kbl()%>%
   kable_styling(position = "center")%>%
   column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+# row_spec(0, background = "black")
        
 ```
 
@@ -310,7 +310,7 @@ At first we used dplyr to filter the years from 2012 to 2022, keeping the last 2
 
 Next, we utilized dplyr to update the variable in the "Player" column we did load a different database *"precision"* to later create columns and variables, then in order to have a common column for adding variables later we load a new database *"precision"*.
 
-We integrated a third databse "precision" to fill in the last NA values. We renamed the column "Player" as "Fullname" to ensure it has the same column names as those we aim to extract. Add missing columns such as Age, Height, and Weight by joining the databases.
+We integrated a third databse `precision` to fill in the last NA values. We renamed the column "Player" as "Fullname" to ensure it has the same column names as those we aim to extract. Add missing columns such as Age, Height, and Weight by joining the databases.
 
 Now, we used dplyr::left_join to join the data frames using the "Player" column as a common key, we filled in the NAs with values from the third database and kept only the columns of interest.
 

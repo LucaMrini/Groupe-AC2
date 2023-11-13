@@ -30,7 +30,7 @@ data1 <- data1 %>%
 # un par un, il n'yen a pas énormément
 data1$data_problem <- grepl("\\?", data1$Player)
 players_problem <- data1[data1$data_problem, ]
-View(players_problem)
+
 
 # Remplacer Edin Dzeko
 # Renommer "Edin D?eko" en "Edin Džeko"
@@ -65,11 +65,11 @@ data1$Player <- sub("Milan \\?uri\\?", "Milan Đurić", data1$Player)
 
 # Renommer et ajouter aux derniers auquel il manquait le ć
 data1$Player <- gsub("\\?", "ć", data1$Player)
-View(data1)
+
 
 # Load du dataset fifa 21 pour ajouter les colonnes Height et Weight
 data_fifa_21 <- read_csv("data/fifa21.csv")
-View(data_fifa_21)
+
 
 # faire en sorte d'avoir Player dans les deux bases de données pour faciliter le fait de joindre
 data_fifa_21 <- data_fifa_21 %>%
@@ -111,7 +111,6 @@ data1 <- data1 %>%
 height_na <- data1 %>%
   filter(is.na(Height))
 
-View(height_na)
 
 # Histoire d'avoir une nouvelle colonne en commun "Born", qui est l'année de naissance
 data_fifa_21 <- data_fifa_21 %>%

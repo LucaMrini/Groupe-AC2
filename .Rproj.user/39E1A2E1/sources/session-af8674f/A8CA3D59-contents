@@ -1,1 +1,2 @@
 unique(playerclean$Squad.x)
+plot_missing(data1)
