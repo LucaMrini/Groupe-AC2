@@ -26,7 +26,6 @@ purrr::walk(required_packages, function(package) {
   library(package, character.only = TRUE)
 })
 
-
 ######################################################
 ## The following sets a few option for nice reports ##
 ######################################################

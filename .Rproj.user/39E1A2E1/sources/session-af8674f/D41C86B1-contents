@@ -1,7 +1,5 @@
 # 2 Data
 
-#questions #render ne marche pas à cause "row_spec" use LateX ?
-
 ```{r, echo = FALSE, message = FALSE}
 source(here::here("scripts/setup.R"))
 ```
