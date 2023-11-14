@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variables </th>
+   <th style="text-align:left;"> Meaning </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ID </td>
+   <td style="text-align:left;color: black !important;"> Unique identifier for the player </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Name </td>
+   <td style="text-align:left;color: black !important;"> Player's name </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Natinality </td>
+   <td style="text-align:left;color: black !important;"> Player's nationality </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Overal </td>
+   <td style="text-align:left;color: black !important;"> Player's overall skill rating </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Potential </td>
+   <td style="text-align:left;color: black !important;"> Player's potential skill rating </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Height </td>
+   <td style="text-align:left;color: black !important;"> Player's height </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Weight </td>
+   <td style="text-align:left;color: black !important;"> Player's weight </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PreferredFoot </td>
+   <td style="text-align:left;color: black !important;"> Player's preferred foot for kicking (left or right) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> BirthDate </td>
+   <td style="text-align:left;color: black !important;"> Player's date of birth </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Age </td>
+   <td style="text-align:left;color: black !important;"> Player's current age </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PreferredPositions </td>
+   <td style="text-align:left;color: black !important;"> Positions on the field preferred by the player </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> PlayerWorkRate </td>
+   <td style="text-align:left;color: black !important;"> Player's work rate or effort during matches </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> WeakFoot </td>
+   <td style="text-align:left;color: black !important;"> Player's weaker foot rating or ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> SkillMoves </td>
+   <td style="text-align:left;color: black !important;"> Player's skill move rating or ability to perform technical moves </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Value </td>
+   <td style="text-align:left;color: black !important;"> Player's estimated market value </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Wage </td>
+   <td style="text-align:left;color: black !important;"> Player's salary or wage </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Nation </td>
+   <td style="text-align:left;color: black !important;"> Player's nation </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Nation_Position </td>
+   <td style="text-align:left;color: black !important;"> Player's position within the national team </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Nation_KitNumber </td>
+   <td style="text-align:left;color: black !important;"> Player's kit number in the national team </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Club </td>
+   <td style="text-align:left;color: black !important;"> Player's club </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Club_Position </td>
+   <td style="text-align:left;color: black !important;"> Player's position within the club team </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Club_KitNumber </td>
+   <td style="text-align:left;color: black !important;"> Player's kit number in the club team </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Club_JoinedClub </td>
+   <td style="text-align:left;color: black !important;"> Date when the player joined the club </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Club_ContractLength </td>
+   <td style="text-align:left;color: black !important;"> Length of the player's contract with the club </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> BallControl </td>
+   <td style="text-align:left;color: black !important;"> Player's skill in controlling the ball </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Dribbling </td>
+   <td style="text-align:left;color: black !important;"> Player's dribbling ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Marking </td>
+   <td style="text-align:left;color: black !important;"> Player's marking ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> SlideTackle </td>
+   <td style="text-align:left;color: black !important;"> Player's sliding tackle ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> StandTackle </td>
+   <td style="text-align:left;color: black !important;"> Player's standing tackle ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Aggression </td>
+   <td style="text-align:left;color: black !important;"> Player's level of aggression on the field </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Reactions </td>
+   <td style="text-align:left;color: black !important;"> Player's reaction time </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> AttPosition </td>
+   <td style="text-align:left;color: black !important;"> Player's positioning for attacks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Interceptions </td>
+   <td style="text-align:left;color: black !important;"> Player's ability to intercept passes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Vision </td>
+   <td style="text-align:left;color: black !important;"> Player's vision on the field </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Composure </td>
+   <td style="text-align:left;color: black !important;"> Player's composure under pressure </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Crossing </td>
+   <td style="text-align:left;color: black !important;"> Player's ability to cross the ball into the box </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ShortPass </td>
+   <td style="text-align:left;color: black !important;"> Player's accuracy in short passes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> LongPass </td>
+   <td style="text-align:left;color: black !important;"> Player's accuracy in long passes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Acceleration </td>
+   <td style="text-align:left;color: black !important;"> Player's acceleration </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Stamina </td>
+   <td style="text-align:left;color: black !important;"> Player's stamina or endurance </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Strength </td>
+   <td style="text-align:left;color: black !important;"> Player's physical strength </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Balance </td>
+   <td style="text-align:left;color: black !important;"> Player's balance on the field </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> SprintSpeed </td>
+   <td style="text-align:left;color: black !important;"> Player's sprinting speed </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Agility </td>
+   <td style="text-align:left;color: black !important;"> Player's agility </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Jumping </td>
+   <td style="text-align:left;color: black !important;"> Player's jumping ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Heading </td>
+   <td style="text-align:left;color: black !important;"> Player's heading ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ShotPower </td>
+   <td style="text-align:left;color: black !important;"> Player's power in shooting </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Finishing </td>
+   <td style="text-align:left;color: black !important;"> Player's ability to finish goal-scoring opportunities </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> LongShots </td>
+   <td style="text-align:left;color: black !important;"> Player's ability to take long-range shots </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Curve </td>
+   <td style="text-align:left;color: black !important;"> Player's ability to curve the ball </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> FKAcc </td>
+   <td style="text-align:left;color: black !important;"> Player's accuracy in free kicks </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Penalties </td>
+   <td style="text-align:left;color: black !important;"> Player's penalty-taking ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Volleys </td>
+   <td style="text-align:left;color: black !important;"> Player's ability to hit volleys </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GKPositioning </td>
+   <td style="text-align:left;color: black !important;"> Goalkeeper's positioning on the field </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GKDiving </td>
+   <td style="text-align:left;color: black !important;"> Goalkeeper's diving ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GKHandling </td>
+   <td style="text-align:left;color: black !important;"> Goalkeeper's handling ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GKKicking </td>
+   <td style="text-align:left;color: black !important;"> Goalkeeper's kicking ability </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> GKReflexes </td>
+   <td style="text-align:left;color: black !important;"> Goalkeeper's reflexes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Traits </td>
+   <td style="text-align:left;color: black !important;"> Special traits associated with the player </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Specialities </td>
+   <td style="text-align:left;color: black !important;"> Special abilities or skills the player possesses </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

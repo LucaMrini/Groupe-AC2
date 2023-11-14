@@ -1,0 +1,5 @@
+"0","tibble(Variables = c(""Date"",""Bundesliga"",""LaLiga"",""SerieA"",""Ligue1"",""Premierleague""),"
+"0","       Meaning = c(""Date"",""revenue Bundesliga"",""revenue La Liga"",""revenue Serie A"",""revenue Ligue 1"",""revenue Premier league""))%>%"
+"0","   kableExtra::kbl()%>%"
+"0","  kableExtra::kable_styling(position = ""center"")%>%"
+"0","  kableExtra::column_spec(1:2, color = ""black"")"

@@ -1,0 +1,5 @@
+"0","tibble(Variables = c(""country"",""revenue""),"
+"0","       Meaning = c(""country"",""revenue calculated in mio""))%>%"
+"0","   kableExtra::kbl()%>%"
+"0"," kableExtra::kable_styling(position = ""center"")%>%"
+"0","  kableExtra::column_spec(1:2, color = ""black"")"

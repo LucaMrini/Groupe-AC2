@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/Groupe-AC2/scripts/setup.R",
     "project_path": "scripts/setup.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "1932239803",
     "contents": "",
     "dirty": true,
     "created": 1699954398879.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "8,64",
-        "scrollLine": "8"
+        "cursorPosition": "8,84",
+        "scrollLine": "0"
     },
     "folds": "",
     "lastKnownWriteTime": 1699954378,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1699956291488,
+    "last_content_update": 1699971492972,
     "read_only": false,
     "read_only_alternatives": []
 }

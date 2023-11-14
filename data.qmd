@@ -161,7 +161,7 @@ tibble(Variables = c("Rk","Player","Nation","Pos","Squad","Comp","Age","Born","M
 "Percentage of aerials won"))%>%
 kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 ```
 
 Source : <https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats>
@@ -182,15 +182,12 @@ tibble(Variables = c(
     "acceleration", "stamina", "strength", "spring_speed", "heading", "shot_power",
     "finishing", "long_shots", "FK_Acc.", "reflexes", "handling", "gk_positioning", "gk_diving"
   ),
-  Meaning =c("id", "Fullname", "current_rating", "potential_rating", "height", "weight",
-    "preferred_foot", "birth_date", "preferred_positions", "work_rate", "weak_foot",
-    "skill_moves", "value", "wage", "ball_control", "dribbling", "marking", "tackling",
-    "aggression", "composure", "reaction", "crossing", "short_pass", "long_pass",
-    "acceleration", "stamina", "strength", "spring_speed", "heading", "shot_power",
-    "finishing", "long_shots", "FK_Acc.", "reflexes", "handling", "gk_positioning", "gk_diving"))%>%
+  Meaning =c("Unique identifier for a player","Full name of the player","Players current skill rating or performance level","Expected potential skill level or rating a player can achieve","Player's height","Player's weight","Player's preferred foot for kicking (left or right)",
+"Player's date of birth","Positions on the field the player prefers to play","Player's work rate or level of effort during matches","Player's weaker foot rating or ability","Player's skill move rating or ability to perform technical moves","Player's estimated market value",
+"Player's salary or wage","Player's skill in controlling the ball","Player's dribbling ability","Player's defensive marking ability","Player's ability to perform tackles","Player's level of aggression on the field","Player's composure under pressure","Player's reaction time","Player's ability to cross the ball into the box","Player's accuracy in short passes","Player's accuracy in long passes","Player's acceleration","Player's stamina or endurance","Player's physical strength","Player's sprinting speed","Player's heading ability","Player's power in shooting","Player's ability to finish goal-scoring opportunities","Player's ability to take long-range shots","Player's accuracy in free kicks","Goalkeeper's reflexes","Goalkeeper's handling ability","Goalkeeper's positioning on the field","Goalkeeper's diving ability"))%>%
 kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 
        
@@ -207,7 +204,7 @@ tibble(Variables = c("Year","Rank","Player","Country","Team","Points","Source"),
        Meaning = c("Year of assignment","winner,second,third","Player first and last Name","Country of birth/acquired citizenship","Football team at the time the prize was assigned","Score obtained","Source of the data"))%>%
    kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 ```
 
@@ -219,10 +216,69 @@ Ex :
 
 ```{r 2021}
 tibble(Variables = c("ID","Name","Natinality","Overal","Potential","Height","Weight","PreferredFoot","BirthDate","Age","PreferredPositions","PlayerWorkRate","WeakFoot","SkillMoves","Value","Wage","Nation","Nation_Position","Nation_KitNumber","Club","Club_Position","Club_KitNumber","Club_JoinedClub","Club_ContractLength","BallControl","Dribbling","Marking","SlideTackle","StandTackle","Aggression","Reactions","AttPosition","Interceptions","Vision","Composure","Crossing","ShortPass","LongPass","Acceleration","Stamina","Strength","Balance","SprintSpeed","Agility","Jumping","Heading","ShotPower","Finishing","LongShots","Curve","FKAcc","Penalties","Volleys","GKPositioning","GKDiving","GKHandling","GKKicking","GKReflexes","Traits","Specialities"),
-       Meaning = c("ID","Name","Natinality","Overal","Potential","Height","Weight","PreferredFoot","BirthDate","Age","PreferredPositions","PlayerWorkRate","WeakFoot","SkillMoves","Value","Wage","Nation","Nation_Position","Nation_KitNumber","Club","Club_Position","Club_KitNumber","Club_JoinedClub","Club_ContractLength","BallControl","Dribbling","Marking","SlideTackle","StandTackle","Aggression","Reactions","AttPosition","Interceptions","Vision","Composure","Crossing","ShortPass","LongPass","Acceleration","Stamina","Strength","Balance","SprintSpeed","Agility","Jumping","Heading","ShotPower","Finishing","LongShots","Curve","FKAcc","Penalties","Volleys","GKPositioning","GKDiving","GKHandling","GKKicking","GKReflexes","Traits","Specialities"))%>%
+       Meaning = c("Unique identifier for the player",
+"Player's name",
+"Player's nationality",
+"Player's overall skill rating",
+"Player's potential skill rating",
+"Player's height",
+"Player's weight",
+"Player's preferred foot for kicking (left or right)",
+"Player's date of birth",
+"Player's current age",
+"Positions on the field preferred by the player",
+"Player's work rate or effort during matches",
+"Player's weaker foot rating or ability",
+"Player's skill move rating or ability to perform technical moves",
+"Player's estimated market value",
+"Player's salary or wage",
+"Player's nation",
+"Player's position within the national team",
+"Player's kit number in the national team",
+"Player's club",
+"Player's position within the club team",
+"Player's kit number in the club team",
+"Date when the player joined the club",
+"Length of the player's contract with the club",
+"Player's skill in controlling the ball",
+"Player's dribbling ability",
+"Player's marking ability",
+"Player's sliding tackle ability",
+"Player's standing tackle ability",
+"Player's level of aggression on the field",
+"Player's reaction time",
+"Player's positioning for attacks",
+"Player's ability to intercept passes",
+"Player's vision on the field",
+"Player's composure under pressure",
+"Player's ability to cross the ball into the box",
+"Player's accuracy in short passes",
+"Player's accuracy in long passes",
+"Player's acceleration",
+"Player's stamina or endurance",
+"Player's physical strength",
+"Player's balance on the field",
+"Player's sprinting speed",
+"Player's agility",
+"Player's jumping ability",
+"Player's heading ability",
+"Player's power in shooting",
+"Player's ability to finish goal-scoring opportunities",
+"Player's ability to take long-range shots",
+"Player's ability to curve the ball",
+"Player's accuracy in free kicks",
+"Player's penalty-taking ability",
+"Player's ability to hit volleys",
+"Goalkeeper's positioning on the field",
+"Goalkeeper's diving ability",
+"Goalkeeper's handling ability",
+"Goalkeeper's kicking ability",
+"Goalkeeper's reflexes",
+"Special traits associated with the player",
+"Special abilities or skills the player possesses"))%>%
    kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 ```
 
@@ -250,7 +306,7 @@ tibble(Variables = c("Rank","CCA3","Country/Territory","Capital","Continent","20
 ,"Population of the Country/Territories in the year 1970","Area size of the Country/Territories in square kilometer","Population Density per square kilometer","Population Growth Rate by Country/Territories","The population percentage by each Country/Territories"))%>%
    kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 ```
 
@@ -281,7 +337,7 @@ tibble(Variables = c("Date","Bundesliga","LaLiga","SerieA","Ligue1","Premierleag
        Meaning = c("Date","revenue Bundesliga","revenue La Liga","revenue Serie A","revenue Ligue 1","revenue Premier league"))%>%
    kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 ```
 
@@ -296,7 +352,7 @@ tibble(Variables = c("country","revenue"),
        Meaning = c("country","revenue calculated in mio"))%>%
    kableExtra::kbl()%>%
  kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 ```
 
@@ -311,7 +367,7 @@ tibble(Variables = c("country","number"),
        Meaning = c("country of origin","Number of players of that origin"))%>%
    kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
-  kableExtra::column_spec(1:2, color = "black")%>%
+  kableExtra::column_spec(1:2, color = "black")
 
 ```
 
