@@ -1,5 +1,0 @@
-"0","tibble(Variables = c(""country"",""number""),"
-"0","       Meaning = c(""country of origin"",""Number of players of that origin""))%>%"
-"0","   kableExtra::kbl()%>%"
-"0","  kableExtra::kable_styling(position = ""center"")%>%"
-"0","  kableExtra::column_spec(1:2, color = ""black"")"
