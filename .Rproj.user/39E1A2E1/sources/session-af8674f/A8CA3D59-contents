@@ -1,2 +1,3 @@
 unique(playerclean$Squad.x)
-plot_missing(data1)
+plot_missing(data1)$```{r setup, include=FALSE}
+# Load necessary packages

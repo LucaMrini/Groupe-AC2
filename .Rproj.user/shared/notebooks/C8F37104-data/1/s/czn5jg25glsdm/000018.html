@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;background-color: black !important;"> Variables </th>
+   <th style="text-align:left;background-color: black !important;"> Meaning </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;color: black !important;"> id </td>
+   <td style="text-align:left;color: black !important;"> id </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> Fullname </td>
+   <td style="text-align:left;color: black !important;"> Fullname </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> current_rating </td>
+   <td style="text-align:left;color: black !important;"> current_rating </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> potential_rating </td>
+   <td style="text-align:left;color: black !important;"> potential_rating </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> height </td>
+   <td style="text-align:left;color: black !important;"> height </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> weight </td>
+   <td style="text-align:left;color: black !important;"> weight </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> preferred_foot </td>
+   <td style="text-align:left;color: black !important;"> preferred_foot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> birth_date </td>
+   <td style="text-align:left;color: black !important;"> birth_date </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> preferred_positions </td>
+   <td style="text-align:left;color: black !important;"> preferred_positions </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> work_rate </td>
+   <td style="text-align:left;color: black !important;"> work_rate </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> weak_foot </td>
+   <td style="text-align:left;color: black !important;"> weak_foot </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> skill_moves </td>
+   <td style="text-align:left;color: black !important;"> skill_moves </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> value </td>
+   <td style="text-align:left;color: black !important;"> value </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> wage </td>
+   <td style="text-align:left;color: black !important;"> wage </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> ball_control </td>
+   <td style="text-align:left;color: black !important;"> ball_control </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> dribbling </td>
+   <td style="text-align:left;color: black !important;"> dribbling </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> marking </td>
+   <td style="text-align:left;color: black !important;"> marking </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> tackling </td>
+   <td style="text-align:left;color: black !important;"> tackling </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> aggression </td>
+   <td style="text-align:left;color: black !important;"> aggression </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> composure </td>
+   <td style="text-align:left;color: black !important;"> composure </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> reaction </td>
+   <td style="text-align:left;color: black !important;"> reaction </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> crossing </td>
+   <td style="text-align:left;color: black !important;"> crossing </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> short_pass </td>
+   <td style="text-align:left;color: black !important;"> short_pass </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> long_pass </td>
+   <td style="text-align:left;color: black !important;"> long_pass </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> acceleration </td>
+   <td style="text-align:left;color: black !important;"> acceleration </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> stamina </td>
+   <td style="text-align:left;color: black !important;"> stamina </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> strength </td>
+   <td style="text-align:left;color: black !important;"> strength </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> spring_speed </td>
+   <td style="text-align:left;color: black !important;"> spring_speed </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> heading </td>
+   <td style="text-align:left;color: black !important;"> heading </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> shot_power </td>
+   <td style="text-align:left;color: black !important;"> shot_power </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> finishing </td>
+   <td style="text-align:left;color: black !important;"> finishing </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> long_shots </td>
+   <td style="text-align:left;color: black !important;"> long_shots </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> FK_Acc. </td>
+   <td style="text-align:left;color: black !important;"> FK_Acc. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> reflexes </td>
+   <td style="text-align:left;color: black !important;"> reflexes </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> handling </td>
+   <td style="text-align:left;color: black !important;"> handling </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> gk_positioning </td>
+   <td style="text-align:left;color: black !important;"> gk_positioning </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;color: black !important;"> gk_diving </td>
+   <td style="text-align:left;color: black !important;"> gk_diving </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

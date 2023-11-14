@@ -1,0 +1,6 @@
+"0","tibble(Variables = c(""Year"",""Rank"",""Player"",""Country"",""Team"",""Points"",""Source""),"
+"0","       Meaning = c(""Year of assignment"",""winner,second,third"",""Player first and last Name"",""Country of birth/acquired citizenship"",""Football team at the time the prize was assigned"",""Score obtained"",""Source of the data""))%>%"
+"0","   kableExtra::kbl()%>%"
+"0","  kableExtra::kable_styling(position = ""center"")%>%"
+"0","  kableExtra::column_spec(1:2, color = ""black"")%>%"
+"0","kableExtra::row_spec(0, background = ""black"")"

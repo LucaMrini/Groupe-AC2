@@ -6,7 +6,7 @@
 required_packages <- c(
   "here", # for the project's organization
   "tidyverse", # for wrangling
-  "ggrepel", "gghighlight", "patchwork", "maps", "scales" # for plotting
+  "ggrepel", "gghighlight", "patchwork", "maps", "scales","gt","kableExtra","quarto" # for plotting
 )
 #
 check_install_packages <- function(packages) {

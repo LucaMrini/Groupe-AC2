@@ -1,7 +1,5 @@
 # 2 Data
 
-#questions #render ne marche pas à cause "row_spec" use LateX ?
-
 ```{r, echo = FALSE, message = FALSE}
 source(here::here("scripts/setup.R"))
 ```
@@ -161,10 +159,9 @@ tibble(Variables = c("Rk","Player","Nation","Pos","Squad","Comp","Age","Born","M
 "Aerials won",
 "Aerials lost",
 "Percentage of aerials won"))%>%
-  kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-  row_spec(0, background = "black")
+kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
 ```
 
 Source : <https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats>
@@ -175,13 +172,27 @@ Ex : Used to complete informations --\> height, weight
 
 \--\> other offensive infos
 
-```{r Fifa.csv}
-tibble(Variables = c("id","Fullname","current_rating","potential_rating","height","weight","preferred_foot","birth_date","preferred_positions","work_rate","weak_foot","skill_moves","value","wage","ball_control","dribbling","marking","tackling","aggression","composure","reaction","crossing","short_pass","long_pass","acceleration","stamina","strength","spring_speed","heading","shot_power","finishing","long_shots","FK_Acc.","reflexes","handling","gk_positioning","gk_diving"),
-       Meaning = c())%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-# row_spec(0, background = "black")
+```{r, Fifa,results='asis'}
+
+tibble(Variables = c(
+    "id", "Fullname", "current_rating", "potential_rating", "height", "weight",
+    "preferred_foot", "birth_date", "preferred_positions", "work_rate", "weak_foot",
+    "skill_moves", "value", "wage", "ball_control", "dribbling", "marking", "tackling",
+    "aggression", "composure", "reaction", "crossing", "short_pass", "long_pass",
+    "acceleration", "stamina", "strength", "spring_speed", "heading", "shot_power",
+    "finishing", "long_shots", "FK_Acc.", "reflexes", "handling", "gk_positioning", "gk_diving"
+  ),
+  Meaning =c("id", "Fullname", "current_rating", "potential_rating", "height", "weight",
+    "preferred_foot", "birth_date", "preferred_positions", "work_rate", "weak_foot",
+    "skill_moves", "value", "wage", "ball_control", "dribbling", "marking", "tackling",
+    "aggression", "composure", "reaction", "crossing", "short_pass", "long_pass",
+    "acceleration", "stamina", "strength", "spring_speed", "heading", "shot_power",
+    "finishing", "long_shots", "FK_Acc.", "reflexes", "handling", "gk_positioning", "gk_diving"))%>%
+kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
+
        
 ```
 
@@ -194,10 +205,10 @@ Ex : From this data set we extracted some of the info for .....
 ```{r Ballon dor winners}
 tibble(Variables = c("Year","Rank","Player","Country","Team","Points","Source"),
        Meaning = c("Year of assignment","winner,second,third","Player first and last Name","Country of birth/acquired citizenship","Football team at the time the prize was assigned","Score obtained","Source of the data"))%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+   kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 Source : <https://www.kaggle.com/datasets/marcellopaolo/ballon-dor-golden-ball-winners?select=BallonDor-GoldenBall_Winners_v2.csv>
@@ -208,64 +219,70 @@ Ex :
 
 ```{r 2021}
 tibble(Variables = c("ID","Name","Natinality","Overal","Potential","Height","Weight","PreferredFoot","BirthDate","Age","PreferredPositions","PlayerWorkRate","WeakFoot","SkillMoves","Value","Wage","Nation","Nation_Position","Nation_KitNumber","Club","Club_Position","Club_KitNumber","Club_JoinedClub","Club_ContractLength","BallControl","Dribbling","Marking","SlideTackle","StandTackle","Aggression","Reactions","AttPosition","Interceptions","Vision","Composure","Crossing","ShortPass","LongPass","Acceleration","Stamina","Strength","Balance","SprintSpeed","Agility","Jumping","Heading","ShotPower","Finishing","LongShots","Curve","FKAcc","Penalties","Volleys","GKPositioning","GKDiving","GKHandling","GKKicking","GKReflexes","Traits","Specialities"),
-       Meaning = c())%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+       Meaning = c("ID","Name","Natinality","Overal","Potential","Height","Weight","PreferredFoot","BirthDate","Age","PreferredPositions","PlayerWorkRate","WeakFoot","SkillMoves","Value","Wage","Nation","Nation_Position","Nation_KitNumber","Club","Club_Position","Club_KitNumber","Club_JoinedClub","Club_ContractLength","BallControl","Dribbling","Marking","SlideTackle","StandTackle","Aggression","Reactions","AttPosition","Interceptions","Vision","Composure","Crossing","ShortPass","LongPass","Acceleration","Stamina","Strength","Balance","SprintSpeed","Agility","Jumping","Heading","ShotPower","Finishing","LongShots","Curve","FKAcc","Penalties","Volleys","GKPositioning","GKDiving","GKHandling","GKKicking","GKReflexes","Traits","Specialities"))%>%
+   kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 Source : <https://www.kaggle.com/datasets/justdhia/fifa-players?select=2021.csv>
 
 ## 2.1.5 **World Population Dataset**
 
-```{}
-```
-
-```{}
-```
-
 Ex :
 
 ```{r World Population Dataset}
 tibble(Variables = c("Rank","CCA3","Country/Territory","Capital","Continent","2022 Population","2020 Population","2015 Population","2010 Population","2000 Population","1990 Population","1980 Population","1970 Population","Area (km²)","Density (per km²)","Growth Rate","World Population Percentage"),
-       Meaning = c("Rank by Population","3 Digit Country/Territories Code","Name of the Country/Territories",
-"Name of the Capital","Name of the Continent","Population of the Country/Territories in the year 2022","Population of the Country/Territories in the year 2020","Population of the Country/Territories in the year 2015","Population of the Country/Territories in the year 2010","Population of the Country/Territories in the year 2000","Population of the Country/Territories in the year 1980","Population of the Country/Territories in the year 1970","Area size of the Country/Territories in square kilometer","Population Density per square kilometer","Population Growth Rate by Country/Territories","The population percentage by each Country/Territories"))%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+       
+       Meaning = c("Rank by Population",
+                   "3 Digit Country/Territories Code"
+                   ,"Name of the Country/Territories",
+"Name of the Capital"
+,"Name of the Continent",
+"Population of the Country/Territories in the year 2022"
+,"Population of the Country/Territories in the year 2020"
+,"Population of the Country/Territories in the year 2015"
+,"Population of the Country/Territories in the year 2010"
+,"Population of the Country/Territories in the year 2000"
+,"Population of the Country/Territories in the year 1990"
+,"Population of the Country/Territories in the year 1980"
+,"Population of the Country/Territories in the year 1970","Area size of the Country/Territories in square kilometer","Population Density per square kilometer","Population Growth Rate by Country/Territories","The population percentage by each Country/Territories"))%>%
+   kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 Source : <https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset>
 
-## 2.1.6  **GDP By Country 1999 - 2022**
+## 2.1.6 **GDP By Country 1999 - 2022**
 
-Ex :
+Ex : no data for 2011
 
 ```{r GDP By Country 1999 - 2022}
 tibble(Variables = c("Country","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022"),
-       Meaning = c("Name of the country","population in 1999","Population in 1999",
-"Population in 2000","Population in 2001","Population in 2002","Population in 2003","Population in 2004","Population in 2005","Population in 2006","Population in 2007","Population in 2008","Population in 2009","Population in 2010","Population in 2011","Population in 2012","Population in 2013","Population in 2014","Population in 2015","Population in 2016","Population in 2017","Population in 2018","Population in 2019","Population in 2020","Population in 2021","Population in 2022"))%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+       Meaning = c("Name of the country","Population in 1999",
+"Population in 2000","Population in 2001","Population in 2002","Population in 2003","Population in 2004","Population in 2005","Population in 2006","Population in 2007","Population in 2008","Population in 2009","Population in 2010","Population in 2012","Population in 2013","Population in 2014","Population in 2015","Population in 2016","Population in 2017","Population in 2018","Population in 2019","Population in 2020","Population in 2021","Population in 2022"))%>%
+   kableExtra::kbl()%>%
+   kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")
+ 
 ```
 
 Source : <https://www.kaggle.com/code/alejopaullier/gdp-by-country-1999-2022>
 
-## 2.1.7  **Revenue of the Big Five soccer leagues in Europe from 2012/13 to 2021/22, with a forecast to 2023/24, by league**
+## 2.1.7 **Revenue of the Big Five soccer leagues in Europe from 2012/13 to 2021/22, with a forecast to 2023/24, by league**
 
 Ex : Dataset done from a webpage on statista that forecasts the revenue of the five biggest leagues from 2012 to 2022.
 
 ```{r Revenue of the Big Five soccer}
 tibble(Variables = c("Date","Bundesliga","LaLiga","SerieA","Ligue1","Premierleague"),
        Meaning = c("Date","revenue Bundesliga","revenue La Liga","revenue Serie A","revenue Ligue 1","revenue Premier league"))%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+   kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 Source : <https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/>
@@ -277,10 +294,10 @@ Ex : Dataset made from scratches from Statista to create our own db
 ```{r broadcasting}
 tibble(Variables = c("country","revenue"),
        Meaning = c("country","revenue calculated in mio"))%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+   kableExtra::kbl()%>%
+ kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 Source : <https://www.statista.com/statistics/627306/broadcasting-big-five-european-football-league-revenues/>
@@ -292,10 +309,10 @@ Ex :
 ```{r Number of soccer players }
 tibble(Variables = c("country","number"),
        Meaning = c("country of origin","Number of players of that origin"))%>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+   kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 Source : <https://www.statista.com/statistics/1080755/foreign-players-european-soccer-nation/>
@@ -325,10 +342,10 @@ Problems and solutions :
 ```{r Ballon dor winners clean}
 tibble(Variables = c("Year","Player","Country","Team","Age","Height","Weight","PreferredFoot","PreferredPositions"),
 Meaning = c("Birthdate of the player","Name of the player","Country of origin of the player ","Team of the player","Age of the player","Height of the player","Weight of the player","Preferred foot of the player","Preferred posiiton of the player")) %>%
-   kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+   kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 ## 2.2.2 Data of players clean
@@ -345,22 +362,22 @@ Example :
 
 ```{r Data of players clean}
 tibble(Variables = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "Mp", "Min", "Goals", "SoT%", "G/Sh", "ShoDist", "PasTotAtt","PasTotCmp%", "Assists","PPA","CrsPA","SCA","GCA","GcaDrib","Press%","DriAtt","DriSucc%","Fld","AERwon%","Height","Weight"), Meaning = c("Rank of the player","Player's name","Player's nation","Position","Squad's name","League that squad occupies","Year of birth","Matches played","Minutes played","Goals scored or allowed","Shots on target percentage (Does not include penalty kicks)","Goals per shot","Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)","Passes attempted","Pass completion percentage","Assists","Completed passes into the 18-yard box","Completed crosses into the 18-yard box","Shot-creating actions","Goal-creating actions","Successful dribbles that lead to a goal"," Percentage of time the squad gained possession withing five seconds of applying pressure","Dribbles attempted","Percentage of dribbles completed successfully","Fouls drawn","Percentage of aerials won","Height of the player","Weight of the player"))%>%
-  kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+  kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
-## 2.2.3 Data Clubs and others clean 
+## 2.2.3 Data Clubs and others clean
 
 ex :
 
 ```{r data clubs}
 tibble(Variables = c(	"Player",	"Nation",	"GDP",	"Population",	" Pro Players ",	"Comp"	,"Revenue Comp/league",	"TV Rights Comp",	"Squad",	"TV Rights Squad",	"Squad mv",	"SShirts Squad"), Meaning = c("Name of player","Nationality of player","GDP of Nation","ation's Population","Registered Pro Players by Nation","competition's name","Revenue of competition/league","revenue of tv rights by comp/league","Squad's name","revenue of TV Rights Squad","Squad market value","Sponsorship Shirts Squad"))%>%
-  kbl()%>%
-  kable_styling(position = "center")%>%
-  column_spec(1:2, color = "black")%>%
-row_spec(0, background = "black")
+  kableExtra::kbl()%>%
+  kableExtra::kable_styling(position = "center")%>%
+  kableExtra::column_spec(1:2, color = "black")%>%
+
 ```
 
 -   Spotting mistakes and missing data (could be part of EDA too)
