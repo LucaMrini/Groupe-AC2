@@ -1,4 +1,0 @@
-"0","tibble(Variables = c(	""Player"",	""Nation"",	""GDP"",	""Population"",	"" Pro Players "",	""Comp""	,""Revenue Comp/league"",	""TV Rights Comp"",	""Squad"",	""TV Rights Squad"",	""Squad mv"",	""SShirts Squad""), Meaning = c(""Name of player"",""Nationality of player"",""GDP of Nation"",""ation's Population"",""Registered Pro Players by Nation"",""competition's name"",""Revenue of competition/league"",""revenue of tv rights by comp/league"",""Squad's name"",""revenue of TV Rights Squad"",""Squad market value"",""Sponsorship Shirts Squad""))%>%"
-"0","  kableExtra::kbl()%>%"
-"0","  kableExtra::kable_styling(position = ""center"")%>%"
-"0","  kableExtra::column_spec(1:2, color = ""black"")"
