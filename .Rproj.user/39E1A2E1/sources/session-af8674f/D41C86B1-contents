@@ -377,23 +377,23 @@ Source : <https://www.statista.com/statistics/1080755/foreign-players-european-s
 
 ## 2.2.1 Ballon d'or winners clean
 
-Explanations/steps :
+Now, it's time to clean up the Ballon d'Or database. This was less difficult than the previous database, although it still required some work. The *dplyr* and *readr* libraries were used during this data wrangling exercise. First, we needed to filter our database to keep only the winners from the last 20 years. This choice was made to observe the evolution of 21st-century football. It's important to note that there was no Ballon d'Or awarded in 2020, hence its absence. To do this, nothing was more efficient than using a *filter()* function.
 
-At first we used dplyr to filter the years from 2012 to 2022, keeping the last 20 Ballon d'Or winners (there was none in 2020) to create a list with only the winners, we renamed Luka Modrić because his name didn't register because of the "ć".
+Next, we encountered a naming issue with a certain player. For some reason, Luka Modrić was listed as 'Croatia Luka Modric' so it was necessary to rename him using the *mutate()* function in conjunction with *ifelse()*.
 
-Next, we utilized dplyr to update the variable in the "Player" column we did load a different database *"precision"* to later create columns and variables, then in order to have a common column for adding variables later we load a new database *"precision"*.
+Now, we could start adding new columns that would be useful for the project's analysis. We aimed to add the following columns: **Age, Height, Weight, PreferredFoot, and PreferredPositions**.
 
-We integrated a third databse `precision` to fill in the last NA values. We renamed the column "Player" as "Fullname" to ensure it has the same column names as those we aim to extract. Add missing columns such as Age, Height, and Weight by joining the databases.
+To achieve this, we needed other databases to join the missing columns. We chose FIFA05 and FIFA21 databases because the oldest winners are not present in the most modern game. To maximize our chances of having the necessary variables, we opted for two databases. To join two databases, we needed a common key. The **Player** column was the most suitable, so we aligned this name in the other databases using the *rename()* function. Having a common key allowed us to merge the databases using the *left_join()* function. However, this resulted in numerous unnecessary columns in our database. Using the *select()* function, we retained only the necessary columns. This process will be repeated while writing the code.
 
-Now, we used dplyr::left_join to join the data frames using the "Player" column as a common key, we filled in the NAs with values from the third database and kept only the columns of interest.
+New challenges arose. For the sake of our analysis, we needed new columns. Firstly, an **Age** column. We now had the birth date and wanted the age at the time of winning. As some players won multiple times, they needed different ages for each success. Therefore, retrieving age from other databases wasn't feasible; we had to do it ourselves. We used the *sub()* function to extract the birth year and then, with *mutate()*, created the **Age** column by subtracting the birth year from the Ballon d'Or's year.
 
-We calculated the age from the birth date and utilized the sub function to extract the year.
+Next, to replace missing values in our columns, we used a combination of *\$* and *ifelse(is.na())* functions. *\$* was used to select the database and column we wanted to work on, while the latter function replaced missing values. Consequently, our columns were filled with values from the two external databases.
 
-We removed the "BirthDate" column,created the Age column ,replaced missing values in "Height" with values from "height" and did the same for other columns.
+However, we encountered an issue with the player **Kaka**, who had missing values for some columns. As he was the only player with this problem, we manually created a *Kaka_values \<- c()* containing the different characteristics and used this in an *ifelse()* function to replace the missing values.
 
-Afterward, we kept only the columns of interest and removed NAs from Age, since values are only missing for the player Kaka, ifelse was used to replace them for him only . Lastly we standardized and reorganized the columns.
+Before finishing and selecting only the useful columns, we needed to standardize the **PreferredFoot** and **PreferredPositions** columns. **PreferredFoot** sometimes had values like *R* instead of *Right*, and **PreferredPositions** had '-' instead of '/'. The *ifelse()* and *gsub()* functions were instrumental in this process.
 
-Problems and solutions :
+Now, the Ballon d'Or database is cleaned up with the columns we intend to use for the analysis ahead.
 
 ```{r Ballon dor winners clean}
 tibble(Variables = c("Year","Player","Country","Team","Age","Height","Weight","PreferredFoot","PreferredPositions"),
@@ -406,15 +406,33 @@ Meaning = c("Birthdate of the player","Name of the player","Country of origin of
 
 ## 2.2.2 Data of players clean
 
-Explanations : The basis of this data set is the "football player stats 2021-2022" one.
+Cleaning up the database of player performances and statistics was a very complex task. Several types of problem arose, and we had to make choices and take initiatives for the rest of our analysis.
 
-From there we first selected only the players that played at least 9 matches with at least 180 minutes, then we chose only the player in the forward position by selecting position starting by "F" for forward. Then we encountered a problem with players that had unique characters in their name like "ž" or "ð" so we integrated them by hand .
+The *dplyr*, *readr, stringr, tidyr and lubridate* libraries were used during this data wrangling exercise.
 
-Then we subsetted the data base selecting only the data of interest and adding the data weight and height by renaming, selecting and in the end left_join this subset. Finally we Removed the Na with the drop_na function.
+Firstly, when we downloaded our database, a major problem appeared. As soon as a player or team name contained a special character such as an acute accent, the accent changed to **?** and we realized that we had an encoding problem. To overcome this problem, we tested different encoding, in particular *'UTF-8'*, and others *'ISO'*, but the problem didn't go away. In fact, some names ended up with the wrong accent. Nevertheless, we found that the *'ISO-8859-1'* encoding was the most suitable, leaving us with a problem with Slavic and ex-Yugoslav family names in particular. We therefore tried to create a list of players with the remaining encoding problem.
 
-Problems : At first the special characters appeared as a diamond with a ? inside, we tried different types of encoding like UTF-8 or latin1 but the one that worked was "ISO-8859-1". Most of the characters appeared but some still didn't so we added them by hand since there were only 10.
+Understanding that special characters were indeed very special for these players, we took the initiative of manually renaming certain players such as *"Edin Džeko"*, using the *sub()* function, and then using the *gsub()* function, we replaced the last **?** with the letter **ć**, which was generally the letter most present in names with this problem. However, for some reason, the players *"Dušan Vlahović"* and *"Nikola Vlašić"* had spaces instead of the letter **"š"**, so we had to use another method to rename them. We used the *ifelse()* function, and as it wasn't possible to rename them using the basic written name, we had to use another common key: **Rk**.
 
-Example :
+It was important first to explain how we renamed our players and teams in the first place, as this was a major problem. However, before beginning the steps above, we first sorted the database a little. First of all, we had duplicate players because, as our database covers an entire season, it's quite normal to have transfers in mid-season, which explains the presence of duplicate players with different characteristics such as the club. The *distinct()* function allows us to remove duplicates.
+
+Next, we had to filter the database for various reasons. For the rest of our analysis, certain columns will be important, such as the **Goals** column. However, when we were still getting to know our database, we noticed that this column produced some surprising results. In fact, this column represents the number of goals per 90 minutes, but some players had crazy statistics. *Pablo Sarabia*, for example, scored 5 goals every 90 minutes. The problem was that *Sarabia* hadn't played many minutes (22). We therefore realized that players who had been effective but had played few minutes would have disproportionately high statistics, because their statistics would then be weighted against the 90 minutes that our database covers.
+
+So, using the *filter()* function, we took the initiative of only keeping players who had played at least 9 matches **(MP \>= 9)** and who had played at least 405 minutes **(Min \>= 405)**. This choice was made because we assumed that our players had to have played at least half the matches in half a season, because as we said, some players were transferred during the middle of the season. Moreover, in terms of minutes, we wanted them to have played at least one half of the 9 matches they played (45 minutes), and by multiplying that by the number of matches, we arrived at our figures. Thus, we only want to keep the attacking players, so those whose positions begin with the letter **'F'** for Forward.
+
+Now that the database has been filtered, we are missing two columns for the rest of our project: **Height** and **Weight**. To do this, we decided to take a database from the FIFA21 game, the year of our statistics, which had the missing characteristics. However, here too we encountered a number of problems.
+
+Firstly, we needed a common key to join the two databases. To do this, *rename()* allowed us to rename **Name** to **Player** and then, thanks to *left_join()*, the two databases were joined. Now we needed to see which players didn't have values for **Height** and **Weight**, so we created a *height_na* list using *filter(is.na())*. So 85 players had missing values. For a start, we could have players who simply didn't have the same spelling, for example *Sehrou/Serhou Guirassy* depending on the database. Then there was the fact that the FIFA21 database had full names, meaning that some players had their 2nd and 3rd first names included, something that was not in our database. Finally, there were some players who simply didn't appear in the game.
+
+To overcome these problems, we tried various solutions. The one we kept was to separate the **Player** column into **Surname** and **Name**, using *separate()*, in order to be able to search and fill in via the **Name** common key. The problem with this solution was that we now had duplicates that we had to remove. This solution enabled us to reduce the number of missing values to 50.
+
+A final attempt was to use several common keys at the same time. To do this, we needed the year of birth and the team in which the player plays. Once we had made sure we had these common keys, a new *left_join()* with a *by = c("Born", "Squad")* inside was used, and we could try to fill in the missing NAs. This choice of common keys was made on the assumption that if we only had strikers, it was quite possible that the strikers in the same team would differ in age, which would help us to maximise our chances of replacements. That's how we got down to 38 values.
+
+However, we realized that it would be too complex to find the last missing values. So we stopped and looked at our *height_na* and realized that most of these players via the **Goals** column would not interest us for the rest of our analysis. We therefore took the initiative of manually replacing the **Height** and **Weight** of the best player from the **Goals** column for each of the 5 leagues, using *mutate()*, in order to keep players who might be of interest to us for the analysis. For the rest of the players, we decided to remove them from our database using *filter(!is.na())*.
+
+It was now necessary to re-join **Surname** and **Name** as **Player** to avoid NAs filling up in one of the columns because of Brazilian players, for example, who are only called by their name.
+
+Before concluding, you should know that in our analysis we want to compare the statistical and physical trends between the different leagues. So, to finish with this database, we wanted to create 5 different databases in order to have the players in each league, and to do this we had to create *"comp_players"* using the *filter()* function. We now have the databases we need to approach the various remaining stages of this project.
 
 ```{r Data of players clean}
 tibble(Variables = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "Mp", "Min", "Goals", "SoT%", "G/Sh", "ShoDist", "PasTotAtt","PasTotCmp%", "Assists","PPA","CrsPA","SCA","GCA","GcaDrib","Press%","DriAtt","DriSucc%","Fld","AERwon%","Height","Weight"), Meaning = c("Rank of the player","Player's name","Player's nation","Position","Squad's name","League that squad occupies","Year of birth","Matches played","Minutes played","Goals scored or allowed","Shots on target percentage (Does not include penalty kicks)","Goals per shot","Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)","Passes attempted","Pass completion percentage","Assists","Completed passes into the 18-yard box","Completed crosses into the 18-yard box","Shot-creating actions","Goal-creating actions","Successful dribbles that lead to a goal"," Percentage of time the squad gained possession withing five seconds of applying pressure","Dribbles attempted","Percentage of dribbles completed successfully","Fouls drawn","Percentage of aerials won","Height of the player","Weight of the player"))%>%
@@ -429,7 +447,7 @@ tibble(Variables = c("Rk","Player","Nation", "Pos", "Squad", "Comp","Born", "Mp"
 ex :
 
 ```{r data clubs}
-tibble(Variables = c(	"Player",	"Nation",	"GDP",	"Population",	" Pro Players ",	"Comp"	,"Revenue Comp/league",	"TV Rights Comp",	"Squad",	"TV Rights Squad",	"Squad mv",	"SShirts Squad"), Meaning = c("Name of player","Nationality of player","GDP of Nation","ation's Population","Registered Pro Players by Nation","competition's name","Revenue of competition/league","revenue of tv rights by comp/league","Squad's name","revenue of TV Rights Squad","Squad market value","Sponsorship Shirts Squad"))%>%
+tibble(Variables = c(	"Player",	"Nation",	"GDP",	"Population",	" Pro Players ",	"Comp"	,"Revenue Comp/league",	"TV Rights Comp",	"Squad"), Meaning = c("Name of player","Nationality of player","GDP of Nation","ation's Population","Registered Pro Players by Nation","competition's name","Revenue of competition/league","revenue of tv rights by comp/league","Squad's name"))%>%
   kableExtra::kbl()%>%
   kableExtra::kable_styling(position = "center")%>%
   kableExtra::column_spec(1:2, color = "black")
