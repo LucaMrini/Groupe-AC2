@@ -55,10 +55,8 @@ ul.task-list li input[type="checkbox"] {
 <h1>2.1 Raw datasets</h1>
 <section id="kaggle-football-player-stats-2021-2022" class="level2">
 <h2 class="anchored" data-anchor-id="kaggle-football-player-stats-2021-2022">2.1.1 Kaggle : football player stats 2021-2022</h2>
-<p>Ex : This is the dataset where we get the majority of our information for our analysis</p>
-<p>--&gt; Basis for clean ds</p>
-<p>--&gt; we will use the data : ….</p>
-<p>--&gt;</p>
+<p>Ex : This is the dataset where we get the majority of our information for our analysis, it’s the basis of most of the other database and more importantly <em>data of players clean</em> : It contains the majority of useful data targeting the skill of players.</p>
+<p>As if, some of the names of the players aren’t recognized but we managed to fix it (more details on the data wrangling) .</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -651,8 +649,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="fifa.csv" class="level2">
 <h2 class="anchored" data-anchor-id="fifa.csv">2.1.2 Fifa.csv</h2>
-<p>Ex : Used to complete informations –&gt; height, weight</p>
-<p>--&gt; other offensive infos</p>
+<p>Ex : Used to complete information concerning height, weight of <em>data of players clean</em> . The video game Fifa contains reliable and up to date data concerning stats or information concerning football players.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -821,7 +818,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="ballon-dor-golden-ball-winners" class="level2">
 <h2 class="anchored" data-anchor-id="ballon-dor-golden-ball-winners">2.1.3 <strong>Ballon D’or-Golden Ball Winners</strong></h2>
-<p>Ex : From this data set we extracted some of the info for …..</p>
+<p>Ex : From this data set we extracted most of the information concerning the clean database <em>Ballon d’or winners clean</em></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -870,7 +867,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="fifa-players-stats" class="level2">
 <h2 class="anchored" data-anchor-id="fifa-players-stats">2.1.4 <strong>FIFA Players &amp; Stats</strong></h2>
-<p>Ex :</p>
+<p>Ex : Used to complete information concerning height, weight of <em>data of players clean</em> that weren’t on the <em>Fifa.csv</em> database.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -1131,7 +1128,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="world-population-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="world-population-dataset">2.1.5 <strong>World Population Dataset</strong></h2>
-<p>Ex :</p>
+<p>Ex : This dataset contains the world population by country from 1960 until 2021 it will help us to analyze links between demography, gdp of a country and the skill of a forward player.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -1143,72 +1140,260 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">Rank</td>
-<td style="text-align: left; color: black !important;">Rank by Population</td>
+<td style="text-align: left; color: black !important;">Country Name</td>
+<td style="text-align: left; color: black !important;">Name of the country</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">CCA3</td>
-<td style="text-align: left; color: black !important;">3 Digit Country/Territories Code</td>
+<td style="text-align: left; color: black !important;">Country Code</td>
+<td style="text-align: left; color: black !important;">Country Code</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">Country/Territory</td>
-<td style="text-align: left; color: black !important;">Name of the Country/Territories</td>
+<td style="text-align: left; color: black !important;">1960</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1960</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">Capital</td>
-<td style="text-align: left; color: black !important;">Name of the Capital</td>
+<td style="text-align: left; color: black !important;">1961</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1961</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">Continent</td>
-<td style="text-align: left; color: black !important;">Name of the Continent</td>
+<td style="text-align: left; color: black !important;">1962</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1962</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">2022 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2022</td>
+<td style="text-align: left; color: black !important;">1963</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1963</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">2020 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2020</td>
+<td style="text-align: left; color: black !important;">1964</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1964</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">2015 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2015</td>
+<td style="text-align: left; color: black !important;">1965</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1965</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">2010 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2010</td>
+<td style="text-align: left; color: black !important;">1966</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1966</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">2000 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2000</td>
+<td style="text-align: left; color: black !important;">1967</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1967</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">1990 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 1990</td>
+<td style="text-align: left; color: black !important;">1968</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1968</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">1980 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 1980</td>
+<td style="text-align: left; color: black !important;">1969</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1969</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">1970 Population</td>
-<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 1970</td>
+<td style="text-align: left; color: black !important;">1970</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1970</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">Area (km²)</td>
-<td style="text-align: left; color: black !important;">Area size of the Country/Territories in square kilometer</td>
+<td style="text-align: left; color: black !important;">1971</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1971</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">Density (per km²)</td>
-<td style="text-align: left; color: black !important;">Population Density per square kilometer</td>
+<td style="text-align: left; color: black !important;">1972</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1972</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; color: black !important;">Growth Rate</td>
-<td style="text-align: left; color: black !important;">Population Growth Rate by Country/Territories</td>
+<td style="text-align: left; color: black !important;">1973</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1973</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; color: black !important;">World Population Percentage</td>
-<td style="text-align: left; color: black !important;">The population percentage by each Country/Territories</td>
+<td style="text-align: left; color: black !important;">1974</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1974</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1975</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1975</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1976</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1976</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1977</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1977</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1978</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1978</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1979</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1979</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1980</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1980</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1981</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1981</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1982</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1982</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1983</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1983</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1984</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1984</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1985</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1985</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1986</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1986</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1987</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1987</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1988</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1988</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1989</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1989</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1990</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1990</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1991</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1991</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1992</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1992</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1993</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1993</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1994</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1994</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1995</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1995</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1996</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1996</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1997</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1997</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1998</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1998</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1999</td>
+<td style="text-align: left; color: black !important;">Population of Country in 1999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2000</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2001</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2002</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2003</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2004</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2005</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2006</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2006</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2007</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2008</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2009</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2010</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2011</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2012</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2012</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2013</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2013</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2014</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2014</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2015</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2016</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2016</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2017</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2017</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2018</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2018</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2019</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2019</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2020</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2021</td>
+<td style="text-align: left; color: black !important;">Population of Country in 2021</td>
 </tr>
 </tbody>
 </table>
@@ -1216,7 +1401,7 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 </div>
-<p>Source : <a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset" class="uri">https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset</a></p>
+<p>Source : <a href="https://www.kaggle.com/datasets/ryanjt/world-population-2022" class="uri">https://www.kaggle.com/datasets/ryanjt/world-population-2022</a></p>
 </section>
 <section id="gdp-by-country-1999---2022" class="level2">
 <h2 class="anchored" data-anchor-id="gdp-by-country-1999---2022">2.1.6 <strong>GDP By Country 1999 - 2022</strong></h2>
@@ -1416,7 +1601,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="ballon-dor-winners-clean">2.2.1 Ballon d’or winners clean</h2>
 <p>Now, it’s time to clean up the Ballon d’Or database. This was less difficult than the previous database, although it still required some work. The <em><code>dplyr</code></em> and <em><code>readr</code></em> libraries were used during this data wrangling exercise. First, we needed to filter our database to keep only the winners from the last 20 years. This choice was made to observe the evolution of 21st-century football. It’s important to note that there was no Ballon d’Or awarded in 2020, hence its absence. To do this, nothing was more efficient than using a <em><code>filter()</code></em> function.</p>
 <p>Next, we encountered a naming issue with a certain player. For some reason, Luka Modrić was listed as ‘Croatia Luka Modric’ so it was necessary to rename him using the <em><code>mutate()</code></em> function in conjunction with <em><code>ifelse()</code></em>.</p>
-<p>Now, we could start adding new columns that would be useful for the project’s analysis. We aimed to add the following columns: <strong>Age, Height, Weight, PreferredFoot, and PreferredPositions</strong>.</p>
+<p>Now, we could start adding new columns that would be useful for the project’s analysis. We aimed to add the following columns: <strong>Age, Height, Weight, Preferred Foot, and Preferred Positions</strong>.</p>
 <p>To achieve this, we needed other databases to join the missing columns. We chose FIFA05 and FIFA21 databases because the oldest winners are not present in the most modern game. To maximize our chances of having the necessary variables, we opted for two databases. To join two databases, we needed a common key. The <strong>Player</strong> column was the most suitable, so we aligned this name in the other databases using the <em><code>rename()</code></em> function. Having a common key allowed us to merge the databases using the <em><code>left_join()</code></em> function. However, this resulted in numerous unnecessary columns in our database. Using the <em><code>select()</code></em> function, we retained only the necessary columns. This process will be repeated while writing the code.</p>
 <p>New challenges arose. For the sake of our analysis, we needed new columns. Firstly, an <strong>Age</strong> column. We now had the birth date and wanted the age at the time of winning. As some players won multiple times, they needed different ages for each success. Therefore, retrieving age from other databases wasn’t feasible; we had to do it ourselves. We used the <em><code>sub()</code></em> function to extract the birth year and then, with <em><code>mutate()</code></em><code>,</code> created the <strong>Age</strong> column by subtracting the birth year from the Ballon d’Or’s year.</p>
 <p>Next, to replace missing values in our columns, we used a combination of <em>$</em> and <em><code>ifelse(is.na())</code></em> functions. <em>$</em> was used to select the database and column we wanted to work on, while the latter function replaced missing values. Consequently, our columns were filled with values from the two external databases.</p>
@@ -1492,8 +1677,9 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="Rplot06.png" class="img-fluid" width="348"></p>
 <p>A final attempt was to use several common keys at the same time. To do this, we needed the year of birth and the team in which the player plays. Once we had made sure we had these common keys, a new <em><code>left_join()</code></em> with a <em>by = c(“Born”, “Squad”)</em> inside was used, and we could try to fill in the missing NAs. This choice of common keys was made on the assumption that if we only had strikers, it was quite possible that the strikers in the same team would differ in age, which would help us to maximize our chances of replacements. That’s how we got down to 38 values.</p>
 <p>However, we realized that it would be too complex to find the last missing values. So we stopped and looked at our <em>height_na</em> and realized that most of these players via the <strong>Goals</strong> column would not interest us for the rest of our analysis. We therefore took the initiative of manually replacing the <strong>Height</strong> and <strong>Weight</strong> of the best player from the <strong>Goals</strong> column for each of the 5 leagues, using <em>mutate()</em>, in order to keep players who might be of interest to us for the analysis. For the rest of the players, we decided to remove them from our database using <em><code>filter(!is.na())</code></em><code>.</code></p>
-<p>It was now necessary to re-join <strong>Surname</strong> and <strong>Name</strong> as <strong>Player</strong> to avoid NAs filling up in one of the columns because of Brazilian players, for example, who are only called by their name.</p>
-<p>Before concluding, you should know that in our analysis we want to compare the statistical and physical trends between the different leagues. So, to finish with this database, we wanted to create 5 different databases in order to have the players in each league, and to do this we had to create <em>“comp_players”</em> using the <em><code>filter()</code></em> function. We now have the databases we need to approach the various remaining stages of this project.</p>
+<p>It was now necessary to re-join <strong>Surname</strong> and <strong>Name</strong> as <strong>Player</strong> to avoid NAs filling up in one of the columns because of Brazilian players, for example, who are only called by their name. To make sure that all data like “goals”,“assists”, are easy to compare we had to normalize them around 100% of the best performance of the category.</p>
+<p>Before concluding, you should know that in our analysis we want to compare the statistical and physical trends between the different leagues. So, to finish with this database, we wanted to create 5 different databases in order to separate the players in each league, and to do this we had to create <em>“comp_players”</em> using the <em><code>filter()</code></em> function, we did this separation twice : One with the normalized data and the other with the raw datas.</p>
+<p>We now have the databases we need to approach the various remaining stages of this project.</p>
 <p><img src="Rplot07.png" class="img-fluid" width="299"></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">

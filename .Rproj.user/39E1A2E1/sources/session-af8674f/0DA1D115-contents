@@ -141,7 +141,7 @@ ggplot(two_best, aes(x = Height, y = Weight, color = Player)) +
 
 ## 3.2 EDA Skillc
 
-```{r, EDA Skillc,echo=TRUE}}
+```{r EDA Skillc,echo=TRUE}}
 # Exploratory data analysis
 
 data1 <- read_csv("data/data1.csv")
