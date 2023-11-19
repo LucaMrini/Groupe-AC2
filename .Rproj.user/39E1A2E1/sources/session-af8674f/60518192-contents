@@ -1,0 +1,38 @@
+# Your list of abbreviations
+Nation <- c("ALB", "ALG", "ANG", "ARG", "AUT", "BEL", "BEN", "BIH", "BRA", "CAN", "CHA", "CHI", "CHN", "CMR", "COL", "CIV", "COD", "CRO", "CZE", "DEN", "EGY", "ENG", "ESP", "FIN", "FRA", "GAB", "GAM", "GHA", "GER", "GUI", "HON", "IRL", "ISR", "ISL", "ITA", "JAM", "JPN", "KOR", "KVX", "LUX", "MAR", "MEX", "MKD", "MLI", "MNE", "MTQ", "NGA", "NED", "NOR", "NZL", "PAR", "PHI", "POL", "POR", "REU", "RSA", "RUS", "SCO", "SEN", "SLE", "SRB", "SUI", "SUR", "SVN", "SWE", "TUN", "TUR", "UKR", "URU", "USA", "UZB", "VEN", "ZAM", "ZIM")
+
+# Corresponding country names for abbreviations
+country_names <- c("Albania", "Algeria", "Angola", "Argentina", "Austria", "Belgium", "Benin", "Bosnia and Herzegovina", "Brazil", "Canada", "Chad", "Chile", "China", "Cameroon", "Colombia", "Ivory Coast", "Democratic Republic of the Congo", "Croatia", "Czech Republic", "Denmark", "Egypt", "England", "Spain", "Finland", "France", "Gabon", "Gambia", "Ghana", "Germany", "Guinea", "Honduras", "Ireland", "Israel", "Iceland", "Italy", "Jamaica", "Japan", "South Korea", "Kosovo", "Luxembourg", "Morocco", "Mexico", "North Macedonia", "Mali", "Montenegro", "Martinique", "Nigeria", "Netherlands", "Norway", "New Zealand", "Paraguay", "Philippines", "Poland", "Portugal", "Réunion", "South Africa", "Russia", "Scotland", "Senegal", "Sierra Leone", "Serbia", "Switzerland", "Suriname", "Slovenia", "Sweden", "Tunisia", "Turkey", "Ukraine", "Uruguay", "United States of America", "Uzbekistan", "Venezuela", "Zambia", "Zimbabwe")
+
+# Create a data frame matching abbreviations with country names
+abbreviation_mapping <- data.frame(Nation = Nation, Country = country_names)
+
+# Remove duplicates if any
+abbreviation_mapping <- unique(abbreviation_mapping)
+
+# Print the resulting mapping
+print(abbreviation_mapping)
+
+# Let's assume 'your_dataset' has a column named 'Abbreviation' containing the abbreviations
+
+# Merge your_dataset with the abbreviation_mapping based on the 'Abbreviation' column
+result_dataset <- merge(data1, abbreviation_mapping, by = "Nation", all.x = TRUE)
+result_dataset <- result_dataset[, c(1, ncol(result_dataset), 2:(ncol(result_dataset) - 1))]
+plot_missing(result_dataset)
+
+unmatched_rows <- result_dataset[is.na(result_dataset$Country), ]
+
+
+
+# Display or work with the unmatched rows
+print(unmatched_rows$Nation)
+
+world <- world %>% 
+rename(Country=Country.Name)
+
+specific_cols <- c(1,2,4,5,7,8)
+result_subset <- result_dataset[, specific_cols]
+specific_colss <- c(1,2,38:64)
+world_subset <- world[, specific_colss]
+world_subset<- world_subset %>% 
+  rename(Country=Country.Name)

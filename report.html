@@ -1,0 +1,2864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nedim Mujcic,Deborah-Awuni Maggini,Luca Marini">
+<meta name="dcterms.date" content="2023-11-19">
+
+<title>Factors influencing the performance of football players - Analysis in a key position</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="report_files/libs/quarto-html/quarto.js"></script>
+<script src="report_files/libs/quarto-html/popper.min.js"></script>
+<script src="report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="report_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="report_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Factors influencing the performance of football players - Analysis in a key position</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nedim Mujcic,Deborah-Awuni Maggini,Luca Marini </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 19, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>1 Introduction</h1>
+<section id="overview-and-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="overview-and-motivation">1.1 Overview and Motivation</h2>
+<p><font size="3"></font></p><font size="3">
+<p>This is a project analyzing the factors influencing the performance of football players in a key position. Here’s how it all began:</p>
+<p>The choice of sport, and football in particular, was a natural one. With football being the best-known and most practiced sport, it was not surprising that everyone in our group was at least a little interested in it. Moreover, one of our members has been passionate about the sport since childhood. Having played in clubs for over 10 years and watched a lot of matches every week, he thought it would be beneficial for a project of this scale to put his knowledge to good use in a subject that has always interested him thus combining passion with academic work: Data in the world of sport.</p>
+<p>Nowadays, data has taken on an enormous importance in this sport, allowing some of the more economically modest teams to maintain a certain level by picking interesting players in lower leagues and, of course, at a lower cost. There are many examples of this: Toulouse FC in France and Brentford FC in England to name but a few. The fact that you can use statistics to compensate for a lack of resources is such an interesting subject. Another inspiration for our subject comes from outside football. The presence of data in sport has also enabled the world of cinema to bring out “Moneyball”, starring Brad Pitt, showing how the Oakland Athletics baseball team managed to build a highly competitive team despite having more modest resources than the other big franchises, thanks to a method known as sabermetrics. The fact that we have a film that in some way demonstrates the process used to improve a team through statistics is a real plus, and has enabled us to ask ourselves the following question: what common characteristics do the best players in the striker’s position have, for example? The existence of websites like “fantasy football leagues” or sports betting sites, in a way, necessitates having databases of various statistics related to player performance, such as the number of shots on target, successful passes, and so on. Therefore, it is an advantage because we have access to a plethora of different databases containing various statistics, which alleviates some of the burden of searching for a sufficiently large database for this project.</p>
+</font><p><font size="3"></font></p>
+</section>
+<section id="project-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="project-objectives">1.2 Project Objectives</h2>
+<p><font size="3"></font></p><font size="3">
+<p>Working on player performance statistics, it is interesting to see which statistics are important for different positions and especially between different leagues. From experience, we can say that, for example, English football is much more physical than the German league. Does it necessarily mean that our striker needs to be over 1.90 meters tall and have a certain weight to score a lot of goals? Additionally, of course, each team plays with a different system and strategy. Nevertheless, could we extract meaningful statistics within a position that in some way show a need to excel in a specific statistic? These kinds of questions set our goals and also allow us to put ourselves in the shoes of a data analyst within a club, demonstrating the complexity of the work but, more importantly, the ability to study the process by which a player is recruited based on their statistics and whether there is a way to predict their individual success and, beyond that, their importance in the collective success of their team. We decided to focus on a key position (striker), and on the characteristics chosen to be ‘limited’ because, as an outsider, we obviously don’t have all the possible factors influencing performance that a real data analyst would have, so this allows us to imagine an opening for future work due to the enormity of the resources in this area and it obviously shows the complexity of such a profession.</p>
+<p>Thus, the objective would be to identify the most significant statistics for a key position, allowing us to visualize the crucial skills required to maximize a player’s potential success during a transfer. The advantage would then be to find a way to predict this success.</p>
+</font><p><font size="3"></font></p>
+</section>
+<section id="research-questions" class="level2">
+<h2 class="anchored" data-anchor-id="research-questions">1.3 Research questions</h2>
+<p><font size="3"></font></p><font size="3">
+<p>On an individual performance level:</p>
+<p>Among the top goal scorers in the top 5 leagues, what are the common factors and statistics that are significant, and how it evolves depending on the championship?</p>
+<p>What are the main physical factors influencing the goals per short on target (90’)?</p>
+<p>What specific statistics consistently distinguish Ballon d’Or winners from other top players, and how have these trends evolved over the past decades?</p>
+<p>On an economic level:</p>
+<p>How different cultural and economic indicators, such as a footballer’s nationality, his country’s GDP or his club revenue influence his individual performance and the overall performance of his team?</p>
+</font><p><font size="3"></font></p>
+</section>
+</section>
+<section id="data" class="level1">
+<h1>2 Data</h1>
+</section>
+<section id="raw-datasets" class="level1">
+<h1>2.1 Raw datasets</h1>
+<section id="kaggle-football-player-stats-2021-2022" class="level2">
+<h2 class="anchored" data-anchor-id="kaggle-football-player-stats-2021-2022">2.1.1 Kaggle : football player stats 2021-2022</h2>
+<p>Ex : This is the dataset where we get the majority of our information for our analysis</p>
+<p>--&gt; Basis for clean ds</p>
+<p>--&gt; we will use the data : ….</p>
+<p>--&gt;</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Rk</td>
+<td style="text-align: left; color: black !important;">Rank</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Player</td>
+<td style="text-align: left; color: black !important;">Player name</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Nation</td>
+<td style="text-align: left; color: black !important;">Player nation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Pos</td>
+<td style="text-align: left; color: black !important;">Position</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Squad</td>
+<td style="text-align: left; color: black !important;">Squad’s name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Comp</td>
+<td style="text-align: left; color: black !important;">League that squad occupies</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Age</td>
+<td style="text-align: left; color: black !important;">Player age</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Born</td>
+<td style="text-align: left; color: black !important;">Year of birth</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">MP</td>
+<td style="text-align: left; color: black !important;">Matches played</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Starts</td>
+<td style="text-align: left; color: black !important;">Matches started</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Min</td>
+<td style="text-align: left; color: black !important;">Minutes played</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">90s</td>
+<td style="text-align: left; color: black !important;">Minutes played divided by 90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Goals</td>
+<td style="text-align: left; color: black !important;">Goals scored or allowed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Shots</td>
+<td style="text-align: left; color: black !important;">Shots total (Does not include penalty kicks)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">SoT</td>
+<td style="text-align: left; color: black !important;">Shots on target (Does not include penalty kicks)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">SoT%</td>
+<td style="text-align: left; color: black !important;">Shots on target percentage (Does not include penalty kicks)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">G/Sh</td>
+<td style="text-align: left; color: black !important;">Goals per shot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">G/SoT</td>
+<td style="text-align: left; color: black !important;">Goals per shot on target (Does not include penalty kicks)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ShoDist</td>
+<td style="text-align: left; color: black !important;">Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">ShoFK</td>
+<td style="text-align: left; color: black !important;">Shots from free kicks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ShoPK</td>
+<td style="text-align: left; color: black !important;">Penalty kicks made</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PKatt</td>
+<td style="text-align: left; color: black !important;">Penalty kicks attempted</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasTotCmp</td>
+<td style="text-align: left; color: black !important;">Passes completed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasTotAtt</td>
+<td style="text-align: left; color: black !important;">Passes attempted</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasTotCmp%</td>
+<td style="text-align: left; color: black !important;">Pass completion percentage</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasTotDist</td>
+<td style="text-align: left; color: black !important;">Total distance, in yards, that completed passes have traveled in any direction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasTotPrgDist</td>
+<td style="text-align: left; color: black !important;">Total distance, in yards, that completed passes have traveled towards the opponent goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasShoCmp</td>
+<td style="text-align: left; color: black !important;">Passes completed (Passes between 5 and 15 yards)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasShoAtt</td>
+<td style="text-align: left; color: black !important;">Passes attempted (Passes between 5 and 15 yards)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasShoCmp%</td>
+<td style="text-align: left; color: black !important;">Pass completion percentage (Passes between 5 and 15 yards)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasMedCmp</td>
+<td style="text-align: left; color: black !important;">Passes completed (Passes between 15 and 30 yards)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasMedAtt</td>
+<td style="text-align: left; color: black !important;">Passes attempted (Passes between 15 and 30 yards)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasMedCmp%</td>
+<td style="text-align: left; color: black !important;">Pass completion percentage (Passes between 15 and 30 yards)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasLonCmp</td>
+<td style="text-align: left; color: black !important;">Passes completed (Passes longer than 30 yards)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasLonAtt</td>
+<td style="text-align: left; color: black !important;">Passes attempted (Passes longer than 30 yards)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasLonCmp%</td>
+<td style="text-align: left; color: black !important;">Pass completion percentage (Passes longer than 30 yards)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Assists</td>
+<td style="text-align: left; color: black !important;">Assists</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasAss</td>
+<td style="text-align: left; color: black !important;">Passes that directly lead to a shot (assisted shots)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Pas3rd</td>
+<td style="text-align: left; color: black !important;">Completed passes that enter the 1/3 of the pitch closest to the goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PPA</td>
+<td style="text-align: left; color: black !important;">Completed passes into the 18-yard box</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">CrsPA</td>
+<td style="text-align: left; color: black !important;">Completed crosses into the 18-yard box</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasProg</td>
+<td style="text-align: left; color: black !important;">Completed passes that move the ball towards the opponent goal at least 10 yards from its furthest point in the last six passes, or any completed pass into the penalty area</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasAtt</td>
+<td style="text-align: left; color: black !important;">Passes attempted</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasLive</td>
+<td style="text-align: left; color: black !important;">Live-ball passes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasDead</td>
+<td style="text-align: left; color: black !important;">Dead-ball passes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasFK</td>
+<td style="text-align: left; color: black !important;">Passes attempted from free kicks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TB</td>
+<td style="text-align: left; color: black !important;">Completed pass sent between back defenders into open space</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasPress</td>
+<td style="text-align: left; color: black !important;">Passes made while under pressure from opponent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Sw</td>
+<td style="text-align: left; color: black !important;">Passes that travel more than 40 yards of the width of the pitch</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasCrs</td>
+<td style="text-align: left; color: black !important;">Crosses</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">CK</td>
+<td style="text-align: left; color: black !important;">Corner kicks</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CkIn</td>
+<td style="text-align: left; color: black !important;">Inswinging corner kicks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">CkOut</td>
+<td style="text-align: left; color: black !important;">Outswinging corner kicks</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CkStr</td>
+<td style="text-align: left; color: black !important;">Straight corner kicks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasGround</td>
+<td style="text-align: left; color: black !important;">Ground passes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasLow</td>
+<td style="text-align: left; color: black !important;">Passes that leave the ground, but stay below shoulder-level</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasHigh</td>
+<td style="text-align: left; color: black !important;">Passes that are above shoulder-level at the peak height</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PaswLeft</td>
+<td style="text-align: left; color: black !important;">Passes attempted using left foot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PaswRight</td>
+<td style="text-align: left; color: black !important;">Passes attempted using right foot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PaswHead</td>
+<td style="text-align: left; color: black !important;">Passes attempted using head</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TI</td>
+<td style="text-align: left; color: black !important;">Throw-Ins taken</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PaswOther</td>
+<td style="text-align: left; color: black !important;">Passes attempted using body parts other than the player head or feet</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasCmp</td>
+<td style="text-align: left; color: black !important;">Passes completed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasOff</td>
+<td style="text-align: left; color: black !important;">Offsides</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasOut</td>
+<td style="text-align: left; color: black !important;">Out of bounds</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasInt</td>
+<td style="text-align: left; color: black !important;">Intercepted</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasBlocks</td>
+<td style="text-align: left; color: black !important;">Blocked by the opponent who was standing in its path</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">SCA</td>
+<td style="text-align: left; color: black !important;">Shot-creating actions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ScaPassLive</td>
+<td style="text-align: left; color: black !important;">Completed live-ball passes that lead to a shot attempt</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">ScaPassDead</td>
+<td style="text-align: left; color: black !important;">Completed dead-ball passes that lead to a shot attempt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ScaDrib</td>
+<td style="text-align: left; color: black !important;">Successful dribbles that lead to a shot attempt</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">ScaSh</td>
+<td style="text-align: left; color: black !important;">Shots that lead to another shot attempt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ScaFld</td>
+<td style="text-align: left; color: black !important;">Fouls drawn that lead to a shot attempt</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">ScaDef</td>
+<td style="text-align: left; color: black !important;">Defensive actions that lead to a shot attempt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GCA</td>
+<td style="text-align: left; color: black !important;">Goal-creating actions</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GcaPassLive</td>
+<td style="text-align: left; color: black !important;">Completed live-ball passes that lead to a goal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GcaPassDead</td>
+<td style="text-align: left; color: black !important;">Completed dead-ball passes that lead to a goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GcaDrib</td>
+<td style="text-align: left; color: black !important;">Successful dribbles that lead to a goal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GcaSh</td>
+<td style="text-align: left; color: black !important;">Shots that lead to another goal-scoring shot</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GcaFld</td>
+<td style="text-align: left; color: black !important;">Fouls drawn that lead to a goal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GcaDef</td>
+<td style="text-align: left; color: black !important;">Defensive actions that lead to a goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Tkl</td>
+<td style="text-align: left; color: black !important;">Number of players tackled</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TklWon</td>
+<td style="text-align: left; color: black !important;">Tackles in which the tackler team won possession of the ball</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TklDef3rd</td>
+<td style="text-align: left; color: black !important;">Tackles in defensive 1/3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TklMid3rd</td>
+<td style="text-align: left; color: black !important;">Tackles in middle 1/3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TklAtt3rd</td>
+<td style="text-align: left; color: black !important;">Tackles in attacking 1/3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TklDri</td>
+<td style="text-align: left; color: black !important;">Number of dribblers tackled</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TlDriAtt</td>
+<td style="text-align: left; color: black !important;">Number of times dribbled past plus number of tackles</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TklDri%</td>
+<td style="text-align: left; color: black !important;">Percentage of dribblers tackled</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TklDriPast</td>
+<td style="text-align: left; color: black !important;">Number of times dribbled past by an opposing player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Press</td>
+<td style="text-align: left; color: black !important;">Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PresSucc</td>
+<td style="text-align: left; color: black !important;">Number of times the squad gained possession within five seconds of applying pressure</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Press%</td>
+<td style="text-align: left; color: black !important;">Percentage of time the squad gained possession within five seconds of applying pressure</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PresDef3rd</td>
+<td style="text-align: left; color: black !important;">Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the defensive 1/3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PresMid3rd</td>
+<td style="text-align: left; color: black !important;">Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the middle 1/3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PresAtt3rd</td>
+<td style="text-align: left; color: black !important;">Number of times applying pressure to opposing player who is receiving, carrying or releasing the ball, in the attacking 1/3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Blocks</td>
+<td style="text-align: left; color: black !important;">Number of times blocking the ball by standing in its path</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">BlkSh</td>
+<td style="text-align: left; color: black !important;">Number of times blocking a shot by standing in its path</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">BlkShSv</td>
+<td style="text-align: left; color: black !important;">Number of times blocking a shot that was on target, by standing in its path</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">BlkPass</td>
+<td style="text-align: left; color: black !important;">Number of times blocking a pass by standing in its path</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Int</td>
+<td style="text-align: left; color: black !important;">Interceptions</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Tkl+Int</td>
+<td style="text-align: left; color: black !important;">Number of players tackled plus number of interceptions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Clr</td>
+<td style="text-align: left; color: black !important;">Clearances</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Err</td>
+<td style="text-align: left; color: black !important;">Mistakes leading to an opponent shot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Touches</td>
+<td style="text-align: left; color: black !important;">Number of times a player touched the ball. Note: Receiving a pass, then dribbling, then sending a pass counts as one touch</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TouDefPen</td>
+<td style="text-align: left; color: black !important;">Touches in defensive penalty area</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TouDef3rd</td>
+<td style="text-align: left; color: black !important;">Touches in defensive 1/3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TouMid3rd</td>
+<td style="text-align: left; color: black !important;">Touches in middle 1/3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TouAtt3rd</td>
+<td style="text-align: left; color: black !important;">Touches in attacking 1/3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TouAttPen</td>
+<td style="text-align: left; color: black !important;">Touches in attacking penalty area</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">TouLive</td>
+<td style="text-align: left; color: black !important;">Live-ball touches. Does not include corner kicks, free kicks, throw-ins, kick-offs, goal kicks or penalty kicks.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">DriSucc</td>
+<td style="text-align: left; color: black !important;">Dribbles completed successfully</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">DriAtt</td>
+<td style="text-align: left; color: black !important;">Dribbles attempted</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">DriSucc%</td>
+<td style="text-align: left; color: black !important;">Percentage of dribbles completed successfully</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">DriPast</td>
+<td style="text-align: left; color: black !important;">Number of players dribbled past</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">DriMegs</td>
+<td style="text-align: left; color: black !important;">Number of times a player dribbled the ball through an opposing player legs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Carries</td>
+<td style="text-align: left; color: black !important;">Number of times the player controlled the ball with their feet</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CarTotDist</td>
+<td style="text-align: left; color: black !important;">Total distance, in yards, a player moved the ball while controlling it with their feet, in any direction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">CarPrgDist</td>
+<td style="text-align: left; color: black !important;">Total distance, in yards, a player moved the ball while controlling it with their feet towards the opponent goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CarProg</td>
+<td style="text-align: left; color: black !important;">Carries that move the ball towards the opponent goal at least 5 yards, or any carry into the penalty area</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Car3rd</td>
+<td style="text-align: left; color: black !important;">Carries that enter the 1/3 of the pitch closest to the goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CPA</td>
+<td style="text-align: left; color: black !important;">Carries into the 18-yard box</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">CarMis</td>
+<td style="text-align: left; color: black !important;">Number of times a player failed when attempting to gain control of a ball</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CarDis</td>
+<td style="text-align: left; color: black !important;">Number of times a player loses control of the ball after being tackled by an opposing player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">RecTarg</td>
+<td style="text-align: left; color: black !important;">Number of times a player was the target of an attempted pass</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Rec</td>
+<td style="text-align: left; color: black !important;">Number of times a player successfully received a pass</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Rec%</td>
+<td style="text-align: left; color: black !important;">Percentage of time a player successfully received a pass</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">RecProg</td>
+<td style="text-align: left; color: black !important;">Completed passes that move the ball towards the opponent goal at least 10 yards from its furthest point in the last six passes, or any completed pass into the penalty area</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">CrdY</td>
+<td style="text-align: left; color: black !important;">Yellow cards</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CrdR</td>
+<td style="text-align: left; color: black !important;">Red cards</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2CrdY</td>
+<td style="text-align: left; color: black !important;">Second yellow card</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Fls</td>
+<td style="text-align: left; color: black !important;">Fouls committed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Fld</td>
+<td style="text-align: left; color: black !important;">Fouls drawn</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Off</td>
+<td style="text-align: left; color: black !important;">Offsides</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Crs</td>
+<td style="text-align: left; color: black !important;">Crosses</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TklW</td>
+<td style="text-align: left; color: black !important;">Tackles in which the tackler team won possession of the ball</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PKwon</td>
+<td style="text-align: left; color: black !important;">Penalty kicks won</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PKcon</td>
+<td style="text-align: left; color: black !important;">Penalty kicks conceded</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">OG</td>
+<td style="text-align: left; color: black !important;">Own goals</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Recov</td>
+<td style="text-align: left; color: black !important;">Number of loose balls recovered</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">AerWon</td>
+<td style="text-align: left; color: black !important;">Aerials won</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">AerLost</td>
+<td style="text-align: left; color: black !important;">Aerials lost</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">AerWon%</td>
+<td style="text-align: left; color: black !important;">Percentage of aerials won</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats" class="uri">https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats</a></p>
+</section>
+<section id="fifa.csv" class="level2">
+<h2 class="anchored" data-anchor-id="fifa.csv">2.1.2 Fifa.csv</h2>
+<p>Ex : Used to complete informations –&gt; height, weight</p>
+<p>--&gt; other offensive infos</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">id</td>
+<td style="text-align: left; color: black !important;">Unique identifier for a player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Fullname</td>
+<td style="text-align: left; color: black !important;">Full name of the player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">current_rating</td>
+<td style="text-align: left; color: black !important;">Players current skill rating or performance level</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">potential_rating</td>
+<td style="text-align: left; color: black !important;">Expected potential skill level or rating a player can achieve</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">height</td>
+<td style="text-align: left; color: black !important;">Player's height</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">weight</td>
+<td style="text-align: left; color: black !important;">Player's weight</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">preferred_foot</td>
+<td style="text-align: left; color: black !important;">Player's preferred foot for kicking (left or right)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">birth_date</td>
+<td style="text-align: left; color: black !important;">Player's date of birth</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">preferred_positions</td>
+<td style="text-align: left; color: black !important;">Positions on the field the player prefers to play</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">work_rate</td>
+<td style="text-align: left; color: black !important;">Player's work rate or level of effort during matches</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">weak_foot</td>
+<td style="text-align: left; color: black !important;">Player's weaker foot rating or ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">skill_moves</td>
+<td style="text-align: left; color: black !important;">Player's skill move rating or ability to perform technical moves</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">value</td>
+<td style="text-align: left; color: black !important;">Player's estimated market value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">wage</td>
+<td style="text-align: left; color: black !important;">Player's salary or wage</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ball_control</td>
+<td style="text-align: left; color: black !important;">Player's skill in controlling the ball</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">dribbling</td>
+<td style="text-align: left; color: black !important;">Player's dribbling ability</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">marking</td>
+<td style="text-align: left; color: black !important;">Player's defensive marking ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">tackling</td>
+<td style="text-align: left; color: black !important;">Player's ability to perform tackles</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">aggression</td>
+<td style="text-align: left; color: black !important;">Player's level of aggression on the field</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">composure</td>
+<td style="text-align: left; color: black !important;">Player's composure under pressure</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">reaction</td>
+<td style="text-align: left; color: black !important;">Player's reaction time</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">crossing</td>
+<td style="text-align: left; color: black !important;">Player's ability to cross the ball into the box</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">short_pass</td>
+<td style="text-align: left; color: black !important;">Player's accuracy in short passes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">long_pass</td>
+<td style="text-align: left; color: black !important;">Player's accuracy in long passes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">acceleration</td>
+<td style="text-align: left; color: black !important;">Player's acceleration</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">stamina</td>
+<td style="text-align: left; color: black !important;">Player's stamina or endurance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">strength</td>
+<td style="text-align: left; color: black !important;">Player's physical strength</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">spring_speed</td>
+<td style="text-align: left; color: black !important;">Player's sprinting speed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">heading</td>
+<td style="text-align: left; color: black !important;">Player's heading ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">shot_power</td>
+<td style="text-align: left; color: black !important;">Player's power in shooting</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">finishing</td>
+<td style="text-align: left; color: black !important;">Player's ability to finish goal-scoring opportunities</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">long_shots</td>
+<td style="text-align: left; color: black !important;">Player's ability to take long-range shots</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">FK_Acc.</td>
+<td style="text-align: left; color: black !important;">Player's accuracy in free kicks</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">reflexes</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's reflexes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">handling</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's handling ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">gk_positioning</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's positioning on the field</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">gk_diving</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's diving ability</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.kaggle.com/datasets/daguizer/fifa-2021-to-2005-complete-player-attributes" class="uri">https://www.kaggle.com/datasets/daguizer/fifa-2021-to-2005-complete-player-attributes</a></p>
+</section>
+<section id="ballon-dor-golden-ball-winners" class="level2">
+<h2 class="anchored" data-anchor-id="ballon-dor-golden-ball-winners">2.1.3 <strong>Ballon D’or-Golden Ball Winners</strong></h2>
+<p>Ex : From this data set we extracted some of the info for …..</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Year</td>
+<td style="text-align: left; color: black !important;">Year of assignment</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Rank</td>
+<td style="text-align: left; color: black !important;">winner,second,third</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Player</td>
+<td style="text-align: left; color: black !important;">Player first and last Name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Country</td>
+<td style="text-align: left; color: black !important;">Country of birth/acquired citizenship</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Team</td>
+<td style="text-align: left; color: black !important;">Football team at the time the prize was assigned</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Points</td>
+<td style="text-align: left; color: black !important;">Score obtained</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Source</td>
+<td style="text-align: left; color: black !important;">Source of the data</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.kaggle.com/datasets/marcellopaolo/ballon-dor-golden-ball-winners?select=BallonDor-GoldenBall_Winners_v2.csv" class="uri">https://www.kaggle.com/datasets/marcellopaolo/ballon-dor-golden-ball-winners?select=BallonDor-GoldenBall_Winners_v2.csv</a></p>
+</section>
+<section id="fifa-players-stats" class="level2">
+<h2 class="anchored" data-anchor-id="fifa-players-stats">2.1.4 <strong>FIFA Players &amp; Stats</strong></h2>
+<p>Ex :</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ID</td>
+<td style="text-align: left; color: black !important;">Unique identifier for the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Name</td>
+<td style="text-align: left; color: black !important;">Player's name</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Natinality</td>
+<td style="text-align: left; color: black !important;">Player's nationality</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Overal</td>
+<td style="text-align: left; color: black !important;">Player's overall skill rating</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Potential</td>
+<td style="text-align: left; color: black !important;">Player's potential skill rating</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Height</td>
+<td style="text-align: left; color: black !important;">Player's height</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Weight</td>
+<td style="text-align: left; color: black !important;">Player's weight</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PreferredFoot</td>
+<td style="text-align: left; color: black !important;">Player's preferred foot for kicking (left or right)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">BirthDate</td>
+<td style="text-align: left; color: black !important;">Player's date of birth</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Age</td>
+<td style="text-align: left; color: black !important;">Player's current age</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PreferredPositions</td>
+<td style="text-align: left; color: black !important;">Positions on the field preferred by the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PlayerWorkRate</td>
+<td style="text-align: left; color: black !important;">Player's work rate or effort during matches</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">WeakFoot</td>
+<td style="text-align: left; color: black !important;">Player's weaker foot rating or ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">SkillMoves</td>
+<td style="text-align: left; color: black !important;">Player's skill move rating or ability to perform technical moves</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Value</td>
+<td style="text-align: left; color: black !important;">Player's estimated market value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Wage</td>
+<td style="text-align: left; color: black !important;">Player's salary or wage</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Nation</td>
+<td style="text-align: left; color: black !important;">Player's nation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Nation_Position</td>
+<td style="text-align: left; color: black !important;">Player's position within the national team</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Nation_KitNumber</td>
+<td style="text-align: left; color: black !important;">Player's kit number in the national team</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Club</td>
+<td style="text-align: left; color: black !important;">Player's club</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Club_Position</td>
+<td style="text-align: left; color: black !important;">Player's position within the club team</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Club_KitNumber</td>
+<td style="text-align: left; color: black !important;">Player's kit number in the club team</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Club_JoinedClub</td>
+<td style="text-align: left; color: black !important;">Date when the player joined the club</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Club_ContractLength</td>
+<td style="text-align: left; color: black !important;">Length of the player's contract with the club</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">BallControl</td>
+<td style="text-align: left; color: black !important;">Player's skill in controlling the ball</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Dribbling</td>
+<td style="text-align: left; color: black !important;">Player's dribbling ability</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Marking</td>
+<td style="text-align: left; color: black !important;">Player's marking ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">SlideTackle</td>
+<td style="text-align: left; color: black !important;">Player's sliding tackle ability</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">StandTackle</td>
+<td style="text-align: left; color: black !important;">Player's standing tackle ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Aggression</td>
+<td style="text-align: left; color: black !important;">Player's level of aggression on the field</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Reactions</td>
+<td style="text-align: left; color: black !important;">Player's reaction time</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">AttPosition</td>
+<td style="text-align: left; color: black !important;">Player's positioning for attacks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Interceptions</td>
+<td style="text-align: left; color: black !important;">Player's ability to intercept passes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Vision</td>
+<td style="text-align: left; color: black !important;">Player's vision on the field</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Composure</td>
+<td style="text-align: left; color: black !important;">Player's composure under pressure</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Crossing</td>
+<td style="text-align: left; color: black !important;">Player's ability to cross the ball into the box</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ShortPass</td>
+<td style="text-align: left; color: black !important;">Player's accuracy in short passes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">LongPass</td>
+<td style="text-align: left; color: black !important;">Player's accuracy in long passes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Acceleration</td>
+<td style="text-align: left; color: black !important;">Player's acceleration</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Stamina</td>
+<td style="text-align: left; color: black !important;">Player's stamina or endurance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Strength</td>
+<td style="text-align: left; color: black !important;">Player's physical strength</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Balance</td>
+<td style="text-align: left; color: black !important;">Player's balance on the field</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">SprintSpeed</td>
+<td style="text-align: left; color: black !important;">Player's sprinting speed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Agility</td>
+<td style="text-align: left; color: black !important;">Player's agility</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Jumping</td>
+<td style="text-align: left; color: black !important;">Player's jumping ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Heading</td>
+<td style="text-align: left; color: black !important;">Player's heading ability</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ShotPower</td>
+<td style="text-align: left; color: black !important;">Player's power in shooting</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Finishing</td>
+<td style="text-align: left; color: black !important;">Player's ability to finish goal-scoring opportunities</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">LongShots</td>
+<td style="text-align: left; color: black !important;">Player's ability to take long-range shots</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Curve</td>
+<td style="text-align: left; color: black !important;">Player's ability to curve the ball</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">FKAcc</td>
+<td style="text-align: left; color: black !important;">Player's accuracy in free kicks</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Penalties</td>
+<td style="text-align: left; color: black !important;">Player's penalty-taking ability</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Volleys</td>
+<td style="text-align: left; color: black !important;">Player's ability to hit volleys</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GKPositioning</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's positioning on the field</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GKDiving</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's diving ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GKHandling</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's handling ability</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GKKicking</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's kicking ability</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GKReflexes</td>
+<td style="text-align: left; color: black !important;">Goalkeeper's reflexes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Traits</td>
+<td style="text-align: left; color: black !important;">Special traits associated with the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Specialities</td>
+<td style="text-align: left; color: black !important;">Special abilities or skills the player possesses</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.kaggle.com/datasets/justdhia/fifa-players?select=2021.csv" class="uri">https://www.kaggle.com/datasets/justdhia/fifa-players?select=2021.csv</a></p>
+</section>
+<section id="world-population-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="world-population-dataset">2.1.5 <strong>World Population Dataset</strong></h2>
+<p>Ex :</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Rank</td>
+<td style="text-align: left; color: black !important;">Rank by Population</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CCA3</td>
+<td style="text-align: left; color: black !important;">3 Digit Country/Territories Code</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Country/Territory</td>
+<td style="text-align: left; color: black !important;">Name of the Country/Territories</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Capital</td>
+<td style="text-align: left; color: black !important;">Name of the Capital</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Continent</td>
+<td style="text-align: left; color: black !important;">Name of the Continent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2022 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2020 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2015 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2010 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2000 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 2000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1990 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 1990</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1980 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 1980</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">1970 Population</td>
+<td style="text-align: left; color: black !important;">Population of the Country/Territories in the year 1970</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Area (km²)</td>
+<td style="text-align: left; color: black !important;">Area size of the Country/Territories in square kilometer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Density (per km²)</td>
+<td style="text-align: left; color: black !important;">Population Density per square kilometer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Growth Rate</td>
+<td style="text-align: left; color: black !important;">Population Growth Rate by Country/Territories</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">World Population Percentage</td>
+<td style="text-align: left; color: black !important;">The population percentage by each Country/Territories</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset" class="uri">https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset</a></p>
+</section>
+<section id="gdp-by-country-1999---2022" class="level2">
+<h2 class="anchored" data-anchor-id="gdp-by-country-1999---2022">2.1.6 <strong>GDP By Country 1999 - 2022</strong></h2>
+<p>Ex : This is a dataset from Kaggle that contains the GDP by country for different countries it will be used to do analysis on the link of a nation’s wealth and the skills of a player.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Country</td>
+<td style="text-align: left; color: black !important;">Name of the country</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">1999</td>
+<td style="text-align: left; color: black !important;">Population in 1999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2000</td>
+<td style="text-align: left; color: black !important;">Population in 2000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2001</td>
+<td style="text-align: left; color: black !important;">Population in 2001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2002</td>
+<td style="text-align: left; color: black !important;">Population in 2002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2003</td>
+<td style="text-align: left; color: black !important;">Population in 2003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2004</td>
+<td style="text-align: left; color: black !important;">Population in 2004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2005</td>
+<td style="text-align: left; color: black !important;">Population in 2005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2006</td>
+<td style="text-align: left; color: black !important;">Population in 2006</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2007</td>
+<td style="text-align: left; color: black !important;">Population in 2007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2008</td>
+<td style="text-align: left; color: black !important;">Population in 2008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2009</td>
+<td style="text-align: left; color: black !important;">Population in 2009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2010</td>
+<td style="text-align: left; color: black !important;">Population in 2010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2012</td>
+<td style="text-align: left; color: black !important;">Population in 2012</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2013</td>
+<td style="text-align: left; color: black !important;">Population in 2013</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2014</td>
+<td style="text-align: left; color: black !important;">Population in 2014</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2015</td>
+<td style="text-align: left; color: black !important;">Population in 2015</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2016</td>
+<td style="text-align: left; color: black !important;">Population in 2016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2017</td>
+<td style="text-align: left; color: black !important;">Population in 2017</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2018</td>
+<td style="text-align: left; color: black !important;">Population in 2018</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2019</td>
+<td style="text-align: left; color: black !important;">Population in 2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2020</td>
+<td style="text-align: left; color: black !important;">Population in 2020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2021</td>
+<td style="text-align: left; color: black !important;">Population in 2021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2022</td>
+<td style="text-align: left; color: black !important;">Population in 2022</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.kaggle.com/code/alejopaullier/gdp-by-country-1999-2022" class="uri">https://www.kaggle.com/code/alejopaullier/gdp-by-country-1999-2022</a></p>
+</section>
+<section id="revenue-of-the-big-five-soccer-leagues-in-europe-from-201213-to-202122-with-a-forecast-to-202324-by-league" class="level2">
+<h2 class="anchored" data-anchor-id="revenue-of-the-big-five-soccer-leagues-in-europe-from-201213-to-202122-with-a-forecast-to-202324-by-league">2.1.7 <strong>Revenue of the Big Five soccer leagues in Europe from 2012/13 to 2021/22, with a forecast to 2023/24, by league</strong></h2>
+<p>Ex : Dataset done from a webpage on statista that forecasts the revenue of the five biggest leagues from 2012 to 2022.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Date</td>
+<td style="text-align: left; color: black !important;">Date</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Bundesliga</td>
+<td style="text-align: left; color: black !important;">revenue Bundesliga</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">LaLiga</td>
+<td style="text-align: left; color: black !important;">revenue La Liga</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">SerieA</td>
+<td style="text-align: left; color: black !important;">revenue Serie A</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Ligue1</td>
+<td style="text-align: left; color: black !important;">revenue Ligue 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Premierleague</td>
+<td style="text-align: left; color: black !important;">revenue Premier league</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/" class="uri">https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/</a></p>
+</section>
+<section id="revenue-from-broadcasting-rights-of-european-soccer-leagues-from-in-201920" class="level2">
+<h2 class="anchored" data-anchor-id="revenue-from-broadcasting-rights-of-european-soccer-leagues-from-in-201920">2.1.8 : <strong>Revenue from broadcasting rights of European soccer leagues from in 2019/20</strong></h2>
+<p>Ex : Dataset made from scratches from Statista to create our own db</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">country</td>
+<td style="text-align: left; color: black !important;">country</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">revenue</td>
+<td style="text-align: left; color: black !important;">revenue calculated in mio</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Source : <a href="https://www.statista.com/statistics/627306/broadcasting-big-five-european-football-league-revenues/" class="uri">https://www.statista.com/statistics/627306/broadcasting-big-five-european-football-league-revenues/</a></p>
+</section>
+</section>
+<section id="data-wrangling-and-cleaning" class="level1">
+<h1>2.2 Data wrangling and cleaning</h1>
+<section id="ballon-dor-winners-clean" class="level2">
+<h2 class="anchored" data-anchor-id="ballon-dor-winners-clean">2.2.1 Ballon d’or winners clean</h2>
+<p>Now, it’s time to clean up the Ballon d’Or database. This was less difficult than the previous database, although it still required some work. The <em><code>dplyr</code></em> and <em><code>readr</code></em> libraries were used during this data wrangling exercise. First, we needed to filter our database to keep only the winners from the last 20 years. This choice was made to observe the evolution of 21st-century football. It’s important to note that there was no Ballon d’Or awarded in 2020, hence its absence. To do this, nothing was more efficient than using a <em><code>filter()</code></em> function.</p>
+<p>Next, we encountered a naming issue with a certain player. For some reason, Luka Modrić was listed as ‘Croatia Luka Modric’ so it was necessary to rename him using the <em><code>mutate()</code></em> function in conjunction with <em><code>ifelse()</code></em>.</p>
+<p>Now, we could start adding new columns that would be useful for the project’s analysis. We aimed to add the following columns: <strong>Age, Height, Weight, PreferredFoot, and PreferredPositions</strong>.</p>
+<p>To achieve this, we needed other databases to join the missing columns. We chose FIFA05 and FIFA21 databases because the oldest winners are not present in the most modern game. To maximize our chances of having the necessary variables, we opted for two databases. To join two databases, we needed a common key. The <strong>Player</strong> column was the most suitable, so we aligned this name in the other databases using the <em><code>rename()</code></em> function. Having a common key allowed us to merge the databases using the <em><code>left_join()</code></em> function. However, this resulted in numerous unnecessary columns in our database. Using the <em><code>select()</code></em> function, we retained only the necessary columns. This process will be repeated while writing the code.</p>
+<p>New challenges arose. For the sake of our analysis, we needed new columns. Firstly, an <strong>Age</strong> column. We now had the birth date and wanted the age at the time of winning. As some players won multiple times, they needed different ages for each success. Therefore, retrieving age from other databases wasn’t feasible; we had to do it ourselves. We used the <em><code>sub()</code></em> function to extract the birth year and then, with <em><code>mutate()</code></em><code>,</code> created the <strong>Age</strong> column by subtracting the birth year from the Ballon d’Or’s year.</p>
+<p>Next, to replace missing values in our columns, we used a combination of <em>$</em> and <em><code>ifelse(is.na())</code></em> functions. <em>$</em> was used to select the database and column we wanted to work on, while the latter function replaced missing values. Consequently, our columns were filled with values from the two external databases.</p>
+<p>However, we encountered an issue with the player <strong>Kaka</strong>, who had missing values for some columns. As he was the only player with this problem, we manually created a <em><code>Kaka_values &lt;- c()</code></em> containing the different characteristics and used this in an <em><code>ifelse()</code></em> function to replace the missing values.</p>
+<p>Before finishing and selecting only the useful columns, we needed to standardize the <strong>PreferredFoot</strong> and <strong>PreferredPositions</strong> columns. <strong>PreferredFoot</strong> sometimes had values like <em>R</em> instead of <em>Right</em>, and <strong>PreferredPositions</strong> had ‘-’ instead of ‘/’. The <em><code>ifelse()</code></em> and <em><code>gsub()</code></em> functions were instrumental in this process.</p>
+<p>Now, the Ballon d’Or database is cleaned up with the columns we intend to use for the analysis ahead.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Year</td>
+<td style="text-align: left; color: black !important;">Birthdate of the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Player</td>
+<td style="text-align: left; color: black !important;">Name of the player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Country</td>
+<td style="text-align: left; color: black !important;">Country of origin of the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Team</td>
+<td style="text-align: left; color: black !important;">Team of the player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Age</td>
+<td style="text-align: left; color: black !important;">Age of the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Height</td>
+<td style="text-align: left; color: black !important;">Height of the player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Weight</td>
+<td style="text-align: left; color: black !important;">Weight of the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PreferredFoot</td>
+<td style="text-align: left; color: black !important;">Preferred foot of the player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PreferredPositions</td>
+<td style="text-align: left; color: black !important;">Preferred posiiton of the player</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="data-of-players-clean" class="level2">
+<h2 class="anchored" data-anchor-id="data-of-players-clean">2.2.2 Data of players clean</h2>
+<p>Cleaning up the database of player performances and statistics was a very complex task. Several types of problem arose, and we had to make choices and take initiatives for the rest of our analysis.</p>
+<p>The <em><code>dplyr</code></em><code>,</code> <em>readr, <code>stringr</code>, <code>tidyr</code> and <code>lubridate</code></em> libraries were used during this data wrangling exercise.</p>
+<p>Firstly, when we downloaded our database, a major problem appeared. As soon as a player or team name contained a special character such as an acute accent, the accent changed to <strong>?</strong> and we realized that we had an encoding problem. To overcome this problem, we tested different encoding, in particular <em>‘UTF-8’</em>, and others <em>‘ISO’</em>, but the problem didn’t go away. In fact, some names ended up with the wrong accent. Nevertheless, we found that the <em>‘ISO-8859-1’</em> encoding was the most suitable, leaving us with a problem with Slavic and ex-Yugoslav family names in particular. We therefore tried to create a list of players with the remaining encoding problem.</p>
+<p>Understanding that special characters were indeed very special for these players, we took the initiative of manually renaming certain players such as <em>“Edin Džeko”</em>, using the <em>sub()</em> function, and then using the <em>gsub()</em> function, we replaced the last <strong>?</strong> with the letter <strong>ć</strong>, which was generally the letter most present in names with this problem. However, for some reason, the players <em>“Dušan Vlahović”</em> and <em>“Nikola Vlašić”</em> had spaces instead of the letter <strong>“š”</strong>, so we had to use another method to rename them. We used the <em>ifelse()</em> function, and as it wasn’t possible to rename them using the basic written name, we had to use another common key: <strong>Rk</strong>.</p>
+<p>It was important first to explain how we renamed our players and teams in the first place, as this was a major problem. However, before beginning the steps above, we first sorted the database a little. First of all, we had duplicate players because, as our database covers an entire season, it’s quite normal to have transfers in mid-season, which explains the presence of duplicate players with different characteristics such as the club. The <em><code>distinct()</code></em> function allows us to remove duplicates.</p>
+<p>Next, we had to filter the database for various reasons. For the rest of our analysis, certain columns will be important, such as the <strong>Goals</strong> column. However, when we were still getting to know our database, we noticed that this column produced some surprising results. In fact, this column represents the number of goals per 90 minutes, but some players had crazy statistics. <em>Pablo Sarabia</em>, for example, scored 5 goals every 90 minutes. The problem was that <em>Sarabia</em> hadn’t played many minutes (22). We therefore realized that players who had been effective but had played few minutes would have disproportionately high statistics, because their statistics would then be weighted against the 90 minutes that our database covers.</p>
+<p>So, using the <em><code>filter()</code></em> function, we took the initiative of only keeping players who had played at least 9 matches <strong>(MP &gt;= 9)</strong> and who had played at least 405 minutes <strong>(Min &gt;= 405)</strong>. This choice was made because we assumed that our players had to have played at least half the matches in half a season, because as we said, some players were transferred during the middle of the season. Moreover, in terms of minutes, we wanted them to have played at least one half of the 9 matches they played (45 minutes), and by multiplying that by the number of matches, we arrived at our figures. Thus, we only want to keep the attacking players, so those whose positions begin with the letter <strong>‘F’</strong> for Forward.</p>
+<p>Now that the database has been filtered, we are missing two columns for the rest of our project: <strong>Height</strong> and <strong>Weight</strong>. To do this, we decided to take a database from the FIFA21 game, the year of our statistics, which had the missing characteristics. However, here too we encountered a number of problems.</p>
+<p><img src="Rplot05.png" class="img-fluid" width="265"></p>
+<p>Firstly, we needed a common key to join the two databases. To do this, <em><code>rename()</code></em> allowed us to rename <strong>Name</strong> to <strong>Player</strong> and then, thanks to <em><code>left_join()</code></em>, the two databases were joined. Now we needed to see which players didn’t have values for <strong>Height</strong> and <strong>Weight</strong>, so we created a <em>height_na</em> list using <em><code>filter(is.na())</code></em>. So 85 players had missing values. For a start, we could have players who simply didn’t have the same spelling, for example <em>Sehrou/Serhou Guirassy</em> depending on the database. Then there was the fact that the FIFA21 database had full names, meaning that some players had their 2nd and 3rd first names included, something that was not in our database. Finally, there were some players who simply didn’t appear in the game.</p>
+<p>To overcome these problems, we tried various solutions. The one we kept was to separate the <strong>Player</strong> column into <strong>Surname</strong> and <strong>Name</strong>, using <em><code>separate()</code></em><code>,</code> in order to be able to search and fill in via the <strong>Name</strong> common key. The problem with this solution was that we now had duplicates that we had to remove. This solution enabled us to reduce the number of missing values to 50.</p>
+<p><img src="Rplot06.png" class="img-fluid" width="348"></p>
+<p>A final attempt was to use several common keys at the same time. To do this, we needed the year of birth and the team in which the player plays. Once we had made sure we had these common keys, a new <em><code>left_join()</code></em> with a <em>by = c(“Born”, “Squad”)</em> inside was used, and we could try to fill in the missing NAs. This choice of common keys was made on the assumption that if we only had strikers, it was quite possible that the strikers in the same team would differ in age, which would help us to maximize our chances of replacements. That’s how we got down to 38 values.</p>
+<p>However, we realized that it would be too complex to find the last missing values. So we stopped and looked at our <em>height_na</em> and realized that most of these players via the <strong>Goals</strong> column would not interest us for the rest of our analysis. We therefore took the initiative of manually replacing the <strong>Height</strong> and <strong>Weight</strong> of the best player from the <strong>Goals</strong> column for each of the 5 leagues, using <em>mutate()</em>, in order to keep players who might be of interest to us for the analysis. For the rest of the players, we decided to remove them from our database using <em><code>filter(!is.na())</code></em><code>.</code></p>
+<p>It was now necessary to re-join <strong>Surname</strong> and <strong>Name</strong> as <strong>Player</strong> to avoid NAs filling up in one of the columns because of Brazilian players, for example, who are only called by their name.</p>
+<p>Before concluding, you should know that in our analysis we want to compare the statistical and physical trends between the different leagues. So, to finish with this database, we wanted to create 5 different databases in order to have the players in each league, and to do this we had to create <em>“comp_players”</em> using the <em><code>filter()</code></em> function. We now have the databases we need to approach the various remaining stages of this project.</p>
+<p><img src="Rplot07.png" class="img-fluid" width="299"></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Rk</td>
+<td style="text-align: left; color: black !important;">Rank of the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Player</td>
+<td style="text-align: left; color: black !important;">Player's name</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Nation</td>
+<td style="text-align: left; color: black !important;">Player's nation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Pos</td>
+<td style="text-align: left; color: black !important;">Position</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Squad</td>
+<td style="text-align: left; color: black !important;">Squad's name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Comp</td>
+<td style="text-align: left; color: black !important;">League that squad occupies</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Born</td>
+<td style="text-align: left; color: black !important;">Year of birth</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Mp</td>
+<td style="text-align: left; color: black !important;">Matches played</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Min</td>
+<td style="text-align: left; color: black !important;">Minutes played</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Goals</td>
+<td style="text-align: left; color: black !important;">Goals scored or allowed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">SoT%</td>
+<td style="text-align: left; color: black !important;">Shots on target percentage (Does not include penalty kicks)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">G/Sh</td>
+<td style="text-align: left; color: black !important;">Goals per shot</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">ShoDist</td>
+<td style="text-align: left; color: black !important;">Average distance, in yards, from goal of all shots taken (Does not include penalty kicks)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">PasTotAtt</td>
+<td style="text-align: left; color: black !important;">Passes attempted</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PasTotCmp%</td>
+<td style="text-align: left; color: black !important;">Pass completion percentage</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Assists</td>
+<td style="text-align: left; color: black !important;">Assists</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">PPA</td>
+<td style="text-align: left; color: black !important;">Completed passes into the 18-yard box</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">CrsPA</td>
+<td style="text-align: left; color: black !important;">Completed crosses into the 18-yard box</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">SCA</td>
+<td style="text-align: left; color: black !important;">Shot-creating actions</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">GCA</td>
+<td style="text-align: left; color: black !important;">Goal-creating actions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">GcaDrib</td>
+<td style="text-align: left; color: black !important;">Successful dribbles that lead to a goal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Press%</td>
+<td style="text-align: left; color: black !important;">Percentage of time the squad gained possession withing five seconds of applying pressure</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">DriAtt</td>
+<td style="text-align: left; color: black !important;">Dribbles attempted</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">DriSucc%</td>
+<td style="text-align: left; color: black !important;">Percentage of dribbles completed successfully</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Fld</td>
+<td style="text-align: left; color: black !important;">Fouls drawn</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">AERwon%</td>
+<td style="text-align: left; color: black !important;">Percentage of aerials won</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Height</td>
+<td style="text-align: left; color: black !important;">Height of the player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Weight</td>
+<td style="text-align: left; color: black !important;">Weight of the player</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="data-leagues-clean" class="level2">
+<h2 class="anchored" data-anchor-id="data-leagues-clean">2.2.3 Data leagues clean</h2>
+<p>ex :</p>
+<p>This database was created from multible <em><code>tibbles</code></em> created from statista since this information was not easily accessible as a csv file. The first tibble contains the revenue of the big 5 leagues from 2012 to 2024 and the second one is the revenu of tv rights broadcast of those big 5 leagues for the period 2021-2022.</p>
+<p>The second step was to merge those <em><code>tibbles</code></em> to the chosen info of our database called data1 that contains cleaned data of the players chosen for our analysis, to do so we wanted to use the <em><code>left_join</code></em> function with “comp” as a similar key, the problem was that in the merged database we wanted the dates as headers and the leagues as values for the “comp” column as it was the opposite for one of the <em><code>tibbles.</code></em>To resolve this problem we <em><code>transposed</code></em> the data base “Pibcomp” so it could fit in the merged database. Now that the problem was finished we used <em><code>left join</code></em> and used the function <em><code>select</code></em> and <em><code>everything</code></em> while joining data1 to not clog the database with useless info and better the readability.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Comp</td>
+<td style="text-align: left; color: black !important;">League's name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">surname</td>
+<td style="text-align: left; color: black !important;">Surname of player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Name</td>
+<td style="text-align: left; color: black !important;">Name of player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Nation</td>
+<td style="text-align: left; color: black !important;">country code</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">squad</td>
+<td style="text-align: left; color: black !important;">team's name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">TV_Revenue_in_Mio</td>
+<td style="text-align: left; color: black !important;">Tv revenue of league</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2012-2013</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2012-2013</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2013-2014</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2013-2014</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2014-2015</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2014-2015</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2015-2016</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2015-2016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2016-2017</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2016-2017</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2017-2018</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2017-2018</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2018-2019</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2018-2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2019-2020</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2019-2020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2020-2021</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2020-2021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2021-2022</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2021-2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">2022-2023</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2022-2023</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">2023-2024</td>
+<td style="text-align: left; color: black !important;">The revenue of the league for 2023-2024</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>source : <a href="https://fr.statista.com/infographie/24103/montant-des-droits-tv-domestiques-ligue-1-et-grands-championnats-europeens/" class="uri">https://fr.statista.com/infographie/24103/montant-des-droits-tv-domestiques-ligue-1-et-grands-championnats-europeens/</a></p>
+<p><a href="https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/" class="uri">https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/</a></p>
+</section>
+<section id="nation-info-for-players-clean" class="level2">
+<h2 class="anchored" data-anchor-id="nation-info-for-players-clean">2.2.4 Nation info for players clean</h2>
+<p>Ex : This database is the database linking informations about the players and of their country of origin like the evolution of the GDP or the demography.</p>
+<p>The constituing database are data1 which is the cleaned database of players, World .csv which is the evolution of demography and gdp.csv which is the evolution of GDP. To merge those database we wanted to use left_join but with a similar pivot containing country codes. The problem was the following : GDP didn’t have any country code column but a “complete name” one .</p>
+<p>To resolve the problem we created a custom list linking country codes to a “complete version” for example “ENG” was linked to “England”, we then joined this list to GDP by using the complete names as a pivot (here called abre) with the help of the function <em><code>rename</code></em> and <em><code>left_pivot.</code></em></p>
+<p>We then had to add the info of players ,the problem was the following : The two databases had different encoding for country codes so we tried to convert them using the <em><code>countrycode</code></em> package, problem was that the coding for data1 was a custom one probably used for the abbreviation of football teams not recognized by the package, so we first tried with the custom list . The listed matched in part but we had almost 30% of missing values so we had to improvise. We created a second list ( called abre2) that included the differences between the two lists added it to the data1 and linked the 3 databases together.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Rplot.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Missing values</figcaption>
+</figure>
+</div>
+<p>we searched for outliers with the function :</p>
+<p><code>test &lt;- test[, !names(test) %in% c("abre", "abre2","Country.Code")]</code></p>
+<p><code>rows_with_na &lt;- test[!complete.cases(test), ]</code></p>
+<p>We had some outliers that we had to correct manually for example “England” had to be corrected to “United Kingdom” or Congo had to be corrected to “Congo, Democratic Republic of” or “Congo, Dem. Rep.” depending of the list .</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Rplot03.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Missing values</figcaption>
+</figure>
+</div>
+<p>Then we manually added the key info and dropped the rest to finally arrive to 0% of missing rows.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Nation</td>
+<td style="text-align: left; color: black !important;">Country code</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Surname</td>
+<td style="text-align: left; color: black !important;">Surname of player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Name</td>
+<td style="text-align: left; color: black !important;">Name of player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">Squad</td>
+<td style="text-align: left; color: black !important;">Squad of player</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">Comp</td>
+<td style="text-align: left; color: black !important;">League of player</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1999.x</td>
+<td style="text-align: left; color: black !important;">GDP in 1999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2000.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2001.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2002.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2003.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2004.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2005.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2005</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2006.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2006</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2007.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2008.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2009.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2010.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2011.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2012.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2012</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2013.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2013</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2014.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2014</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2015.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2016.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2016</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2017.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2017</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2018.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2018</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2019.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2019</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2020.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2021.x</td>
+<td style="text-align: left; color: black !important;">GDP in 2021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">x2022</td>
+<td style="text-align: left; color: black !important;">GDP in 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1960.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1960</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1961.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1961</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1962.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1962</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1963.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1963</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1964.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1964</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1965.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1965</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1966.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1966</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1967.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1967</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1968.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1968</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1969.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1969</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1970.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1970</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1971.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1971</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1972.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1972</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1973.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1973</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1974.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1974</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1975.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1975</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1976.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1976</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1977.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1977</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1978.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1978</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1979.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1979</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1980.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1980</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1981.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1981</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1982.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1982</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1983.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1983</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1984.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1984</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1985.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1985</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1986.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1986</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1987.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1987</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1988.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1988</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1989.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1989</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1990.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1990</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1991.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1991</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1992.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1993.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1993</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1994.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1995.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1995</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1996.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1997.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1997</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X1998.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1998</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X1999.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 1999</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2000.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2001.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2002.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2003.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2004.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2005.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2006.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2007.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2008.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2009.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2010.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2011.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2011</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2012.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2012</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2013.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2013</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2014.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2014</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2015.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2015</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2016.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2017.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2017</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2018.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2018</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2019.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; color: black !important;">X2020.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; color: black !important;">X2021.x</td>
+<td style="text-align: left; color: black !important;">Population of country in 2021</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>source : <a href="https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset" class="uri">https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset</a></p>
+<p><a href="https://www.kaggle.com/code/alejopaullier/gdp-by-country-1999-2022" class="uri">https://www.kaggle.com/code/alejopaullier/gdp-by-country-1999-2022</a></p>
+</section>
+</section>
+<section id="eda" class="level1">
+<h1>3 EDA</h1>
+<section id="eda-ballon-dor" class="level2">
+<h2 class="anchored" data-anchor-id="eda-ballon-dor">3.1 EDA Ballon d’or</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-2.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-3.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-4.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-5.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-6.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-7.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-8.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-9.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-10.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-11.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-12.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Ballon%20or-13.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="eda-skillc" class="level2">
+<h2 class="anchored" data-anchor-id="eda-skillc">3.2 EDA Skillc</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-2.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-3.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-4.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-5.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-6.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-7.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-8.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-9.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-10.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-11.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-12.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-13.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-14.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-15.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-16.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-17.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-18.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-19.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-20.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-21.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-22.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-23.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-24.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-25.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-26.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-27.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-28.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-29.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-30.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-31.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-32.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-33.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-34.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-35.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-36.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-37.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-38.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-39.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-40.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-41.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-42.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-43.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="report_files/figure-html/EDA%20Skillc-44.png" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Mapping out the underlying structure</li>
+<li>Identifying the most important variables</li>
+<li>Univariate visualizations</li>
+<li>Multivariate visualizations</li>
+<li>Summary tables</li>
+</ul>
+</section>
+</section>
+<section id="analysis" class="level1">
+<h1>Analysis</h1>
+<ul>
+<li>Answers to the research questions</li>
+<li>Different methods considered</li>
+<li>Competing approaches</li>
+<li>Justifications</li>
+</ul>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<ul>
+<li>Take home message</li>
+<li>Limitations</li>
+<li>Future work?</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

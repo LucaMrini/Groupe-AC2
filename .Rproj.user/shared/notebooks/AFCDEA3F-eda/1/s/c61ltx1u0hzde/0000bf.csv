@@ -1,0 +1,8 @@
+"0",""
+"0","# Graphique montrant l'évolution de l'âge des vainqueurs du Ballon d'Or"
+"0","ggplot(data_bo, aes(x = Year, y = Age)) +"
+"0","  geom_point() +  # Points pour chaque vainqueur du Ballon d'Or"
+"0","  geom_smooth(method = ""loess"", se = FALSE, color = ""blue"") +  # Lissage pour montrer la tendance"
+"0","  labs(x = ""Year"", y = ""Age"", "
+"0","       title = ""Evolution of the age of Ballon d'Or winners"") +"
+"0","  theme_minimal()"

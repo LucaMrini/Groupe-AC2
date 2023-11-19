@@ -1,0 +1,4 @@
+"0",""
+"0","# Exemple de courbe de densité pour la distribution de ShoDist"
+"0","ggplot(data1, aes(x = ShoDist)) + geom_density(fill = ""lightgreen"", color = ""black"") +"
+"0","  labs(title = ""Distribution de ShoDist"", x = ""ShoDist"", y = ""Densité"")"

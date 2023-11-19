@@ -1,0 +1,515 @@
+# Librairies
+library(ggplot2)
+library(dplyr)
+library(plotly)
+
+# Graphique montrant le nombre de joueurs dans chaque championnat
+data1 %>%
+  count(Comp) %>%
+  ggplot(aes(x = reorder(Comp, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Number of players per league",
+       x = "Leagues", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Graphique montrant le nombre de joueurs par nationalités
+data1 %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  head(50) %>%  # Sélection des 10 nationalités les plus courantes (à adapter selon vos besoins)
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Number of players by nationality",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Graphique montrant le nombre de joueurs par nationalités (histoire d'avoir les 10 plus nombreuses)
+data1 %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  head(10) %>%  # Sélection des 10 nationalités les plus courantes (à adapter selon vos besoins)
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "red", alpha = 0.7) +
+  labs(title = "Number of players by nationality",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Graphique afin de montrer les 10 meilleurs statistiques Goals
+data1 %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Top 10 players with the best 'Goals' statistic",
+       x = "Players", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Graphique afin de voir les proportions des FW, FWDF, FWMF
+data1 %>%
+  count(Pos) %>%
+  ggplot(aes(x = "", y = n, fill = Pos)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
+  labs(title = "Proportions of different player positions",
+       fill = "Pos") +
+  theme_void() +
+  theme(legend.position = "right")
+
+# graphique montrant le nombre de joueur par équipe en Premier League
+data1 %>%
+  filter(Comp == "Premier League") %>%  # Filtrer les données pour la Premier League
+  count(Squad) %>%
+  ggplot(aes(x = reorder(Squad, n), y = n, fill = Squad)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of players per squad in the Premier League",
+       x = "Squad", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(fill = "none")  # Désactiver la légende des couleurs car chaque barre représente une équipe
+
+# graphique montrant le nombre de joueur par équipe en Bundesliga
+data1 %>%
+  filter(Comp == "Bundesliga") %>%  # Filtrer les données pour la Bundesliga
+  count(Squad) %>%
+  ggplot(aes(x = reorder(Squad, n), y = n, fill = Squad)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of players per squad in the Bundesliga",
+       x = "Squad", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(fill = "none")  # Désactiver la légende des couleurs car chaque barre représente une équipe
+
+# graphique montrant le nombre de joueur par équipe en La Liga
+data1 %>%
+  filter(Comp == "La Liga") %>%  # Filtrer les données pour la Liga
+  count(Squad) %>%
+  ggplot(aes(x = reorder(Squad, n), y = n, fill = Squad)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of players per squad in La Liga",
+       x = "Squad", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(fill = "none")  # Désactiver la légende des couleurs car chaque barre représente une équipe
+
+# graphique montrant le nombre de joueur par équipe en Serie A
+data1 %>%
+  filter(Comp == "Serie A") %>%  # Filtrer les données pour la Serie A
+  count(Squad) %>%
+  ggplot(aes(x = reorder(Squad, n), y = n, fill = Squad)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of players per squad in the Serie A",
+       x = "Squad", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(fill = "none")  # Désactiver la légende des couleurs car chaque barre représente une équipe
+
+# graphique montrant le nombre de joueur par équipe en Ligue 1
+data1 %>%
+  filter(Comp == "Ligue 1") %>%  # Filtrer les données pour la Ligue 1
+  count(Squad) %>%
+  ggplot(aes(x = reorder(Squad, n), y = n, fill = Squad)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of players per squad in Ligue 1",
+       x = "Squad", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(fill = "none")  # Désactiver la légende des couleurs car chaque barre représente une équipe
+
+# 10 meilleurs statistiques Goals en Premier League
+premier_league_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Top 10 goals statistics",
+       x = "Player", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# 10 meilleurs statistiques Goals en Bundesliga
+bundesliga_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "blue", alpha = 0.7) +
+  labs(title = "Top 10 goals statistics",
+       x = "Player", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# 10 meilleurs statistiques Goals en La Liga
+la_liga_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "red", alpha = 0.7) +
+  labs(title = "Top 10 goals statistics",
+       x = "Player", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# 10 meilleurs statistiques Goals en Serie A
+serie_a_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "orange", alpha = 0.7) +
+  labs(title = "Top 10 goals statistics",
+       x = "Player", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# 10 meilleurs statistiques Goals en Ligue 1
+ligue_1_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "yellow", alpha = 0.7) +
+  labs(title = "Top 10 goals statistics",
+       x = "Player", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Nombre de joueurs par Nation en Premier League
+premier_league_players %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Number of players per nation",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Nombre de joueurs par Nation en Bundesliga
+bundesliga_players %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "blue", alpha = 0.7) +
+  labs(title = "Number of players per nation",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Nombre de joueurs par Nation en La Liga
+la_liga_players %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "red", alpha = 0.7) +
+  labs(title = "Number of players per nation",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Nombre de joueurs par Nation en Serie A
+serie_a_players %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "orange", alpha = 0.7) +
+  labs(title = "Number of players per nation",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# Nombre de joueurs par Nation en Ligue 1
+ligue_1_players %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "yellow", alpha = 0.7) +
+  labs(title = "Number of players per nation",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité
+
+# distribution des ages en Premier League
+premier_league_players %>%
+  ggplot(aes(x = Age)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Age distribution of Premier League players",
+       x = "Age", y = "Number of players") +
+  theme_minimal()
+
+# distribution des ages en Bundesliga
+bundesliga_players %>%
+  ggplot(aes(x = Age)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Age distribution of Bundesliga players",
+       x = "Age", y = "Number of players") +
+  theme_minimal()
+
+# distribution des ages en La Liga
+la_liga_players %>%
+  ggplot(aes(x = Age)) +
+  geom_histogram(binwidth = 1, fill = "red", color = "black", alpha = 0.7) +
+  labs(title = "Age distribution of La Liga players",
+       x = "Age", y = "Number of players") +
+  theme_minimal()
+
+# distribution des ages en Serie A
+serie_a_players %>%
+  ggplot(aes(x = Age)) +
+  geom_histogram(binwidth = 1, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Age distribution of Serie A players",
+       x = "Age", y = "Number of players") +
+  theme_minimal()
+
+# distribution des ages en Ligue 1
+ligue_1_players %>%
+  ggplot(aes(x = Age)) +
+  geom_histogram(binwidth = 1, fill = "yellow", color = "black", alpha = 0.7) +
+  labs(title = "Age distribution of Ligue 1 players",
+       x = "Age", y = "Number of players") +
+  theme_minimal()
+
+# distribution des poids en premier league
+premier_league_players %>%
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 2, fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Weight distribution of Premier League players",
+       x = "Weight", y = "Number of players") +
+  theme_minimal()
+
+# distribution des poids en bundesliga
+bundesliga_players %>%
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 2, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Weight distribution of Bundesliga players",
+       x = "Weight", y = "Number of players") +
+  theme_minimal()
+
+# distribution des poids en Laliga
+la_liga_players %>%
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 2, fill = "red", color = "black", alpha = 0.7) +
+  labs(title = "Weight distribution of La Liga players",
+       x = "Weight", y = "Number of players") +
+  theme_minimal()
+
+# distribution des poids en Serie A
+serie_a_players %>%
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 2, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Weight distribution of Serie A players",
+       x = "Weight", y = "Number of players") +
+  theme_minimal()
+
+# distribution des poids en Ligue 1
+ligue_1_players %>%
+  ggplot(aes(x = Weight)) +
+  geom_histogram(binwidth = 2, fill = "yellow", color = "black", alpha = 0.7) +
+  labs(title = "Weight distribution of Ligue 1 players",
+       x = "Weight", y = "Number of players") +
+  theme_minimal()
+
+# distribution des tailles en premier league
+premier_league_players %>%
+  ggplot(aes(x = Height)) +
+  geom_histogram(binwidth = 2, fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Height distribution of Premier League players",
+       x = "Height", y = "Number of players") +
+  theme_minimal()
+
+# distribution des tailles en bundesliga
+bundesliga_players %>%
+  ggplot(aes(x = Height)) +
+  geom_histogram(binwidth = 2, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Height distribution of Bundesliga players",
+       x = "Height", y = "Number of players") +
+  theme_minimal()
+
+# distribution des tailles en Laliga
+la_liga_players %>%
+  ggplot(aes(x = Height)) +
+  geom_histogram(binwidth = 2, fill = "red", color = "black", alpha = 0.7) +
+  labs(title = "Height distribution of La Liga players",
+       x = "Height", y = "Number of players") +
+  theme_minimal()
+
+# distribution des tailles en Serie A
+serie_a_players %>%
+  ggplot(aes(x = Height)) +
+  geom_histogram(binwidth = 2, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Height distribution of Serie A players",
+       x = "Height", y = "Number of players") +
+  theme_minimal()
+
+# distribution des tailles en Ligue 1
+ligue_1_players %>%
+  ggplot(aes(x = Height)) +
+  geom_histogram(binwidth = 2, fill = "yellow", color = "black", alpha = 0.7) +
+  labs(title = "Height distribution of Ligue 1 players",
+       x = "Height", y = "Number of players") +
+  theme_minimal()
+
+# Calcul des écarts-types pour l'âge, la taille et le poids par compétition
+std_dev_by_comp <- data1 %>%
+  group_by(Comp) %>%
+  summarise(
+    Age_std_dev = sd(Age, na.rm = TRUE),
+    Height_std_dev = sd(Height, na.rm = TRUE),
+    Weight_std_dev = sd(Weight, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  arrange(desc(Age_std_dev), desc(Height_std_dev), desc(Weight_std_dev))
+
+# Création du graphique (AGE)
+ggplot(std_dev_by_comp, aes(x = reorder(Comp, Age_std_dev), y = Age_std_dev)) +
+  geom_bar(stat = "identity", fill = "skyblue", width = 0.5) +
+  labs(title = "Age standard deviations by competition",
+       x = "League",
+       y = "Standard deviation of age") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Création du graphique (Taille)
+ggplot(std_dev_by_comp, aes(x = reorder(Comp, Height_std_dev), y = Height_std_dev)) +
+  geom_bar(stat = "identity", fill = "green", width = 0.5) +
+  labs(title = "Height standard deviations by competition",
+       x = "League",
+       y = "Standard deviation of height") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# Création du graphique (Poids)
+ggplot(std_dev_by_comp, aes(x = reorder(Comp, Weight_std_dev), y = Weight_std_dev)) +
+  geom_bar(stat = "identity", fill = "gray", width = 0.5) +
+  labs(title = "Weight standard deviations by competition",
+       x = "League",
+       y = "Standard deviation of weight") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
+
+# J'AI CRéE UNE BASE DE DONNéE NORMALIZED_DATA1 AVEC EN COLONNE DES POURCENTAGES QUE L'ON AURA BESOIN EN STANDARDIZANT DEPUIS SKILLC
+
+# TENTATIVE DE COMPARAISON ENTRE DEUX JOUEURS, ETC
+haaland_stats <- c(97.196262, 47.88571, 61.111111, 55.10204, 27.07276, 31.99426, 56.716418, 24.933687, 0.000000, 
+                   39.66309, 58.407080, 30.00000, 39.75155, 11.445087, 52.4, 16.701461, 73.20000)
+
+lewandowski_stats <- c(100.000000, 56.00000, 52.777778, 51.42857, 30.45685, 33.71593, 13.432836, 25.198939, 5.844156, 48.69832, 40.707965, 10.00000, 30.40373, 23.005780, 52.3, 28.183716, 65.33333)
+stats_names <- c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", 
+                 "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", 
+                 "DriSucc%", "Fld", "AerWon%")
+  
+# Comparaison entre les 2 meilleurs Goals de Bundesliga (pris des stats au hasard c'etait juste pour tester)
+# Données de Lewandowski
+lewandowski_stats <- data.frame(
+  Player = "Robert Lewandowski",
+  Goals = 100.000000,
+  ShoDist = 51.42857,
+  PasTotCmp = 30.45685,
+  PasTotAtt = 33.71593,
+  Assists = 13.432836,
+  PPA = 25.198939
+)
+
+haaland_stats <- data.frame(
+  Player = "Erling Haaland",
+  Goals = 97.196262,
+  ShoDist = 55.10204,
+  PasTotCmp = 27.07276,
+  PasTotAtt = 31.99426,
+  Assists = 56.716418,
+  PPA = 24.933687
+)
+
+combined_stats <- rbind(lewandowski_stats, haaland_stats)
+
+# Mise en forme pour la visualisation
+combined_stats_long <- tidyr::gather(combined_stats, key = "Statistic", value = "Value", -Player)
+
+# Création du graphique en barres pour comparer les statistiques
+ggplot(combined_stats_long, aes(x = Statistic, y = Value, fill = Player)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  labs(title = "Comparaison des statistiques entre Lewandowski et Haaland",
+       x = "Statistique", y = "Valeur") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Tentative de comparer le meilleur Goals de chaque championnat
+# Données des cinq joueurs
+salah_stats <- data.frame(
+  Player = "Mohamed Salah",
+  Goals = 70.093458,
+  ShoDist = 63.26531,
+  PasTotCmp = 47.88494,
+  PasTotAtt = 52.22382,
+  Assists = 62.686567,
+  PPA = 52.785146
+)
+
+lewandowski_stats <- data.frame(
+  Player = "Robert Lewandowski",
+  Goals = 100.000000,
+  ShoDist = 51.42857,
+  PasTotCmp = 30.45685,
+  PasTotAtt = 33.71593,
+  Assists = 13.432836,
+  PPA = 25.198939
+)
+
+benzema_stats <- data.frame(
+  Player = "Karim Benzema",
+  Goals = 87.850467,
+  ShoDist = 63.26531,
+  PasTotCmp = 62.09814,
+  PasTotAtt = 62.26686,
+  Assists = 62.686567,
+  PPA = 77.453581
+)
+
+immobile_stats <- data.frame(
+  Player = "Ciro Immobile",
+  Goals = 84.112150,
+  ShoDist = 61.22449,
+  PasTotCmp = 39.08629,
+  PasTotAtt = 42.18077,
+  Assists = 10.447761,
+  PPA = 14.854111
+)
+
+yedder_stats <- data.frame(
+  Player = "Wissam Ben Yedder",
+  Goals = 83.177570,
+  ShoDist = 57.14286,
+  PasTotCmp = 29.61083,
+  PasTotAtt = 34.57676,
+  Assists = 26.865672,
+  PPA = 27.320955
+)
+
+# Combinaison des données pour le graphique
+combined_stats <- rbind(salah_stats, lewandowski_stats, benzema_stats, immobile_stats, yedder_stats)
+
+# Mise en forme pour la visualisation
+combined_stats_long <- tidyr::gather(combined_stats, key = "Statistic", value = "Value", -Player)
+
+# Création du graphique en barres pour comparer les statistiques
+ggplot(combined_stats_long, aes(x = Statistic, y = Value, fill = Player)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  labs(title = "Comparison of statistics between 5 players",
+       x = "Statistic", y = "Value") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+# Tentative de nouveaux graphiques
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ANALYSES (NE SERA PAS DANS EDA A PRIORI)
+# Sélection des colonnes à visualiser
+columns_to_compare <- c("Goals", "ShoDist", "Assists", "SCA", "Carries")  # Exemple de quelques colonnes
+
+# Création des boxplots pour chaque variable
+ggplot(data1, aes(x = "", y = Goals)) + geom_boxplot() + labs(title = "Distribution des buts")
+ggplot(data1, aes(x = "", y = ShoDist)) + geom_boxplot() + labs(title = "Distribution de ShoDist")
+# Répétez cette opération pour les autres variables que vous souhaitez comparer
+
+# Exemple d'histogramme pour la distribution des buts (Goals)
+ggplot(data1, aes(x = Goals)) + geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  labs(title = "Distribution des buts", x = "Buts", y = "Fréquence")
+
+# Exemple de courbe de densité pour la distribution de ShoDist
+ggplot(data1, aes(x = ShoDist)) + geom_density(fill = "lightgreen", color = "black") +
+  labs(title = "Distribution de ShoDist", x = "ShoDist", y = "Densité")
+# Répétez cette opération pour les autres variables que vous souhaitez comparer

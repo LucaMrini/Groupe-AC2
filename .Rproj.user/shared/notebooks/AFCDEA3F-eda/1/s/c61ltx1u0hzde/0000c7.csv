@@ -1,0 +1,7 @@
+"0",""
+"0","# pour un graphique en nuage de points pour comparer à la fois la taille et le poids"
+"0","ggplot(two_best, aes(x = Height, y = Weight, color = Player)) +"
+"0","  geom_point() +"
+"0","  labs(x = ""Height"", y = ""Weight"", "
+"0","       title = ""Height and weight comparison between Messi and Ronaldo"") +"
+"0","  theme_minimal()"

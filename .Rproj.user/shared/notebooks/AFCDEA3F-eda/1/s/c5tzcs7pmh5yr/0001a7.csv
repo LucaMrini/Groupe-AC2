@@ -1,0 +1,8 @@
+"0",""
+"0","# distribution des poids en Serie A"
+"0","serie_a_players %>%"
+"0","  ggplot(aes(x = Weight)) +"
+"0","  geom_histogram(binwidth = 2, fill = ""orange"", color = ""black"", alpha = 0.7) +"
+"0","  labs(title = ""Weight distribution of Serie A players"","
+"0","       x = ""Weight"", y = ""Number of players"") +"
+"0","  theme_minimal()"

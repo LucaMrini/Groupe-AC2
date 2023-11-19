@@ -1,0 +1,28 @@
+# Your lists
+list1 <- c("NGA", "ENG", "SCO", "FRA", "GHA", "ARG", "ESP", "BRA", "SWE", "AUT",
+           "JPN", "COL", "CMR", "CZE", "MLI", "CIV", "MAR", "ALB", "DEN", "CRO",
+           "URU", "MEX", "ISR", "CAN", "BIH", "BEN", "HON", "MKD", "SUI", "POR",
+           "RUS", "ISL", "NOR", "KOR", "PHI", "IRL", "SVN", "MNE", "ZIM", "SLE",
+           "TUN", "CHN", "POL", "UKR", "EGY", "RSA", "ANG", "USA", "SUR", "GER",
+           "ALG", "ITA", "BEL", "NED","REU", "GAB", "SEN", "JAM", "GAM", "GUI", 
+           "TOG", "ZAM", "MTQ", "CHA", 
+           "FIN", "KVX", "LUX", "VEN", "PAR", "CHI", "UZB", "TUR", "SRB", "COD", "NZL")
+
+list2 <- c("NGA", "ENG", "SCO", "FRA", "GHA", "REU", "ARG", "ESP", "GAB", "SEN",
+           "BRA", "SWE", "JAM", "AUT", "JPN", "COL", "CMR", "CZE", "GAM", "GUI",
+           "TOG", "SUR", "GER", "ALG", "ITA", "BEL", "NED", "MLI", "CIV", "MAR",
+           "ALB", "DEN", "CRO", "URU", "MEX", "ISR", "ZAM", "CAN", "MTQ", "BIH",
+           "BEN", "HON", "MKD", "SUI", "POR", "RUS", "ISL", "NOR", "KOR", "PHI",
+           "IRL", "SVN", "MNE", "ZIM", "SLE", "TUN", "CHN", "POL", "UKR", "EGY",
+           "RSA", "CHA", "ANG", "USA", "FIN", "KVX", "LUX", "VEN", "PAR", "CHI",
+           "UZB", "TUR", "SRB", "COD", "NZL","Réunion", "Gabon", "Senegal", "Jamaica", "The Gambia", "Guinea", "Togo", "Zambia", "Martinique", "Chad",
+           "Finland", "Context specific or unknown", "Luxembourg", "Venezuela", "Paraguay", "Chile", "Uzbekistan", "Turkey", "Serbia", "Democratic Republic of the Congo", "New Zealand")
+
+# Find differences: elements in list1 not in list2 and vice versa
+diff_list1 <- setdiff(list1, list2)
+diff_list2 <- setdiff(list2, list1)
+
+# Print the differences
+print(diff_list1)
+print(diff_list2)
+

@@ -1,0 +1,20 @@
+"0","# Exploratory data analysis"
+"0",""
+"0","data_bo <- read_csv(""data/data1.csv"")"
+"2","[1mRows: [22m[34m387[39m [1mColumns: [22m[34m28[39m"
+"2","[36m--[39m [1mColumn specification[22m [36m------------------------------------------------------------[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (5): Player, Nation, Pos, Squad, Comp
+[32mdbl[39m (23): Rk, Age, Height, Weight, MP, Min, Goals, SoT%, G/Sh, ShoDist, PasTotCm..."
+"2","
+[36mi[39m Use `spec()` to retrieve the full column specification for this data.
+[36mi[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."
+"0","data_bo <- get(""data1"", envir = .GlobalEnv)"
+"0","# Graphique montrant le nombre de joueurs dans chaque championnat"
+"0","data1 %>%"
+"0","  count(Comp) %>%"
+"0","  ggplot(aes(x = reorder(Comp, n), y = n)) +"
+"0","  geom_bar(stat = ""identity"", fill = ""skyblue"", alpha = 0.7) +"
+"0","  labs(title = ""Number of players per league"","
+"0","       x = ""Leagues"", y = ""Number of players"") +"
+"0","  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotation des étiquettes pour une meilleure lisibilité"

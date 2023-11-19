@@ -1,0 +1,9 @@
+---
+title: "Factors influencing the performance of football players - Analysis in a key position"
+author: "Nedim Mujcic","Deborah-Awuni Maggini","Luca Marini"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r child = c('intro.qmd', 'data.qmd', 'eda.qmd', 'analysis.qmd', 'concl.qmd')}
+```

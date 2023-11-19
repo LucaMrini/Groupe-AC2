@@ -1,0 +1,7 @@
+write.csv(data_bo, file = "my_data.csv", row.names = FALSE)
+write.csv(premier_league_players, file = "premier_league_players.csv", row.names = FALSE)
+write.csv(bundesliga_players, file = "bundesliga_players.csv", row.names = FALSE)
+write.csv(la_liga_players, file = "la_liga_players.csv", row.names = FALSE)
+write.csv(serie_a_players, file = "serie_a_players.csv", row.names = FALSE)
+write.csv(ligue_1_players, file = "ligue_1_players.csv", row.names = FALSE)
+write.csv(data1, file = "data1.csv", row.names = FALSE)

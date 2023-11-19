@@ -1,0 +1,6 @@
+tv<-tibble(
+`country`= c("Premier League","La Liga","Bundesliga","Serie A","Ligue 1"),
+`revenue_in_mio`= c(2.660,1.711,1.489,1.190,690)
+)
+  view(tv)
+  

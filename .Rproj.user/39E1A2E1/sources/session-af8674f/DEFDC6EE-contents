@@ -1,0 +1,131 @@
+# Libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Faire un graphique montrant qui a gagné le plus de Ballon d'Or
+winners <- data_bo %>%
+  count(Player) %>%
+  arrange(desc(n)) %>%
+  head(10)
+
+ggplot(winners, aes(x = reorder(Player, -n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(x = "Player", y = "Number of Ballon d'Or", title = "Top winners of the Ballon d'Or") +
+  theme_minimal() +
+  coord_flip()  # Afin  d'afficher les barres horizontalement
+
+# Faire un graphique montrant quelle nationalité a remporté le plus de Ballon d'Or
+countries_bo <- data_bo %>%
+  count(Country) %>%
+  arrange(desc(n)) %>%
+  head(10)  
+
+ggplot(countries_bo, aes(x = reorder(Country, -n), y = n)) +
+  geom_bar(stat = "identity", fill = "lightgreen") +
+  labs(x = "Country", y = "Number of Ballon d'Or", title = "Top nationalities of Ballon d'Or winners") +
+  theme_minimal() +
+  coord_flip()  # Pour afficher les barres horizontalement
+
+# Faire un graphique montrant quelle équipe de foot contient des joueurs qui ont gagné le plus de Ballon d'Or
+teams_bo <- data_bo %>%
+  count(Team) %>%
+  arrange(desc(n)) %>%
+  head(10)
+
+ggplot(teams_bo, aes(x = reorder(Team, -n), y = n)) +
+  geom_bar(stat = "identity", fill = "lightpink") +
+  labs(x = "Team", y = "Number of Ballon d'Or", title = "Top teams of Ballon d'Or winners") +
+  theme_minimal() +
+  coord_flip()  # Pour afficher les barres horizontalement
+
+# Graphique pour montrer quel pied est le plus représenter chez les vainqueurs
+foot_percentages <- data_bo %>%
+  count(PreferredFoot) %>%
+  mutate(Percentage = n / sum(n) * 100) %>%
+  arrange(desc(Percentage))
+
+ggplot(foot_percentages, aes(x = PreferredFoot, y = Percentage, fill = PreferredFoot)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Preferred Foot", y = "Pourcentage", title = "Distribution of the Ballon d'Or winners' favourite feet") +
+  scale_fill_manual(values = c("lightblue", "lightgreen", "lightpink"), guide = "none") +
+  theme_minimal()
+
+# Même graphique qu'au dessus, juste en forme de camembert (donc choisir ce que vous préferrez)
+ggplot(foot_percentages, aes(x = "", y = Percentage, fill = PreferredFoot)) +
+  geom_bar(stat = "identity", width = 1) +
+  labs(x = NULL, y = NULL, fill = "Favourite Feet", 
+       title = "Distribution of the Ballon d'Or winners' favourite feet") +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  scale_fill_manual(values = c("lightblue", "lightgreen", "lightpink"))
+
+# évolution de la taille
+ggplot(data_bo, aes(x = Year, y = Height)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "blue") + 
+  labs(x = "Year", y = "Height", 
+       title = "Changes in player size over time") +
+  theme_minimal()
+
+# évolution du poids
+ggplot(data_bo, aes(x = Year, y = Weight)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "red") + 
+  labs(x = "Year", y = "Weight", 
+       title = "Changes in player weight over time") +
+  theme_minimal()
+
+# Tentative de graphique pour montrer l'évolution de la taille et du poids avec les années des vainqueurs
+ggplot(data_bo, aes(x = Year)) +
+  geom_point(aes(y = Weight, color = "Weight"), size = 3, alpha = 0.7) +
+  geom_point(aes(y = Height, color = "Height"), size = 3, alpha = 0.7) +
+  labs(x = "Year", y = "Value", color = "Mesure",
+       title = "Changes in the weight and height of Ballon d'Or winners") +
+  scale_color_manual(values = c("blue", "green")) +
+  theme_minimal()
+
+# Graphique montrant l'évolution de l'âge des vainqueurs du Ballon d'Or
+ggplot(data_bo, aes(x = Year, y = Age)) +
+  geom_point() +  # Points pour chaque vainqueur du Ballon d'Or
+  geom_smooth(method = "loess", se = FALSE, color = "blue") +  # Lissage pour montrer la tendance
+  labs(x = "Year", y = "Age", 
+       title = "Evolution of the age of Ballon d'Or winners") +
+  theme_minimal()
+
+# Graphique montrant les positions de foot qui remportent le plus de Ballon d'Or
+data_bo %>%
+  separate_rows(PreferredPositions, sep = "/") %>%
+  count(PreferredPositions, sort = TRUE) %>%
+  head(10) %>%  # Choix des 10 positions les plus fréquentes (à ajuster si besoin)
+  ggplot(aes(x = reorder(PreferredPositions, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Ballon d'Or winners' favourite football positions",
+       x = "Positions", y = "Number of winners") +
+  coord_flip() +  # Inversion des axes pour une meilleure lisibilité
+  theme_minimal()
+
+# Filtrer les données pour les joueurs spécifiques (Messi et Ronaldo)
+two_best <- data_bo %>%
+  filter(Player %in% c("Lionel Messi", "Cristiano Ronaldo"))
+
+# Création du graphique comparatif pour la taille
+ggplot(two_best, aes(x = Player, y = Height, fill = Player)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Player", y = "Height", 
+       title = "Height comparison between Messi and Ronaldo") +
+  theme_minimal()
+
+# Pour le poids
+ggplot(two_best, aes(x = Player, y = Weight, fill = Player)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Player", y = "Weight", 
+       title = "Weight comparison between Messi and Ronaldo") +
+  theme_minimal()
+
+# pour un graphique en nuage de points pour comparer à la fois la taille et le poids
+ggplot(two_best, aes(x = Height, y = Weight, color = Player)) +
+  geom_point() +
+  labs(x = "Height", y = "Weight", 
+       title = "Height and weight comparison between Messi and Ronaldo") +
+  theme_minimal()
