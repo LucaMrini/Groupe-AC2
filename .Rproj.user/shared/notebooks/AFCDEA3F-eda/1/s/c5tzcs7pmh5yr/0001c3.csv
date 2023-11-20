@@ -1,5 +1,0 @@
-"0","# Répétez cette opération pour les autres variables que vous souhaitez comparer"
-"0",""
-"0","# Exemple d'histogramme pour la distribution des buts (Goals)"
-"0","ggplot(data1, aes(x = Goals)) + geom_histogram(binwidth = 5, fill = ""skyblue"", color = ""black"") +"
-"0","  labs(title = ""Distribution des buts"", x = ""Buts"", y = ""Fréquence"")"

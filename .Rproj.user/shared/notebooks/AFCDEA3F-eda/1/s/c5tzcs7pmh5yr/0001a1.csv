@@ -1,8 +1,0 @@
-"0",""
-"0","# distribution des poids en premier league"
-"0","premier_league_players %>%"
-"0","  ggplot(aes(x = Weight)) +"
-"0","  geom_histogram(binwidth = 2, fill = ""skyblue"", color = ""black"", alpha = 0.7) +"
-"0","  labs(title = ""Weight distribution of Premier League players"","
-"0","       x = ""Weight"", y = ""Number of players"") +"
-"0","  theme_minimal()"

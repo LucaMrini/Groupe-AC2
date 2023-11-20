@@ -1,0 +1,60 @@
+#############################################
+## The following loads the needed packages ##
+#############################################
+
+# load the required packages
+required_packages <- c(
+  "here", # for the project's organization
+  "tidyverse", # for wrangling
+  "ggrepel", "gghighlight", "patchwork", "maps", "scales","gt","kableExtra","quarto","DataExplorer","plotly",
+  "ggplot2","tidyr","readr" )
+check_install_packages <- function(packages) {
+  missing_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+  if(length(missing_packages) > 0) {
+    cat("Installing missing packages:", paste(missing_packages, collapse = ", "), "\n")
+    install.packages(missing_packages, dependencies = TRUE)
+  } else {
+    cat("All required packages are already installed.\n")
+  }
+}
+purrr::walk(required_packages, function(package) {
+  if (!requireNamespace(package, quietly = TRUE)) {
+    cat(paste("Package", package, "not found. Installing...\n"))
+    install.packages(package, dependencies = TRUE)
+  }
+  library(package, character.only = TRUE)
+})
+
+
+######################################################
+## The following sets a few option for nice reports ##
+######################################################
+
+# general options
+options(
+  digits = 3,
+  str = strOptions(strict.width = "cut"),
+  width = 69,
+  tibble.width = 69,
+  cli.unicode = FALSE
+)
+
+# ggplot options
+theme_set(theme_light())
+
+# knitr options
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  # cache = TRUE,
+  fig.retina = 0.8, # figures are either vectors or 300 dpi diagrams
+  dpi = 300,
+  out.width = "70%",
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618,
+  fig.show = "hold",
+  message = FALSE,
+  echo = FALSE
+)
+

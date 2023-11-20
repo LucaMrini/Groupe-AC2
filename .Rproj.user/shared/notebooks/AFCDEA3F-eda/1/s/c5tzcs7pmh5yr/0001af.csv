@@ -1,8 +1,0 @@
-"0",""
-"0","# distribution des tailles en Laliga"
-"0","la_liga_players %>%"
-"0","  ggplot(aes(x = Height)) +"
-"0","  geom_histogram(binwidth = 2, fill = ""red"", color = ""black"", alpha = 0.7) +"
-"0","  labs(title = ""Height distribution of La Liga players"","
-"0","       x = ""Height"", y = ""Number of players"") +"
-"0","  theme_minimal()"
