@@ -645,8 +645,6 @@ ggplot(combined_stats_long, aes(x = Statistic, y = Value, fill = Player)) +
 
 ```
 
-
-
 -   Mapping out the underlying structure
 -   Identifying the most important variables
 -   Univariate visualizations

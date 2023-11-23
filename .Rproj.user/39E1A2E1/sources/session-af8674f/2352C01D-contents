@@ -1,0 +1,6 @@
+reactable(data_bo,
+          sortable = TRUE, 
+          searchable = TRUE)
+reactable(data1,
+          sortable = TRUE, 
+          searchable = TRUE)

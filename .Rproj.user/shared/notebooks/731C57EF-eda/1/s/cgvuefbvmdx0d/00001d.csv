@@ -1,4 +1,0 @@
-"0","# Libraries"
-"0","data_bo <- read_csv(""data/my_data.csv"")"
-"2","Error: 'data/my_data.csv' does not exist in current working directory ('/Users/lucamarini/Desktop/dsfba_project/report').
-"

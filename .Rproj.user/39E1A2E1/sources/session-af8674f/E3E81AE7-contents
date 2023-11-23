@@ -1,0 +1,9 @@
+# Table Theme
+theme = reactableTheme(backgroundColor = "#1D2024", color = "white", borderColor = "#666666",
+                       paginationStyle = list(color = "white"), 
+                       selectStyle = list(color = "black"),
+                       headerStyle = list(color = "white", fontFamily = "Arial"),
+                       cellStyle = list(color = "#FAFAFA", 
+                                        fontFamily = "Source Code Pro, Consolas, Monaco, monospace", 
+                                        fontSize = "14px")
+)

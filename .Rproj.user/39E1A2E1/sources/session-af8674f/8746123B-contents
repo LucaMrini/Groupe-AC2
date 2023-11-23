@@ -1,8 +1,14 @@
 ---
-title: "Factors influencing the performance of football players - Analysis in a key position"
-author: "Nedim Mujcic,Deborah-Awuni Maggini,Luca Marini"
+title: "Factors Influencing the Performance of Football Players: Analysis in a Key Position"
+author: "Nedim Mujcic, Deborah-Awuni Maggini, Luca Marini"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+format:
+    bookup-html:
+        toc: true
+        toc-depth: 3
+        toc-location: left
+code-fold: true
+code-summary: " Show the code"
 self-contained: true
 ---
 

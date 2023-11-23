@@ -1,0 +1,60 @@
+#read doc use the fourth raw as headers then ommit the last column which is empty
+#Do I keep until 2022 ?
+demo_raw <- read.csv("data/luca/demo.csv", header = TRUE, skip = 3)[,-ncol(data)]
+subset_demo_raw <- demo_raw[, c("Country.Name", "Country.Code", paste0("X", 1990:2022))]
+
+new_column_names <- gsub("^X", "pop", names(subset_demo_raw)[-(1:2)])  
+subset_demo_raw <- subset_demo_raw%>%
+  rename_with(~ new_column_names, matches("^X"))
+
+
+gdp_raw <- read.csv("data/luca/gdp_per_capita.csv") %>%
+  select(-ncol(.)) %>%
+  rename(Country.Code = Code)
+subset_gdp_raw <- gdp_raw[, c("Country.Name", "Country.Code", paste0("X", 1990:2020))]
+
+#removed a column 
+subset_country <- left_join(subset_demo_raw, subset_gdp_raw, by = "Country.Code") %>%
+  select(-matches("Country.Name.y"))
+
+#problem country code of data1
+data1 <- read.csv("data/base.csv")
+subset_data1 <- select(data1, Player, Nation) %>%
+rename(Country.Code = Nation)
+
+#rows_with_na <- subset(demo_clean, apply(is.na(demo_clean), 1, any)) to find the missing values 
+specific_codes <- c(
+  "ENG", "SCO", "REU","GAM", "GUI",  "TOG", "GER",
+  "ALG", "NED",  "CRO", "DEN", "URU", "ZAM", "MTQ",
+  "HON", "SUI", "POR", "PHI",  "WAL",   "ZIM",
+  "CTA",  "RSA", "KVX", "CHA", "ANG",  "PAR"
+)
+
+actual_codes <- c(
+  "GBR","GBR","FRA","GMB","GIN","TGO",
+  "DEU","DZA","NLD","HRV","DNK","URY",
+  "ZMB","FRA","HND","CHE","PRT","PHL","GBR",
+  "ZWE","CAF","ZAF","XKX","TCD","AGO","PRY"
+)
+# Create a lookup table
+lookup_table <- setNames(actual_codes, specific_codes)
+subset_data1$Country.Code <- ifelse(subset_data1$Country.Code %in% names(lookup_table), lookup_table[subset_data1$Country.Code], subset_data1$Country.Code)
+demo_clean <- left_join(subset_data1,subset_country,by = "Country.Code") %>%
+rename(Country.Name = Country.Name.X)
+# Example: Applying thousands separator to numeric columns in demo_clean
+demo_clean <- demo_clean
+demo_clean[] <- lapply(demo_clean, function(x) {
+  if (is.numeric(x)) {
+    format(x, big.mark = "'", scientific = FALSE)
+  } else {
+    x
+  }
+})
+
+# Display the formatted dataframe
+view(demo_clean)
+
+
+
+
+
