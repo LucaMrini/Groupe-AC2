@@ -392,7 +392,7 @@ This database was created from multible *`tibbles`* created from statista since 
 The second step was to merge those *`tibbles`* to the chosen info of our database called data1 that contains cleaned data of the players chosen for our analysis, to do so we wanted to use the *`left_join`* function with "comp" as a similar key, the problem was that in the merged database we wanted the dates as headers and the leagues as values for the "comp" column as it was the opposite for one of the *`tibbles.`*To resolve this problem we *`transposed`* the data base "Pibcomp" so it could fit in the merged database. Now that the problem was finished we used *`left join`* and used the function *`select`* and *`everything`* while joining data1 to not clog the database with useless info and better the readability.
 
 ```{r data clubs}
-data1<- read.csv("data/base.csv")
+data1<- read.csv("data/baseplayer.csv")
 tv<-tibble(
 `Comp`= c("Premier League","La Liga","Bundesliga","Serie A","Ligue 1"),
 `Revenue`= c(3518,2049,1460,1123,687)
@@ -450,11 +450,11 @@ The constituting database are data1 which is the cleaned database of players, de
 
 To merge the 3 database we used *`left_join`* and *`rename`* to find a common pivot on the country code column. At this point we had 27% of NA across multiple categories, the problem was that the data1 database used a custom encoding for countries that wasn't recognized nor compatible with the *`countrycode`* package.
 
-![Missing data before cleaning](data/luca/demo_clean before.png){width="236"}
+![Missing data before cleaning](data/luca/demo_clean%20before.png){width="236"}
 
 To resolve this problem we searched for the rows with NA using this code : `subset(demo_clean, apply(is.na(demo_clean), 1, any)) to find the missing values,` after that we manually created a list that linked non recognized values to the correct one to drastically reduce the NAs.
 
-![Missing data after cleaning](data/luca/demo_clean end.png){fig-align="left" width="191" height="210"}
+![Missing data after cleaning](data/luca/demo_clean%20end.png){fig-align="left" width="191" height="210"}
 
 ```{r Read demo data}
 #read doc use the fourth raw as headers then ommit the last column which is empty
@@ -477,7 +477,7 @@ subset_country <- left_join(subset_demo_raw, subset_gdp_raw, by = "Country.Code"
   select(-matches("Country.Name.y"))
 
 #problem country code of data1
-data1 <- read.csv("data/base.csv")
+data1 <- read.csv("data/baseplayer.csv")
 subset_data1 <- select(data1, Player, Nation) %>%
 rename(Country.Code = Nation)
 
@@ -528,7 +528,6 @@ reactable(
     searchInputStyle = list(width = "100%")
   )
 )
-
 
 ```
 

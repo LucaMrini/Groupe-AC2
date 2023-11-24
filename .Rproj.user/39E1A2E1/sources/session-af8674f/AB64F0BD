@@ -1,0 +1,26 @@
+{
+    "id": "AB64F0BD",
+    "path": "~/Documents/GitHub/Groupe-AC2/data/base.csv",
+    "project_path": "data/base.csv",
+    "type": "text",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1700828999597.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "252,5",
+        "scrollLine": "211"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1700822234,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1700822234,
+    "read_only": false,
+    "read_only_alternatives": []
+}

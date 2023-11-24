@@ -1,0 +1,107 @@
+# Librairies
+library(dplyr)
+library(readr)
+
+# Data Base sur les gagnants des Ballons d'Or
+data_bo <- read_csv("data/bdor.csv")
+
+# Utilisez dplyr pour filtrer les années de 2012 à 2022, afin de garder les 20 derniers ballons d'or (il n'yen a pas eu en 2020)
+data_bo <- data_bo %>%
+  filter(Year >= 2002 & Year <= 2022)
+
+# faire une liste avec uniquement les gagnants
+data_bo <- data_bo %>%
+  filter(Rank == "1st")
+
+# renommer Luka Modrić
+# Utilisez dplyr pour mettre à jour la variable dans la colonne "Player"
+data_bo <- data_bo %>%
+  mutate(Player = ifelse(Player == "Croatia Luka Modric", "Luka Modrić", Player))
+
+# Charger une base de donnée différentes pour par la suite créer des colonnes et variables
+data_fifa_21 <- read_csv("data/fifa21.csv")
+
+# Afin de pouvoir avoir une colonne en commun afin de par la suite pouvoir ajouter les variables
+data_fifa_21 <- data_fifa_21 %>%
+  rename(Player = Name)
+
+# charger une nouvelle base de donnée pour remplir les derniers NA
+fifa05 <- read_delim("data/fifa5.csv", delim = ";", 
+                     escape_double = FALSE, trim_ws = TRUE)
+
+# avoir le même nom des colonnes qu'on cherche à extraire
+fifa05 <- fifa05 %>%
+  rename(Player = Fullname)
+
+
+# Afin d'ajouter les colonnes manquantes Age, Taille, Poids notamment (donc joindre les bases de données)
+# Utilisez dplyr::left_join pour joindre les data frames en utilisant la colonne "Player" comme clé commune
+data_bo <- left_join(data_bo, data_fifa_21, by = "Player")
+
+# remplir les NA avec la 3ème base de donnée par la suite
+data_bo <- left_join(data_bo, fifa05, by = "Player")
+
+# garder les colonnes qui nous interessent
+data_bo <- data_bo %>%
+  select(
+    Year, Rank, Player, Country, Team, Height, Weight, PreferredFoot, BirthDate, PreferredPositions,
+    height, weight, preferred_foot, birth_date, preferred_positions
+  )
+
+# Garder que l'année pour calculer ensuite l'âge
+# Utilisez la fonction sub pour extraire l'année
+data_bo$Year_Birth <- as.numeric(sub(".*,(\\s\\d{4})", "\\1", data_bo$BirthDate))
+
+# Supprimez la colonne "BirthDate" 
+data_bo <- data_bo[, -which(names(data_bo) == "BirthDate")]
+
+# créer la colonne Age
+data_bo <- data_bo %>%
+  mutate(Age = Year - Year_Birth)
+
+# Remplacez les valeurs manquantes dans "Height" par les valeurs de "height"
+data_bo$Height <- ifelse(is.na(data_bo$Height), data_bo$height, data_bo$Height)
+
+# Faire la même chose pour les autres colonnes
+data_bo$Weight <- ifelse(is.na(data_bo$Weight), data_bo$weight, data_bo$Weight)
+data_bo$PreferredFoot <- ifelse(is.na(data_bo$PreferredFoot), data_bo$preferred_foot, data_bo$PreferredFoot)
+data_bo$PreferredPositions <- ifelse(is.na(data_bo$PreferredPositions), data_bo$preferred_positions, data_bo$PreferredPositions)
+data_bo$year_birth <- as.numeric(substr(data_bo$birth_date, 7, 10))
+data_bo$Year_Birth <- ifelse(is.na(data_bo$Year_Birth), data_bo$year_birth, data_bo$Year_Birth)
+
+# Garder que les colonnes qui nous intéressent
+data_bo <- data_bo %>%
+  select(
+    Year, Rank, Player, Country, Team, Height, Weight, 
+    PreferredFoot, PreferredPositions, Year_Birth, Age
+  )
+
+# Enlever les NA de Age
+data_bo <- data_bo %>%
+  mutate(Age = Year - Year_Birth)
+
+# Il ne manque les valeurs que pour le joueur Kaka, ainsi nous allons écrire nous mêmes les valeurs
+Kaka_values <- c(
+  Height = 186,
+  Weight = 82,
+  PreferredFoot = "Both",
+  PreferredPositions = "CAM",
+  Year_Birth = 1982,
+  Age = 25
+)
+
+# Utilisez ifelse pour remplacer les valeurs manquantes uniquement pour le joueur Kaka
+for (col_name in names(Kaka_values)) {
+  data_bo[[col_name]] <- ifelse(data_bo$Player == "Kaka" & is.na(data_bo[[col_name]]), Kaka_values[[col_name]], data_bo[[col_name]])
+}
+
+# Afin de standardiser les colonnes
+data_bo$PreferredFoot <- ifelse(data_bo$PreferredFoot %in% c("L", "R"), ifelse(data_bo$PreferredFoot == "L", "Left", "Right"), data_bo$PreferredFoot)
+data_bo$PreferredPositions <- gsub("-", "/", data_bo$PreferredPositions)
+
+# Afin de réordré, voici sur quoi nous allons travailler pour le Ballon d'Or
+data_bo <- data_bo %>%
+  select(
+    Year, Rank, Player, Country, Team, Age, Height, Weight, PreferredFoot, PreferredPositions
+  )
+
