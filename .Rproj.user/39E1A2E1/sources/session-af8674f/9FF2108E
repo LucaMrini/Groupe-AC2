@@ -1,0 +1,26 @@
+{
+    "id": "9FF2108E",
+    "path": "~/Documents/GitHub/Groupe-AC2/scripts/setup.R",
+    "project_path": "scripts/setup.R",
+    "type": "r_source",
+    "hash": "2219417147",
+    "contents": "",
+    "dirty": false,
+    "created": 1700983504357.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "9,120",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1700995787,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1700995787437,
+    "read_only": false,
+    "read_only_alternatives": []
+}

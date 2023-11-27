@@ -1,0 +1,61 @@
+# Load required libraries
+library(plotly)
+library(fmsb)
+
+# Create a dataframe with player attributes
+player_data <- data.frame(
+  
+  Year = c(2020:2021),
+  Rank = rep("1st",20),
+  Player = c("Ronaldo", "Pavel", "Andriy", "Ronaldo", "Fabio", "Kaka", "Cristiano", 
+             "Lionel", "Lionel", "Lionel", "Lionel", "Cristiano", "Cristiano", 
+             "Lionel", "Cristiano", "Cristiano", "Luka", "Lionel", "Lionel", "Karim"),
+  Country = c("Brazil", "Czech Republic", "Ukraine", "Brazil", "Italy", "Brazil", 
+              "Portugal", "Argentina", "Argentina", "Argentina", "Argentina", 
+              "Portugal", "Portugal", "Argentina", "Portugal", "Portugal", "Croatia", 
+              "Argentina", "Argentina", "France"),
+  Team = c("Real Madrid", "Juventus", "AC Milan", "Barcelona", "Real Madrid", 
+           "AC Milan", "Manchester United", "Barcelona", "Barcelona", "Barcelona", 
+           "Barcelona", "Real Madrid", "Real Madrid", "Barcelona", "Real Madrid", 
+           "Real Madrid", "Real Madrid", "Barcelona", "Paris Saint-Germain", "Real Madrid"),
+  Age = c(26, 31, 28, 25, 33, 25, 23, 22, 23, 24, 25, 28, 29, 28, 31, 32, 33, 32, 34, 35),
+  Height = c(183, 180, 183, 182, 176, 186, 187, 170, 170, 170, 170, 187, 187, 170, 187, 187, 172, 170, 170, 185),
+  Weight = c(82, 75, 73, 76, 75, 82, 83, 72, 72, 72, 72, 83, 83, 72, 83, 83, 66, 72, 72, 81),
+  PreferredFoot = c("Right", "Right", "Right", "Right", "Right", "Both", "Right", "Left", 
+                    "Left", "Left", "Left", "Right", "Right", "Left", "Right", "Right", 
+                    "Right", "Left", "Left", "Right")
+)
+PreferredPositions = c(   "ST/LS/RS",
+                          "CAM/CM/LM",
+                          "ST/CF",
+                          "LCAM/CAM/ST",
+                          "CB/LB/RB",
+                          "CAM",
+                          "ST/LW",
+                          "RW/ST/CF",
+                          "RW/ST/CF",
+                          "RW/ST/CF",
+                          "RW/ST/CF",
+                          "ST/LW",
+                          "ST/LW",
+                          "RW/ST/CF",
+                          "ST/LW",
+                          "ST/LW",
+                          "CM",
+                          "RW/ST/CF",
+                          "RW/ST/CF",
+                          "CF/ST")
+# Radar chart using fmsb package
+radar_data <- player_data[, c("Age", "Height", "Weight")]
+rownames(radar_data) <- player_data$Player
+
+# Create the radar chart
+p <- radarchart(radar_data, axistype = 1, 
+                pcol = "blue", pfcol = "lightblue", plwd = 2, plty = 1,
+                cglcol = "grey", cglty = 1, axislabcol = "grey", caxislabels = seq(0, 200, 50), cglwd = 0.8,
+                vlcex = 0.8 
+)
+
+# Add legend to the radar chart
+legend(x = 0.7, y = 1, legend = rownames(radar_data[-c(1, 2), ]), 
+       bty = "n", pch = 20, col = "lightblue", text.col = "grey", cex = 1.2, pt.cex = 3)

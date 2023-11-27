@@ -1,0 +1,55 @@
+# Load necessary libraries
+library(plotly)
+library(dplyr)
+
+# Example data: Random values for different countries
+set.seed(123)
+data <- data.frame(
+  country = c("USA", "Canada", "Mexico", "Brazil", "UK", "Germany", "France", "China", "India", "Japan"),
+  value_2019 = runif(10, min = 1, max = 100),
+  value_2020 = runif(10, min = 1, max = 100),
+  value_2021 = runif(10, min = 1, max = 100)
+)
+
+# Melt the data for use in plotly
+data_melted <- data %>%
+  pivot_longer(cols = starts_with("value"), names_to = "Year", values_to = "Value")
+
+# Create plotly plot
+plot <- plot_geo(data_melted, locationmode = "country names") %>%
+  add_trace(
+    z = ~Value,
+    locations = ~country,
+    color = ~Value,
+    colors = "Blues",
+    text = ~paste("Country:", country, "<br>Value:", Value),
+    frame = ~Year
+  ) %>%
+  colorbar(title = "Value") %>%
+  layout(
+    title = "World Heat Map",
+    geo = list(showframe = FALSE, projection = list(type = 'mercator')),
+    updatemenus = list(
+      list(
+        type = "buttons",
+        buttons = list(
+          list(
+            method = "animate",
+            args = list(
+              frame = list(duration = 500, redraw = TRUE),
+              fromcurrent = TRUE,
+              transition = list(duration = 300, easing = "quadratic-in-out")
+            ),
+            label = "Play"
+          )
+        ),
+        x = 0.1,
+        xanchor = "right",
+        y = 0,
+        yanchor = "bottom"
+      )
+    )
+  )
+
+# Show the plot
+plot

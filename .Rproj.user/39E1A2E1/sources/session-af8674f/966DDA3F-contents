@@ -1,0 +1,29 @@
+# Load required libraries
+library(plotly)
+
+# Assuming your data is stored in a dataframe named 'player_data'
+
+# Select the player you want to visualize
+selected_player <- data_bo[data_bo$Player == "Kaka", ]
+
+# Selecting numerical attributes for radar plot
+player_stats <- as.numeric(selected_player[, c("Age", "Height", "Weight")])
+player_stats_labels <- c("Age", "Height", "Weight")
+
+# Create a radar chart using plotly
+plot_ly(
+  type = 'scatterpolar',
+  fill = 'toself',
+  r = player_stats,
+  theta = player_stats_labels,
+  mode = 'lines'
+) %>%
+  layout(
+    title = paste("Player Radar Plot -", selected_player$Player),
+    polar = list(
+      radialaxis = list(
+        visible = TRUE,
+        range = c(0, max(player_stats))
+      )
+    )
+  )

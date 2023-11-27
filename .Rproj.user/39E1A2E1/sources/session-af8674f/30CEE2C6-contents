@@ -1,0 +1,29 @@
+library(ggplot2)
+library(plotly)
+
+# Function to generate distribution plot from a dataset
+plot_player_distribution <- function(player_data) {
+  # Reorder the data frame by player counts
+  player_data <- player_data[order(-player_data$players), ]
+  
+  # Generate the plot
+  p <- ggplot(player_data, aes(x = reorder(league, -players), y = players, fill = league)) +
+    geom_bar(stat = "identity", color = "black", alpha = 1, show.legend = FALSE) +
+    labs(title = "Distribution of Soccer Players in Big Five Leagues",
+         x = "League",
+         y = "Number of Players") +
+    theme_minimal()
+  
+  # Convert ggplot to plotly
+  ggplotly(p, tooltip = c("y")) %>%
+    layout(annotations = list(text = paste("League:", player_data$league, "<br>Players:", player_data$players),
+                              x = player_data$league, y = player_data$players, showarrow = FALSE))
+}
+
+# Example dataset (Replace this with your actual dataset)
+combined_data <- data.frame(
+  league = c("Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1"),
+  players = c(85, 69, 80, 69, 84)
+)
+
+plot_player_distribution(combined_data)

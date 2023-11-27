@@ -1,0 +1,32 @@
+{
+    "id": "37B08F5E",
+    "path": "~/Documents/GitHub/Groupe-AC2/data/luca/eda luca.qmd",
+    "project_path": "data/luca/eda luca.qmd",
+    "type": "quarto_markdown",
+    "hash": "3474251107",
+    "contents": "",
+    "dirty": false,
+    "created": 1700926069343.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "tempName": "Untitled2",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "161,0",
+        "scrollLine": "0",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "2364,3447",
+        "rmdVisualModeLocation": "7178:3479.5"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1701031808,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701076606614,
+    "read_only": false,
+    "read_only_alternatives": []
+}
