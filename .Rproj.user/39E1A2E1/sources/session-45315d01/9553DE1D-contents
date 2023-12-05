@@ -1,0 +1,82 @@
+
+data1 <- read_delim("data/skill.csv", delim = ";", 
+                    escape_double = FALSE, 
+                    locale = locale(encoding = "ISO-8859-1"), 
+                    trim_ws = TRUE, show_col_types = FALSE)
+data_fifa_21 <- read_csv("data/fifa21.csv", show_col_types = FALSE)
+
+
+data1 <- data1 %>%
+  select(-Rk,everything()) %>%
+  filter(MP >= 9, Min >= 405, str_detect(Pos, "^F")) %>%
+  distinct(Player, .keep_all = TRUE)
+
+
+
+special_characters <- c("\\?", "Edin D\\?eko", "Alfre\\? Finnbogason", 
+                        "Albert Gu\\?mundsson", "Josip Ili\\?i\\?", 
+                        "Krzysztof Pi\\?tek", "Przemys\\?aw P\\?acheta")
+replacements <- c("ć", "Edin Džeko", "Alfreð Finnbogason", 
+                  "Albert Guðmundsson", "Josip Iličić", 
+                  "Krzysztof Piątek", "Przemysław Płacheta")
+
+for (i in seq_along(special_characters)) {
+  data1$Player <- str_replace_all(data1$Player, fixed(special_characters[i]), replacements[i])
+}
+
+
+data_fifa_21 <- data_fifa_21 %>%
+  rename(Player = Name)
+
+
+suppressWarnings({data1 <- data1 %>%
+  left_join(data_fifa_21 %>% select(Player, Height, Weight), by = "Player") %>%
+  separate(Player, into = c("Surname", "Name"), sep = " ", extra = "merge") %>%
+  left_join(data_fifa_21 %>% select(Player, Height, Weight), by = c("Name" = "Player")) %>%
+  mutate(
+    Height = coalesce(Height.x, Height.y),
+    Weight = coalesce(Weight.x, Weight.y)
+  ) %>%
+  select(-starts_with("Height"), -starts_with("Weight")) %>%
+  distinct(Surname, Name, .keep_all = TRUE)})  
+
+
+if ("Height" %in% colnames(data1) && "Weight" %in% colnames(data1)) {
+  data1 <- data1 %>%
+    filter(!is.na(Height), !is.na(Weight)) %>%
+    mutate(Player = paste(Surname, Name, sep = " "),
+           Age = 2022 - Born,
+           Height = ifelse(
+             Rk %in% c(1181, 1074, 2542, 1326, 21) ~ c(183, 187, 182, 200, 175),
+             TRUE ~ Height
+           ),
+           Weight = ifelse(
+             Rk %in% c(1181, 1074, 2542, 1326, 21) ~ c(76, 74, 70, 83, 75),
+             TRUE ~ Weight
+           )
+    ) %>%
+    select(Player, Nation, Pos, Squad, Comp, Age, Born, Height, Weight, everything())
+  
+}
+
+reactable(
+  data1,
+  searchable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = TRUE,
+  theme = reactableTheme(
+    borderColor = "#dfe2e5",
+    stripedColor = "#f6f8fa",
+    highlightColor = "#f0f5f9",
+    cellPadding = "8px 12px",
+    style = list(
+      fontFamily = "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif",
+      ".rt-td" = list(
+        "min-width" = "200px",  
+        "max-width" = "400px"   
+      )
+    ),
+    searchInputStyle = list(width = "100%")
+  )
+)

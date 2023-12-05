@@ -1,0 +1,8 @@
+demo_clean <- read.csv("data/luca/demo_clean.csv")
+data <- demo_clean$Country.Name
+
+# Aggregate the counts of each country name
+agg_data <- aggregate(count ~ Country.Name, data = data.frame(Country.Name = data, count = 1), FUN = length)
+
+# Sort the aggregated data by count
+sorted_agg_data <- agg_data[order(agg_data$count, decreasing = TRUE), ]

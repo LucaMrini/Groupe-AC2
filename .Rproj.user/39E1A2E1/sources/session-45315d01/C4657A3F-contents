@@ -1,0 +1,58 @@
+library(plotly)
+library(dplyr)
+library(tidyverse)
+
+selected_columns <- demo_clean %>%
+  select(Country.Name, pop1990:pop2022)
+# Function to remove single quotes from numerical values
+remove_quotes <- function(x) {
+  as.numeric(gsub("'", "", x))
+}
+
+selected_columns <- selected_columns %>%
+  mutate_at(vars(pop1990:pop2022), ~remove_quotes(.))
+# Assuming selected_columns is your dataframe
+selected_columns<- selected_columns %>%
+  distinct(Country.Name, .keep_all = TRUE)
+
+# Filter world dataset based on the unique country names
+world <- map_data("world")
+subset_world <- world %>%
+  filter(region %in% unique_countries$Country.Name)
+
+# Merge data with a world map
+map_data <- merge(subset_world, unique_countries, by.x = "region", by.y = "Country.Name", all.x = TRUE)
+
+
+frames <- lapply(1990:2022, function(year) {
+  frame_data <- map_data %>%
+    select(region, matches(paste0("pop", year))) %>%
+    rename(population = matches(paste0("pop", year))) %>%
+    mutate(population = as.numeric(population)) %>%
+    group_by(region) %>%
+    summarise(population = sum(population, na.rm = TRUE)) %>%
+    mutate(frame = year)
+  
+  frame_data
+})
+
+# Combine frames into a single dataframe
+all_frames <- bind_rows(frames)
+
+# Create the plot
+plot_ly(data = all_frames, type = "choropleth", locations = ~region, z = ~population,
+        text = ~paste("Country: ", region, "<br>Population: ", population),
+        color = ~population, colorscale = "Viridis",
+        marker = list(line = list(color = "rgb(255,255,255)", width = 0.5)),
+        frame = ~frame, ids = ~region) %>%
+  layout(title = "World Population Heatmap",
+         geo = list(showframe = FALSE, showcoastlines = TRUE, projection = list(type = "mercator"))) %>%
+  animation_opts(frame = 100, redraw = FALSE) %>%
+  animation_slider(
+    currentvalue = list(prefix = "Year: "),
+    visible = TRUE,
+    steps = list(
+      list(args = list("frame", list(duration = 500), from = 1990, to = 2022, by = 1))
+    )
+  )
+

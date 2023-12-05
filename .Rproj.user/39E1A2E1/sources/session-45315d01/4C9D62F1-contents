@@ -1,0 +1,57 @@
+selected_columns2 <- demo_clean %>%
+  select(Country.Name, X1990:X2020) 
+selected_columns2 <- selected_columns2%>%
+  group_by(Country.Name) %>%
+  slice(1)  
+
+drop_na(selected_columns2)
+average_gdp <- selected_columns2 %>%
+  group_by(Country.Name) %>%
+  summarise(across(starts_with("X"), mean, na.rm = TRUE)) %>%
+  pivot_longer(cols = starts_with("X"), names_to = "Year", values_to = "Avg_GDP")
+
+
+# Sort the data by Year for the slider
+average_gdp <- average_gdp[order(average_gdp$Year), ]
+
+# Creating the Plotly plot with a slider for GDP distribution per year
+plotly_distribution_slider <- list()
+
+# Creating steps for the slider
+steps_slider <- list()
+for (i in 1:length(unique(average_gdp$Year))) {
+  data_for_year <- average_gdp[average_gdp$Year == unique(average_gdp$Year)[i], ]$Avg_GDP
+  
+  # Creating a histogram for each year's GDP distribution
+  hist_data <- hist(data_for_year, plot = FALSE)
+  
+  # Ensure x and y have the same sizes
+  x_vals <- hist_data$mids
+  y_vals <- hist_data$counts
+  
+  plotly_distribution_slider[[i]] <- plot_ly(x = x_vals, y = y_vals, type = 'bar',
+                                             marker = list(color = 'blue'), opacity = 0.7) %>%
+    layout(
+      title = paste("GDP Distribution for Year", unique(average_gdp$Year)[i]),
+      xaxis = list(title = "GDP Values"),
+      yaxis = list(title = "Frequency")
+    )
+  
+  step <- list(
+    method = "restyle",
+    args = list("visible", rep(FALSE, length(unique(average_gdp$Year)))),
+    label = unique(average_gdp$Year)[i]
+  )
+  step$args[[2]][i] <- TRUE
+  steps_slider[[i]] <- step
+}
+
+plotly_distribution_slider[[1]] %>%
+  plotly::layout(
+    sliders = list(
+      list(
+        active = 0,
+        steps = steps_slider
+      )
+    )
+  )

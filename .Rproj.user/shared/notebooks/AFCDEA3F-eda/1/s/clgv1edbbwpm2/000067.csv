@@ -1,8 +1,0 @@
-"0",""
-"0","# évolution de la taille"
-"0","ggplot(data_bo, aes(x = Year, y = Height)) +"
-"0","  geom_point() +"
-"0","  geom_smooth(method = ""loess"", se = FALSE, color = ""blue"") + "
-"0","  labs(x = ""Year"", y = ""Height"", "
-"0","       title = ""Changes in player size over time"") +"
-"0","  theme_minimal()"

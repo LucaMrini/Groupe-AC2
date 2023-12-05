@@ -1,0 +1,17 @@
+gdpcut<- read.csv("data/luca/demo_clean.csv")
+gdpcut <- gdpcut[, c("Country.Name", "Country.Code", paste0("X", 1990:2020))]
+gdpcut_unique <- gdpcut[!duplicated(gdpcut$Country.Name), c("Country.Name", "Country.Code", paste0("X", 1990:2020))]
+# Extract columns X1990 to X2020
+columns_to_convert <- paste0("X", 1990:2020)
+
+
+# Loop through each column, remove single quotes, and convert its values to numeric
+for (col in columns_to_convert) {
+  # Remove single quotes (') from the data
+  gdpcut_unique[[col]] <- as.numeric(gsub("'", "", as.character(gdpcut_unique[[col]])))
+}
+
+# Loop through each column and convert its values to numeric
+for (col in columns_to_convert) {
+  gdpcut_unique[[col]] <- as.numeric(as.character(gdpcut_unique[[col]]))
+}

@@ -1,0 +1,1624 @@
+---
+title: "EDA skillc Nedim"
+format: html
+editor: visual
+---
+
+## Juste pour pouvoir Render de mon côté
+
+```{r}
+#| echo: false
+# Librairies
+library(readr)
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(lubridate)
+
+# Pour délimiter les variables, et pour pouvoir enlever les ? de la base de données
+data1 <- read_delim("data/skill.csv", delim = ";", 
+                    escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"), 
+                    trim_ws = TRUE)
+
+# Enlever les duplications des joueurs comme Jérémie Boga qui était là deux fois
+data1 <- data1 %>%
+  distinct(Player, .keep_all = TRUE)
+
+# Ici, je ne garde que les joueurs ayant disputé au moins 9 matches durant la saison pour ne pas biaiser les résultats, on a choisi 9 en se disant que si un transfert est fait à la mi-saison, le joueur a joué au moins la moitié des matches de sa demi-saison.
+data1 <- data1 %>%
+  filter(MP >= 9)
+
+# Ici, même chose qu'au dessus mais avec les minutes, on a décidé de prendre 405 minutes = 9*45, on part du principe que sur les 9 matches d'auparavant, les joueurs ont au moins joué une mi-temps par match
+data1 <- data1 %>%
+  filter(Min >= 405)
+
+# Pour ne garder que les joueurs offensives donc qui commencent par Forward donc F
+data1 <- data1 %>%
+  filter(str_detect(Pos, "^F"))
+
+# Solution complexe mais comme on arrive pas à changer les ć, on cherche tous les noms des joueurs qui posent problèmes et les renommons
+# un par un, il n'yen a pas énormément
+data1$data_problem <- grepl("\\?", data1$Player)
+players_problem <- data1[data1$data_problem, ]
+
+# Remplacer Edin Dzeko
+# Renommer "Edin D?eko" en "Edin Džeko"
+data1$Player <- sub("Edin D\\?eko", "Edin Džeko", data1$Player)
+
+# Renommer "Alfre? Finnbogason" en "Alfreð Finnbogason"
+data1$Player <- sub("Alfre\\? Finnbogason", "Alfreð Finnbogason", data1$Player)
+
+# Renommer "Albert Gu?mundsson" en "Albert Guðmundsson"
+data1$Player <- sub("Albert Gu\\?mundsson", "Albert Guðmundsson", data1$Player)
+
+# Renommer "Josip Ili?i?" en "Josip Iličić"
+data1$Player <- sub("Josip Ili\\?i\\?", "Josip Iličić", data1$Player)
+
+# Renommer "Krzysztof Pi?tek" en "Krzysztof Piątek"
+data1$Player <- sub("Krzysztof Pi\\?tek", "Krzysztof Piątek", data1$Player)
+
+# Renommer "Przemys?aw P?acheta" en "Przemysław Płacheta"
+data1$Player <- sub("Przemys\\?aw P\\?acheta", "Przemysław Płacheta", data1$Player)
+
+# Renommer "Duan Vlahovi?" en "Dušan Vlahović", manière différente car problème différent, le nom présente un espace pour on ne sait quelle raison
+data1$Player <- ifelse(data1$Rk == 2801, "Dušan Vlahović", data1$Player)
+
+# Renommer "Nikola Vla?i?" en "Nikola Vlašić", manière différente car problème différent, le nom présente un espace pour on ne sait quelle raison
+data1$Player <- ifelse(data1$Rk == 2803, "Nikola Vlašić", data1$Player)
+
+# Renommer "Mat?j Vydra" en "Matěj Vydra"
+data1$Player <- sub("Mat\\?j Vydra", "Matěj Vydra", data1$Player)
+
+# Renommer "Milan ?uri?" en "Milan Đurić"
+data1$Player <- sub("Milan \\?uri\\?", "Milan Đurić", data1$Player)
+
+# Renommer et ajouter aux derniers auquel il manquait le ć
+data1$Player <- gsub("\\?", "ć", data1$Player)
+
+# Load du dataset fifa 21 pour ajouter les colonnes Height et Weight
+data_fifa_21 <- read_csv("data/fifa21.csv")
+
+# faire en sorte d'avoir Player dans les deux bases de données pour faciliter le fait de joindre
+data_fifa_21 <- data_fifa_21 %>%
+  rename(Player = Name)
+
+# Rajouter le poids et la taille grâce à la deuxième base de données
+data1 <- data1 %>%
+  left_join(data_fifa_21 %>% select(Player, Height, Weight), by = "Player")
+
+# Afin d'avoir une liste de quel joueur n'a pas sa taille et poids
+height_na <- data1 %>%
+  filter(is.na(Height))
+
+# Tentative de séparer les noms pour essayer de diminuer les NA
+data1 <- data1 %>%
+  separate(Player, into = c("Surname", "Name"), sep = " ", extra = "merge")
+
+data_fifa_21 <- data_fifa_21 %>%
+  separate(Player, into = c("Surname", "Name"), sep = " ", extra = "merge")
+
+# Joindre pour diminuer les NA en utilisant cette fois uniquement le Name venant de Player, pour la raison que certains joueurs ont des noms composés
+# et que certains prénoms comme Sehrou/Serhou Guirassy sont différents dans les deux bases de données
+data1 <- data1 %>%
+  left_join(data_fifa_21 %>% select(Name, Height, Weight), by = "Name") %>%
+  mutate(
+    Height = coalesce(Height.x, Height.y),
+    Weight = coalesce(Weight.x, Weight.y)
+  ) %>%
+  select(-Height.x, -Weight.x, -Height.y, -Weight.y)
+
+data1 <- data1 %>%
+  distinct(Name, .keep_all = TRUE)
+
+# Mettre en avant les tailles et poids pour ne pas avoir à passer 200 colonnes
+data1 <- data1 %>%
+  select(Rk, Surname, Name, Nation, Pos, Squad, Comp, Age, Born, Height, Weight, everything())
+
+# Afin d'avoir une liste de quel joueur n'a pas sa taille et poids
+height_na <- data1 %>%
+  filter(is.na(Height))
+
+# Histoire d'avoir une nouvelle colonne en commun "Born", qui est l'année de naissance
+data_fifa_21 <- data_fifa_21 %>%
+  mutate(Born = year(mdy(BirthDate)))
+
+# Renommer pour avoir en commun dans les deux bases de données
+data_fifa_21 <- data_fifa_21 %>%
+  rename(Squad = Club)
+
+data1 <- data1 %>%
+  left_join(data_fifa_21 %>% select(Born, Squad, Height, Weight), by = c("Born", "Squad")) %>%
+  mutate(
+    Height = coalesce(Height.x, Height.y),
+    Weight = coalesce(Weight.x, Weight.y)
+  ) %>%
+  select(-Height.x, -Weight.x, -Height.y, -Weight.y)
+
+# Mettre en avant les tailles et poids pour ne pas avoir à passer 200 colonnes
+data1 <- data1 %>%
+  select(Rk, Surname, Name, Nation, Pos, Squad, Comp, Age, Born, Height, Weight, everything())
+
+# Afin d'enlever les duplications faites par les étapes au dessus
+data1 <- data1 %>%
+  distinct(Name, .keep_all = TRUE)
+
+# Afin d'avoir une liste de quel joueur n'a pas sa taille et poids
+height_na <- data1 %>%
+  filter(is.na(Height))
+
+# Arrivé ici, on a compris qu'en essayant de différentes manières, que ce soit par différentes clés communes entre les bdd comme "Born", en ayant séparé "Player"
+# on arrivera toujours pas à remplacer les NA de certains joueurs pour différentes raisons, notamment qu'entre les bdd certains noms sont complets, d'autres que Prénoms et Noms
+# Il y aussi des problèmes avec des noms composés donc avec des "-", mais aussi des Prénoms et Noms différents entres les bdd comme "Sehrou Guirassy" et "Serhou Guirassy"
+# On est donc parti du principe qu'avec la liste de height_na qu'on a la plupart des joueurs ne sont pas d'une énorme importance pour l'analyse future
+# ainsi nous avons décidé de mettre manuellement les valeurs pour les joueurs nous intéressant et de drop les NA restantes.
+
+# Comme critère de choix des joueurs à faire individuellement, nous avons pris le meilleur Goals (90') de chaque championnat
+
+# Heung-Min Son
+data1 <- data1 %>%
+  mutate(
+    Height = ifelse(Rk == 1181, 183, Height),
+    Weight = ifelse(Rk == 1181, 76, Weight)
+  )
+
+# Arnaut Danjuma (Groenevelt)
+data1 <- data1 %>%
+  mutate(
+    Height = ifelse(Rk == 1074, 187, Height),
+    Weight = ifelse(Rk == 1074, 74, Weight)
+  )
+
+# Sambou Soumano
+data1 <- data1 %>%
+  mutate(
+    Height = ifelse(Rk == 2542, 182, Height),
+    Weight = ifelse(Rk == 2542, 70, Weight)
+  )
+
+# Sasa Kalajdzic
+data1 <- data1 %>%
+  mutate(
+    Height = ifelse(Rk == 1326, 200, Height),
+    Weight = ifelse(Rk == 1326, 83, Weight)
+  )
+
+# Felix Afena-Gyan
+data1 <- data1 %>%
+  mutate(
+    Height = ifelse(Rk == 21, 175, Height),
+    Weight = ifelse(Rk == 21, 75, Weight)
+  )
+
+# Enlever les NA restants
+data1 <- data1 %>%
+  filter(!is.na(Height) & !is.na(Weight))
+
+# Remplacer Prénom et Nom par Player
+data1 <- data1 %>%
+  mutate(Player = paste(Surname, Name, sep = " "))
+
+# Mettre en avant Player pour ne pas avoir à passer 200 colonnes
+data1 <- data1 %>%
+  select(Rk, Player, Nation, Pos, Squad, Comp, Age, Born, Height, Weight, everything())
+
+# Supprimer Surname et Name
+data1 <- data1 %>%
+  select(-Surname, -Name)
+
+# créer Age
+data1 <- data1 %>%
+  mutate(Age = 2022 - Born)
+
+# Afin de ne garder que les colonnes qui nous importent pour l'analyse
+data1 <- data1 %>%
+  select(Rk, Player, Nation, Pos, Squad, Comp, Age, Height, Weight, MP, Min, Goals,
+         `SoT%`, `G/Sh`, ShoDist, PasTotCmp, PasTotAtt, Assists, PPA, CrsPA, SCA, 
+         GCA, GcaDrib, Press, DriAtt, `DriSucc%`, Fld, `AerWon%`)
+
+# Afin d'isoler les attaquants de Premier League
+premier_league_players <- data1 %>%
+  filter(Comp == "Premier League")
+
+# Afin d'isoler les attaquants de Bundesliga
+bundesliga_players <- data1 %>%
+  filter(Comp == "Bundesliga")
+
+# Afin d'isoler les attaquants de Ligue 1
+ligue_1_players <- data1 %>%
+  filter(Comp == "Ligue 1")
+
+# Afin d'isoler les attaquants de Série A
+serie_a_players <- data1 %>%
+  filter(Comp == "Serie A")
+
+# Afin d'isoler les attaquants de La Liga
+la_liga_players <- data1 %>%
+  filter(Comp == "La Liga")
+
+# Créer une nouvelle base de données normalisées afin d'avoir des % dans les colonnes et pour par la suite faire le radar plot
+numeric_cols <- c("Goals", "SoT%", "G/Sh", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", 
+                  "GCA", "GcaDrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%")
+
+normalized_data1 <- data1 %>%
+  mutate(across(all_of(numeric_cols), ~ (. / max(., na.rm = TRUE)) * 100))
+
+# Afin d'isoler les attaquants de Premier League
+norm_premier_league_players <- normalized_data1 %>%
+  filter(Comp == "Premier League")
+
+# Afin d'isoler les attaquants de Bundesliga
+norm_bundesliga_players <- normalized_data1 %>%
+  filter(Comp == "Bundesliga")
+
+# Afin d'isoler les attaquants de Ligue 1
+norm_ligue_1_players <- normalized_data1 %>%
+  filter(Comp == "Ligue 1")
+
+# Afin d'isoler les attaquants de Série A
+norm_serie_a_players <- normalized_data1 %>%
+  filter(Comp == "Serie A")
+
+# Afin d'isoler les attaquants de La Liga
+norm_la_liga_players <- normalized_data1 %>%
+  filter(Comp == "La Liga")
+```
+
+## Libraries
+
+Libraries used for this EDA:
+
+```{r}
+#| echo: false
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(leaflet)
+```
+
+## EDA Skillc
+
+```{r Graph 1 Nedim}
+#| echo: false
+# Graph showing the number of players in each league
+gg <- data1 %>%
+  count(Comp) %>%
+  ggplot(aes(x = reorder(Comp, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "The Premier League has the most players",
+       x = "Leagues", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Convert the ggplot graph into a plotly graph
+ggplotly(gg)
+```
+
+```{r Graph 2 Nedim}
+#| echo: false
+# Graph showing the number of players by nationality
+gg <- data1 %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  head(50) %>%  
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "The origins of the Top 5 are the most present",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
+
+# Convert the ggplot graph into a plotly graph
+ggplotly(gg) %>%
+  layout(
+    hoverlabel = list(bgcolor = "white", font = list(color = "black")),  # Couleur du texte et du fond des étiquettes en survol
+    plot_bgcolor = "rgba(0,0,0,0)"  # Couleur de fond du graphique
+  )
+```
+
+```{r Graph 3 Nedim}
+#| echo: false
+# Graph to show the top 10 Goals statistics
+data1 %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  ggplot(aes(x = reorder(Player, Goals), y = Goals)) +
+  geom_bar(stat = "identity", fill = "skyblue", alpha = 0.7) +
+  labs(title = "Robert Lewandowski has the best goals per 90 minutes statistic",
+       x = "Players", y = "Goals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  -> gg 
+
+ggplotly(gg)
+```
+
+```{r Graph 4 Nedim}
+#| echo: false
+# Aggregation of data for counts by position
+data1 %>%
+  count(Pos) %>%
+  plot_ly(x = ~Pos, y = ~n, type = 'bar', color = ~Pos, colors = "Set3") %>%
+  layout(title = "The Forward position is the most representative of the attacking positions",
+         xaxis = list(title = "Position"),
+         yaxis = list(title = "Number of players"),
+         barmode = 'stack')
+```
+
+```{r Graph 5 Nedim}
+#| echo: false
+# Count the number of players per team
+team_counts_pl <- premier_league_players %>%
+  group_by(Squad) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) 
+
+# Create an interactive graphic
+plot_teams <- plot_ly(data = team_counts_pl, x = ~Squad, y = ~Count, type = "bar") %>%
+  layout(title = "Number of players per team in the Premier League",
+         xaxis = list(title = "Squad"),
+         yaxis = list(title = "Number of players"))
+
+# Count the number of players per team
+team_counts_bundesliga <- bundesliga_players %>%
+  group_by(Squad) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) 
+
+# Create an interactive graphic
+plot_teams_bundes <- plot_ly(data = team_counts_bundesliga, x = ~Squad, y = ~Count, type = "bar") %>%
+  layout(title = "Number of players per team in the Bundesliga",
+         xaxis = list(title = "Squad"),
+         yaxis = list(title = "Number of players"))
+
+# Count the number of players per team
+team_counts_la_liga <- la_liga_players %>%
+  group_by(Squad) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) 
+
+# Create an interactive graphic
+plot_teams_la_liga <- plot_ly(data = team_counts_la_liga, x = ~Squad, y = ~Count, type = "bar") %>%
+  layout(title = "Number of players per team in La Liga",
+         xaxis = list(title = "Squad"),
+         yaxis = list(title = "Number of players"))
+
+# Count the number of players per team
+team_counts_serie_a <- serie_a_players %>%
+  group_by(Squad) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) 
+
+# Create an interactive graphic
+plot_teams_serie_a <- plot_ly(data = team_counts_serie_a, x = ~Squad, y = ~Count, type = "bar") %>%
+  layout(title = "Number of players per team in Serie A",
+         xaxis = list(title = "Squad"),
+         yaxis = list(title = "Number of players"))
+
+# Count the number of players per team
+team_counts_ligue_1 <- ligue_1_players %>%
+  group_by(Squad) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) 
+
+# Create an interactive graphic
+plot_teams_ligue_1 <- plot_ly(data = team_counts_ligue_1, x = ~Squad, y = ~Count, type = "bar") %>%
+  layout(title = "Number of players per team in the different leagues",
+         xaxis = list(title = "Squad"),
+         yaxis = list(title = "Number of players"))
+
+# Combine 5 graphics into 1
+# Create the combined chart with buttons to select each championship
+subplot(plot_teams, plot_teams_bundes, plot_teams_la_liga, plot_teams_serie_a, plot_teams_ligue_1, nrows = 3) %>%
+  layout(updatemenus = list(
+    list(
+      buttons = list(
+        list(args = list("visible", list(TRUE, FALSE, FALSE, FALSE, FALSE)),
+             label = "Premier League", method = "restyle"),
+        list(args = list("visible", list(FALSE, TRUE, FALSE, FALSE, FALSE)),
+             label = "Bundesliga", method = "restyle"),
+        list(args = list("visible", list(FALSE, FALSE, TRUE, FALSE, FALSE)),
+             label = "La Liga", method = "restyle"),
+        list(args = list("visible", list(FALSE, FALSE, FALSE, TRUE, FALSE)),
+             label = "Serie A", method = "restyle"),
+        list(args = list("visible", list(FALSE, FALSE, FALSE, FALSE, TRUE)),
+             label = "Ligue 1", method = "restyle")
+      ),
+      x = 0.1,
+      xanchor = "left",
+      y = 1.2,
+      yanchor = "top",
+      showactive = FALSE
+    )
+  )) %>%
+  layout(
+    title = "Number of players per team in the different leagues",
+    xaxis = list(title = "Squad"),
+    yaxis = list(title = "Number of players")
+  ) %>%
+  config(displayModeBar = FALSE)
+```
+
+```{r Graph 6 Nedim}
+#| echo: false
+# Create a dataframe with the names and approximate geographical coordinates of the Premier League clubs
+premier_league_coords <- data.frame(
+  Squad = c(
+    "Crystal Palace", "Norwich City", "Burnley", "Chelsea", "Leicester City",
+    "Liverpool", "Manchester City", "Manchester Utd", "Newcastle Utd", "West Ham",
+    "Arsenal", "Aston Villa", "Leeds United", "Tottenham", "Brentford",
+    "Brighton", "Southampton", "Watford", "Wolves", "Everton"
+  ),
+  Lat = c(51.3983, 52.6226, 53.789, 51.4816, 52.6204, 53.4308, 53.483, 53.4631, 54.9756, 51.5319,
+          51.5549, 52.5091, 53.777, 51.6043, 51.4876, 50.8619, 50.9058, 51.6498, 52.5901, 53.4389),
+  Lon = c(-0.0854, 1.2949, -2.230, -0.1915, -1.1422, -2.9606, -2.200, -2.2913, -1.6211, -0.0134,
+          -0.1084, -1.8841, -1.5722, -0.0724, -0.3021, -0.0817, -1.3906, -0.4011, -2.1306, -2.9664)
+)
+
+# Create a Leaflet map with markers for each Premier League club
+premier_league_map <- leaflet(data = premier_league_coords) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Lon, lat = ~Lat, popup = ~Squad)
+
+# Do the same for all the leagues
+bundesliga_coords <- data.frame(
+  Squad = c(
+    "Arminia", "Stuttgart", "Bochum", "Hoffenheim", "Leverkusen",
+    "Augsburg", "Bayern Munich", "Eint Frankfurt", "Greuther Fürth", "Hertha BSC",
+    "Union Berlin", "Wolfsburg", "Freiburg", "RB Leipzig", "Dortmund",
+    "Köln", "M'Gladbach", "Mainz 05"
+  ),
+  Lat = c(52.0296, 48.7944, 51.4783, 49.1897, 51.0365, 48.3655, 48.2188, 50.068, 49.4817, 52.5145,
+          52.4571, 52.4226, 48.007, 51.3451, 51.4926, 50.9335, 51.1747, 49.9929),
+  Lon = c(8.5322, 9.211, 7.2184, 8.7011, 6.9873, 10.9057, 11.6242, 8.6455, 11.0042, 13.2894,
+          13.4534, 10.8016, 7.8426, 12.3867, 7.4515, 6.9236, 6.4361, 8.2473)
+)
+
+bundesliga_map <- leaflet(data = bundesliga_coords) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Lon, lat = ~Lat, popup = ~Squad)
+
+liga_coords <- data.frame(
+  Squad = c(
+    "Mallorca", "Sevilla", "Betis", "Elche", "Rayo Vallecano",
+    "Real Sociedad", "Real Madrid", "Villarreal", "Athletic Club", "Atlético Madrid",
+    "Barcelona", "Getafe", "Granada", "Alavés", "Celta Vigo",
+    "Cádiz", "Espanyol", "Levante", "Osasuna", "Valencia"
+  ),
+  Lat = c(39.5719, 37.3917, 37.3555, 38.2622, 40.3641, 43.2994, 40.4531, 39.9404, 43.264, 40.4034,
+          41.3809, 40.3083, 37.1953, 42.8493, 42.2197, 36.5271, 41.3865, 39.4753, 42.8083, 39.4748),
+  Lon = c(2.6502, -5.9736, -5.982, -0.7011, -3.6246, -1.9800, -3.6883, -0.102, -2.9498, -3.7209,
+          2.1228, -3.7402, -3.6277, -2.6511, -8.7376, -6.2898, 2.1209, -0.3704, -1.6368, -0.3583)
+)
+
+liga_map <- leaflet(data = liga_coords) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Lon, lat = ~Lat, popup = ~Squad)
+
+serie_a_coords <- data.frame(
+  Squad = c(
+    "Genoa", "Milan", "Napoli", "Hellas Verona", "Sassuolo",
+    "Spezia", "Atalanta", "Bologna", "Cagliari", "Empoli",
+    "Fiorentina", "Roma", "Inter", "Juventus", "Torino",
+    "Udinese", "Venezia", "Lazio", "Salernitana", "Sampdoria"
+  ),
+  Lat = c(44.4133, 45.4789, 40.8522, 45.4215, 40.7601, 44.1076, 45.7281, 44.5174, 39.2223, 43.7228,
+          43.7792, 41.9346, 45.4781, 45.1097, 45.0684, 46.0664, 45.4375, 41.8889, 40.6791, 44.4035),
+  Lon = c(8.9225, 9.1251, 14.2681, 10.9797, 10.2498, 9.9956, 9.6924, 11.3419, 9.1192, 10.3946,
+          11.2431, 12.4542, 9.2224, 7.6413, 7.6807, 13.2427, 12.3342, 12.4998, 14.7656, 8.9157)
+)
+
+serie_a_map <- leaflet(data = serie_a_coords) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Lon, lat = ~Lat, popup = ~Squad)
+
+ligue_1_coords <- data.frame(
+  Squad = c(
+    "Lyon", "Marseille", "Nantes", "Reims", "Clermont Foot",
+    "Lorient", "Paris S-G", "Rennes", "Saint-Étienne", "Troyes",
+    "Monaco", "Nice", "Angers", "Bordeaux", "Brest",
+    "Lens", "Metz", "Montpellier", "Strasbourg", "Lille"
+  ),
+  Lat = c(45.7772, 43.2965, 47.2184, 49.252, 45.7784, 47.7486, 48.8412, 48.1147, 45.4612, 48.2993,
+          43.7384, 43.7102, 47.4667, 44.8378, 48.3904, 50.4352, 49.1193, 43.6116, 48.5734, 50.6292),
+  Lon = c(4.8554, 5.369, -1.5536, 4.028, 3.0715, -3.375, 2.253, -1.6794, 4.3906, 4.0787,
+          7.4246, 7.2614, -0.5307, -0.5807, -4.4865, 2.8288, 6.1757, 3.8781, 7.7521, 3.0573)
+)
+
+ligue_1_map <- leaflet(data = ligue_1_coords) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Lon, lat = ~Lat, popup = ~Squad)
+
+# Combine all coordinate dataframes into one
+all_coords <- rbind(premier_league_coords, bundesliga_coords, liga_coords, serie_a_coords, ligue_1_coords)
+
+# Create a Leaflet map with markers for each club in each league
+all_map <- leaflet(data = all_coords) %>%
+  addTiles() %>%
+  addCircleMarkers(lng = ~Lon, lat = ~Lat, popup = ~Squad)
+
+all_map
+```
+
+```{r Graph 7 Nedim}
+#| echo: false
+# Top 10 Premier League Goals
+top_players_plot <- premier_league_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals)) %>%
+  plot_ly(x = ~reorder(Player, Goals), y = ~Goals, type = "bar", marker = list(color = "skyblue", opacity = 0.7)) %>%
+  layout(title = "Mohamed Salah and Jamie Vardy top the Premier League scoring charts",
+         xaxis = list(title = "Player"),
+         yaxis = list(title = "Goals"),
+         showlegend = FALSE) %>%
+  layout(xaxis = list(categoryorder = "total descending"))
+
+top_players_plot
+```
+
+```{r Graph 8 Nedim}
+#| echo: false
+# Top 10 statistical goals in the Bundesliga
+top_bundesliga_players <- bundesliga_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals))
+
+top_bundesliga_plot <- top_bundesliga_players %>%
+  plot_ly(x = ~reorder(Player, Goals), y = ~Goals, type = "bar", marker = list(color = "blue", opacity = 0.7)) %>%
+  layout(title = "Robert Lewandowski alone at the top of the best Goals ranking",
+         xaxis = list(title = "Player"),
+         yaxis = list(title = "Goals"),
+         showlegend = FALSE) %>%
+  layout(xaxis = list(categoryorder = "total descending"))
+
+top_bundesliga_plot
+```
+
+```{r Graph 9 Nedim}
+#| echo: false
+# Top 10 statistical goals in La Liga
+top_la_liga_players <- la_liga_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals))
+
+top_la_liga_plot <- top_la_liga_players %>%
+  plot_ly(x = ~reorder(Player, Goals), y = ~Goals, type = "bar", marker = list(color = "red", opacity = 0.7)) %>%
+  layout(title = "Karim Benzema is the most successful per 90 minutes in the Spanish league",
+         xaxis = list(title = "Player"),
+         yaxis = list(title = "Goals"),
+         showlegend = FALSE) %>%
+  layout(xaxis = list(categoryorder = "total descending"))
+
+top_la_liga_plot
+```
+
+```{r Graph 10 Nedim}
+#| echo: false
+# 10 best Goal statistics in Serie A
+top_serie_a_players <- serie_a_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals))
+
+top_serie_a_plot <- top_serie_a_players %>%
+  plot_ly(x = ~reorder(Player, Goals), y = ~Goals, type = "bar", marker = list(color = "orange", opacity = 0.7)) %>%
+  layout(title = "Ciro Immobile, alone at the top of Serie A",
+         xaxis = list(title = "Player"),
+         yaxis = list(title = "Goals"),
+         showlegend = FALSE) %>%
+  layout(xaxis = list(categoryorder = "total descending"))
+
+top_serie_a_plot
+```
+
+```{r Graph 11 Nedim}
+#| echo: false
+# 10 best Goal statistics in Ligue 1
+top_ligue_1_players <- ligue_1_players %>%
+  top_n(10, Goals) %>%
+  arrange(desc(Goals))
+
+top_ligue_1_plot <- top_ligue_1_players %>%
+  plot_ly(x = ~reorder(Player, Goals), y = ~Goals, type = "bar", marker = list(color = "yellow", opacity = 0.7)) %>%
+  layout(title = "Wissam Ben Yedder has the best Goals statistic in Ligue 1",
+         xaxis = list(title = "Player"),
+         yaxis = list(title = "Goals"),
+         showlegend = FALSE) %>%
+  layout(xaxis = list(categoryorder = "total descending"))
+
+top_ligue_1_plot
+```
+
+```{r Graph 12 Nedim}
+#| echo: false
+# Combined graph for age distribution
+plot_premier_league <- premier_league_players %>%
+  plot_ly(x = ~Age, type = "histogram", marker = list(color = "skyblue"), name = "Premier League") %>%
+  layout(title = "Age distribution of Premier League players",
+         xaxis = list(title = "Age"), yaxis = list(title = "Number of players"))
+
+plot_bundesliga <- bundesliga_players %>%
+  plot_ly(x = ~Age, type = "histogram", marker = list(color = "blue"), name = "Bundesliga") %>%
+  layout(title = "Age distribution of Bundesliga players",
+         xaxis = list(title = "Age"), yaxis = list(title = "Number of players"))
+
+plot_la_liga <- la_liga_players %>%
+  plot_ly(x = ~Age, type = "histogram", marker = list(color = "red"), name = "La Liga") %>%
+  layout(title = "Age distribution of La Liga players",
+         xaxis = list(title = "Age"), yaxis = list(title = "Number of players"))
+
+plot_serie_a <- serie_a_players %>%
+  plot_ly(x = ~Age, type = "histogram", marker = list(color = "orange"), name = "Serie A") %>%
+  layout(title = "Age distribution of Serie A players",
+         xaxis = list(title = "Age"), yaxis = list(title = "Number of players"))
+
+plot_ligue_1 <- ligue_1_players %>%
+  plot_ly(x = ~Age, type = "histogram", marker = list(color = "yellow"), name = "Ligue 1") %>%
+  layout(title = "Age distribution of different competition's players",
+         xaxis = list(title = "Age"), yaxis = list(title = "Number of players"))
+
+# Créer le graphique combiné avec des boutons pour sélectionner chaque ligue
+subplot(plot_premier_league, plot_bundesliga, plot_la_liga, plot_serie_a, plot_ligue_1, nrows = 3) %>%
+  layout(updatemenus = list(
+    list(
+      buttons = list(
+        list(args = list("visible", c(TRUE, FALSE, FALSE, FALSE, FALSE)),
+             label = "Premier League", method = "restyle"),
+        list(args = list("visible", c(FALSE, TRUE, FALSE, FALSE, FALSE)),
+             label = "Bundesliga", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, TRUE, FALSE, FALSE)),
+             label = "La Liga", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, FALSE, TRUE, FALSE)),
+             label = "Serie A", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, FALSE, FALSE, TRUE)),
+             label = "Ligue 1", method = "restyle")
+      ),
+      x = 0.1,
+      xanchor = "left",
+      y = 1.2,
+      yanchor = "top",
+      showactive = FALSE
+    )
+  ))
+```
+
+```{r Graph 13 Nedim}
+#| echo: false
+# Combined graph for weight
+
+plot_premier_league <- premier_league_players %>%
+  plot_ly(x = ~Weight, type = "histogram", marker = list(color = "skyblue"), name = "Premier League") %>%
+  layout(title = "Weight distribution of Premier League players",
+         xaxis = list(title = "Weight"), yaxis = list(title = "Number of players"))
+
+plot_bundesliga <- bundesliga_players %>%
+  plot_ly(x = ~Weight, type = "histogram", marker = list(color = "blue"), name = "Bundesliga") %>%
+  layout(title = "Weight distribution of Bundesliga players",
+         xaxis = list(title = "Weight"), yaxis = list(title = "Number of players"))
+
+plot_la_liga <- la_liga_players %>%
+  plot_ly(x = ~Weight, type = "histogram", marker = list(color = "red"), name = "La Liga") %>%
+  layout(title = "Weight distribution of La Liga players",
+         xaxis = list(title = "Weight"), yaxis = list(title = "Number of players"))
+
+plot_serie_a <- serie_a_players %>%
+  plot_ly(x = ~Weight, type = "histogram", marker = list(color = "orange"), name = "Serie A") %>%
+  layout(title = "Weight distribution of Serie A players",
+         xaxis = list(title = "Weight"), yaxis = list(title = "Number of players"))
+
+plot_ligue_1 <- ligue_1_players %>%
+  plot_ly(x = ~Weight, type = "histogram", marker = list(color = "yellow"), name = "Ligue 1") %>%
+  layout(title = "Weight distribution of players",
+         xaxis = list(title = "Weight"), yaxis = list(title = "Number of players"))
+
+subplot(plot_premier_league, plot_bundesliga, plot_la_liga, plot_serie_a, plot_ligue_1, nrows = 3) %>%
+  layout(updatemenus = list(
+    list(
+      buttons = list(
+        list(args = list("visible", c(TRUE, FALSE, FALSE, FALSE, FALSE)),
+             label = "Premier League", method = "restyle"),
+        list(args = list("visible", c(FALSE, TRUE, FALSE, FALSE, FALSE)),
+             label = "Bundesliga", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, TRUE, FALSE, FALSE)),
+             label = "La Liga", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, FALSE, TRUE, FALSE)),
+             label = "Serie A", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, FALSE, FALSE, TRUE)),
+             label = "Ligue 1", method = "restyle")
+      ),
+      x = 0.1,
+      xanchor = "left",
+      y = 1.2,
+      yanchor = "top",
+      showactive = FALSE
+    )
+  ))
+```
+
+```{r Graph 14 Nedim}
+#| echo: false
+# Combined chart for size
+plot_premier_league <- premier_league_players %>%
+  plot_ly(x = ~Height, type = "histogram", marker = list(color = "skyblue"), name = "Premier League") %>%
+  layout(title = "Height distribution of Premier League players",
+         xaxis = list(title = "Height"), yaxis = list(title = "Number of players"))
+
+plot_bundesliga <- bundesliga_players %>%
+  plot_ly(x = ~Height, type = "histogram", marker = list(color = "blue"), name = "Bundesliga") %>%
+  layout(title = "Height distribution of Bundesliga players",
+         xaxis = list(title = "Height"), yaxis = list(title = "Number of players"))
+
+plot_la_liga <- la_liga_players %>%
+  plot_ly(x = ~Height, type = "histogram", marker = list(color = "red"), name = "La Liga") %>%
+  layout(title = "Height distribution of La Liga players",
+         xaxis = list(title = "Height"), yaxis = list(title = "Number of players"))
+
+plot_serie_a <- serie_a_players %>%
+  plot_ly(x = ~Height, type = "histogram", marker = list(color = "orange"), name = "Serie A") %>%
+  layout(title = "Height distribution of Serie A players",
+         xaxis = list(title = "Height"), yaxis = list(title = "Number of players"))
+
+plot_ligue_1 <- ligue_1_players %>%
+  plot_ly(x = ~Height, type = "histogram", marker = list(color = "yellow"), name = "Ligue 1") %>%
+  layout(title = "Height distribution of players",
+         xaxis = list(title = "Height"), yaxis = list(title = "Number of players"))
+
+subplot(plot_premier_league, plot_bundesliga, plot_la_liga, plot_serie_a, plot_ligue_1, nrows = 3) %>%
+  layout(updatemenus = list(
+    list(
+      buttons = list(
+        list(args = list("visible", c(TRUE, FALSE, FALSE, FALSE, FALSE)),
+             label = "Premier League", method = "restyle"),
+        list(args = list("visible", c(FALSE, TRUE, FALSE, FALSE, FALSE)),
+             label = "Bundesliga", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, TRUE, FALSE, FALSE)),
+             label = "La Liga", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, FALSE, TRUE, FALSE)),
+             label = "Serie A", method = "restyle"),
+        list(args = list("visible", c(FALSE, FALSE, FALSE, FALSE, TRUE)),
+             label = "Ligue 1", method = "restyle")
+      ),
+      x = 0.1,
+      xanchor = "left",
+      y = 1.2,
+      yanchor = "top",
+      showactive = FALSE
+    )
+  ))
+```
+
+```{r Graph 15 Nedim}
+
+```
+
+```{r Graph 16 Nedim}
+#| echo: false
+# Use of the normalized data
+# Comparison between the 5 best Goals (1 from each league) 
+# Data from the 5 players
+
+salah_stats <- data.frame(
+  Player = "Mohamed Salah",
+  Goals = 70.093458,
+  "G/Sh" = 41.82857,
+  "G/SoT" = 36.111111,
+  ShoDist = 63.26531,
+  PasTotCmp = 47.88494,
+  PasTotAtt = 52.22382,
+  Assists = 62.686567,
+  PPA = 52.785146,
+  CrsPA = 16.883117,
+  SCA = 66.30934,
+  GCA = 71.681416,
+  GCADrib = 53.33333,
+  Press = 45.34161,
+  DriAtt = 51.213873,
+  "DriSucc%" = 41.9,
+  Fld = 20.459290,
+  "AerWon%" = 29.333333
+)
+
+lewandowski_stats <- data.frame(
+  Player = "Robert Lewandowski",
+  Goals = 100.000000,
+  "G/Sh" = 56.00000,
+  "G/SoT" = 52.777778,
+  ShoDist = 51.42857,
+  PasTotCmp = 30.45685,
+  PasTotAtt = 33.71593,
+  Assists = 13.432836,
+  PPA = 25.198939,
+  CrsPA = 5.844156,
+  SCA = 48.69832,
+  GCA = 40.707965,
+  GCADrib = 10.00000,
+  Press = 30.40373,
+  DriAtt = 23.005780,
+  "DriSucc%" = 52.3,
+  Fld = 28.183716,
+  "AerWon%" = 65.33333
+)
+
+benzema_stats <- data.frame(
+  Player = "Karim Benzema",
+  Goals = 87.850467,
+  "G/Sh" = 45.48571,
+  "G/SoT" = 47.222222,
+  ShoDist = 63.26531,
+  PasTotCmp = 62.09814,
+  PasTotAtt = 62.26686,
+  Assists = 62.686567,
+  PPA = 77.453581,
+  CrsPA = 9.090909,
+  SCA = 66.003063,
+  GCA = 64.601770,
+  GCADrib = 46.66667,
+  Press = 28.13665,
+  DriAtt = 19.653179,
+  "DriSucc%" = 71.4,
+  Fld = 8.768267,
+  "AerWon%" = 40.00000
+)
+
+immobile_stats <- data.frame(
+  Player = "Ciro Immobile",
+  Goals = 84.112150,
+  "G/Sh" = 52.45714,
+  "G/SoT" = 50.000000,
+  ShoDist = 61.22449,
+  PasTotCmp = 39.08629,
+  PasTotAtt = 42.18077,
+  Assists = 10.447761,
+  PPA = 14.854111,
+  CrsPA = 4.545455,
+  SCA = 35.68147,
+  GCA = 41.592920,
+  GCADrib = 33.33333,
+  Press = 46.89441,
+  DriAtt = 16.531792,
+  "DriSucc%" = 34.9,
+  Fld = 28.39248,
+  "AerWon%" = 31.200000
+)
+
+ben_yedder_stats <- data.frame(
+  Player = "Wissam Ben Yedder",
+  Goals = 83.177570,
+  "G/Sh" = 61.48571,
+  "G/SoT" = 72.222222,
+  ShoDist = 57.14286,
+  PasTotCmp = 29.61083,
+  PasTotAtt = 34.57676,
+  Assists = 26.865672,
+  PPA = 27.320955,
+  CrsPA = 0.000000,
+  SCA = 36.44717,
+  GCA = 40.707965,
+  GCADrib = 23.33333,
+  Press = 52.17391,
+  DriAtt = 25.086705,
+  "DriSucc%" = 41.0,
+  Fld = 17.745303,
+  "AerWon%" = 35.20000
+)
+
+combined_stats <- rbind(salah_stats, lewandowski_stats, benzema_stats, immobile_stats, ben_yedder_stats)
+
+# Visualization structure
+combined_stats_long <- tidyr::gather(combined_stats, key = "Statistic", value = "Value", -Player)
+
+selected_players <- c("Mohamed Salah", "Robert Lewandowski", "Karim Benzema", "Ciro Immobile", "Wissam Ben Yedder")
+
+# Filter the data for the selected players
+players_selected <- combined_stats_long %>%
+  filter(Player %in% selected_players)
+
+# Creation of the graph with Plotly
+plot <- plot_ly(players_selected, x = ~Statistic, y = ~Value, type = "bar", color = ~Player) %>%
+  layout(title = "Comparison of statistics between the top scorer in each league",
+         xaxis = list(title = "Statistic"), yaxis = list(title = "Value (%)"))
+
+plot
+```
+
+```{r Graph 17 Nedim}
+#| echo: false
+# Comparison of the top 5 scorers (radar map)
+fig <- plot_ly(
+    type = 'scatterpolar',
+    fill = 'toself'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(70.093458, 41.82857, 36.111111, 63.26531, 47.88494, 52.22382, 62.686567, 52.785146, 16.883117, 66.30934, 71.681416, 53.33333, 45.34161, 51.213873, 41.9, 20.459290, 29.333333),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Mohamed Salah',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(100.000000, 56.00000, 52.777778, 51.42857, 30.45685, 33.71593, 13.432836, 25.198939, 5.844156, 48.69832, 40.707965, 10.00000, 30.40373, 23.005780, 52.3, 28.183716, 65.33333),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Robert Lewandowski',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(87.850467, 45.48571, 47.222222, 63.26531, 62.09814, 62.26686, 62.686567, 77.453581, 9.090909, 66.003063, 64.601770, 46.66667, 28.13665, 19.653179, 71.4, 8.768267, 40.00000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Karim Benzema',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(84.112150, 52.45714, 50.000000, 61.22449, 39.08629, 42.18077, 10.447761, 14.854111, 4.545455, 35.68147, 41.592920, 33.33333, 46.89441, 16.531792, 34.9, 28.39248, 31.200000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Ciro Immobile',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(83.177570, 61.48571, 72.222222, 57.14286, 29.61083, 34.57676, 26.865672, 27.320955, 0.000000, 36.44717, 40.707965, 23.33333, 52.17391, 25.086705, 41.0, 17.745303, 35.20000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Wissam Ben Yedder',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  layout(
+    polar = list(
+      radialaxis = list(
+        visible = T,
+        range = c(0,100)
+      )
+    ),
+    title = "Comparison of the best Goals in each league in key statistics"
+  )
+
+fig
+```
+
+```{r Graph 18 Nedim}
+#| echo: false
+# Data from the 5 players
+
+salah_stats <- data.frame(
+  Player = "Mohamed Salah",
+  Goals = 70.093458,
+  "G/Sh" = 41.82857,
+  "G/SoT" = 36.111111,
+  ShoDist = 63.26531,
+  PasTotCmp = 47.88494,
+  PasTotAtt = 52.22382,
+  Assists = 62.686567,
+  PPA = 52.785146,
+  CrsPA = 16.883117,
+  SCA = 66.30934,
+  GCA = 71.681416,
+  GCADrib = 53.33333,
+  Press = 45.34161,
+  DriAtt = 51.213873,
+  "DriSucc%" = 41.9,
+  Fld = 20.459290,
+  "AerWon%" = 29.333333
+)
+
+lewandowski_stats <- data.frame(
+  Player = "Robert Lewandowski",
+  Goals = 100.000000,
+  "G/Sh" = 56.00000,
+  "G/SoT" = 52.777778,
+  ShoDist = 51.42857,
+  PasTotCmp = 30.45685,
+  PasTotAtt = 33.71593,
+  Assists = 13.432836,
+  PPA = 25.198939,
+  CrsPA = 5.844156,
+  SCA = 48.69832,
+  GCA = 40.707965,
+  GCADrib = 10.00000,
+  Press = 30.40373,
+  DriAtt = 23.005780,
+  "DriSucc%" = 52.3,
+  Fld = 28.183716,
+  "AerWon%" = 65.33333
+)
+
+benzema_stats <- data.frame(
+  Player = "Karim Benzema",
+  Goals = 87.850467,
+  "G/Sh" = 45.48571,
+  "G/SoT" = 47.222222,
+  ShoDist = 63.26531,
+  PasTotCmp = 62.09814,
+  PasTotAtt = 62.26686,
+  Assists = 62.686567,
+  PPA = 77.453581,
+  CrsPA = 9.090909,
+  SCA = 66.003063,
+  GCA = 64.601770,
+  GCADrib = 46.66667,
+  Press = 28.13665,
+  DriAtt = 19.653179,
+  "DriSucc%" = 71.4,
+  Fld = 8.768267,
+  "AerWon%" = 40.00000
+)
+
+immobile_stats <- data.frame(
+  Player = "Ciro Immobile",
+  Goals = 84.112150,
+  "G/Sh" = 52.45714,
+  "G/SoT" = 50.000000,
+  ShoDist = 61.22449,
+  PasTotCmp = 39.08629,
+  PasTotAtt = 42.18077,
+  Assists = 10.447761,
+  PPA = 14.854111,
+  CrsPA = 4.545455,
+  SCA = 35.68147,
+  GCA = 41.592920,
+  GCADrib = 33.33333,
+  Press = 46.89441,
+  DriAtt = 16.531792,
+  "DriSucc%" = 34.9,
+  Fld = 28.39248,
+  "AerWon%" = 31.200000
+)
+
+ben_yedder_stats <- data.frame(
+  Player = "Wissam Ben Yedder",
+  Goals = 83.177570,
+  "G/Sh" = 61.48571,
+  "G/SoT" = 72.222222,
+  ShoDist = 57.14286,
+  PasTotCmp = 29.61083,
+  PasTotAtt = 34.57676,
+  Assists = 26.865672,
+  PPA = 27.320955,
+  CrsPA = 0.000000,
+  SCA = 36.44717,
+  GCA = 40.707965,
+  GCADrib = 23.33333,
+  Press = 52.17391,
+  DriAtt = 25.086705,
+  "DriSucc%" = 41.0,
+  Fld = 17.745303,
+  "AerWon%" = 35.20000
+)
+
+# Comparizon with the worst Goals of each league
+przemyslaw_placheta_stats <- data.frame(
+  Player = "Przemysław Płacheta",
+  Goals = 0.000000,
+  "G/Sh" = 100.00000,
+  "G/SoT" = 0.000000,
+  ShoDist = 68.16327,
+  PasTotCmp = 32.31810,
+  PasTotAtt = 40.17217,
+  Assists = 0.000000,
+  PPA = 18.832891,
+  CrsPA = 23.376623,
+  SCA = 38.28484,
+  GCA = 0.000000,
+  GCADrib = 0.00000,
+  Press = 63.66460,
+  DriAtt = 20.693642,
+  "DriSucc%" = 60.0,
+  Fld = 29.853862,
+  "AerWon%" = 30.800000
+)
+
+dickson_abiama_stats <- data.frame(
+  Player = "Dickson Abiama",
+  Goals = 0.000000,
+  "G/Sh" = 25.37143,
+  "G/SoT" = 0.000000,
+  ShoDist = 63.67347,
+  PasTotCmp = 18.78173,
+  PasTotAtt = 24.67719,
+  Assists = 17.910448,
+  PPA = 19.628647,
+  CrsPA = 0.000000,
+  SCA = 37.82542,
+  GCA = 22.123894,
+  GCADrib = 0.00000,
+  Press = 72.98137,
+  DriAtt = 25.664740,
+  "DriSucc%" = 33.3,
+  Fld = 30.897704,
+  "AerWon%" = 47.33333
+)
+
+carlos_bacca_stats <- data.frame(
+  Player = "Carlos Bacca",
+  Goals = 0.000000,
+  "G/Sh" = 25.37143,
+  "G/SoT" = 0.000000,
+  ShoDist = 58.77551,
+  PasTotCmp = 21.15059,
+  PasTotAtt = 27.40316,
+  Assists = 26.865672,
+  PPA = 18.567639,
+  CrsPA = 0.000000,
+  SCA = 34.915773,
+  GCA = 30.973451,
+  GCADrib = 0.00000,
+  Press = 33.22981,
+  DriAtt = 20.231214,
+  "DriSucc%" = 80.0,
+  Fld = 32.985386,
+  "AerWon%" = 51.60000
+)
+
+jeremie_boga_stats <- data.frame(
+  Player = "Jeremie Boga",
+  Goals = 0.000000,
+  "G/Sh" = 38.05714,
+  "G/SoT" = 0.000000,
+  ShoDist = 78.36735,
+  PasTotCmp = 50.59222,
+  PasTotAtt = 52.51076,
+  Assists = 40.298507,
+  PPA = 14.323607,
+  CrsPA = 9.090909,
+  SCA = 47.62634,
+  GCA = 47.787611,
+  GCADrib = 46.66667,
+  Press = 27.26708,
+  DriAtt = 73.410405,
+  "DriSucc%" = 51.1,
+  Fld = 33.82046,
+  "AerWon%" = 22.266667
+)
+
+mitchell_van_bergen_stats <- data.frame(
+  Player = "Mitchell van Bergen",
+  Goals = 0.000000,
+  "G/Sh" = 47.65714,
+  "G/SoT" = 0.000000,
+  ShoDist = 72.24490,
+  PasTotCmp = 23.18105,
+  PasTotAtt = 30.27260,
+  Assists = 0.000000,
+  PPA = 31.564987,
+  CrsPA = 35.714286,
+  SCA = 37.97856,
+  GCA = 0.000000,
+  GCADrib = 0.00000,
+  Press = 68.01242,
+  DriAtt = 25.433526,
+  "DriSucc%" = 54.2,
+  Fld = 9.603340,
+  "AerWon%" = 18.13333
+)
+
+combined_stats <- rbind(przemyslaw_placheta_stats, dickson_abiama_stats, carlos_bacca_stats, jeremie_boga_stats,
+                        mitchell_van_bergen_stats, salah_stats, lewandowski_stats, benzema_stats, immobile_stats,
+                        ben_yedder_stats)
+
+# Visualization structure
+combined_stats_long <- tidyr::gather(combined_stats, key = "Statistic", value = "Value", -Player)
+
+selected_players <- c("Mohamed Salah", "Robert Lewandowski", "Karim Benzema", "Ciro Immobile", "Wissam Ben Yedder", 
+                      "Przemysław Płacheta", "Dickson Abiama", "Carlos Bacca", "Jeremie Boga", "Mitchell van Bergen")
+
+# Filter the data for the selected players
+players_selected <- combined_stats_long %>%
+  filter(Player %in% selected_players)
+
+# Creation of the graph with Plotly
+plot <- plot_ly(players_selected, x = ~Statistic, y = ~Value, type = "bar", color = ~Player) %>%
+  layout(title = "Comparison between the top and bottom scorers in each league",
+         xaxis = list(title = "Statistic"), yaxis = list(title = "Value (%)"))
+
+plot
+```
+
+```{r Graph 19 Nedim}
+#| echo: false
+# Comparison of the top 5 scorers and worst 5 Goals of each League (radar map)
+fig <- plot_ly(
+  type = 'scatterpolar',
+  fill = 'toself'
+) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(70.093458, 41.82857, 36.111111, 63.26531, 47.88494, 52.22382, 62.686567, 52.785146, 16.883117, 66.30934, 71.681416, 53.33333, 45.34161, 51.213873, 41.9, 20.459290, 29.333333),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Mohamed Salah',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(100.000000, 56.00000, 52.777778, 51.42857, 30.45685, 33.71593, 13.432836, 25.198939, 5.844156, 48.69832, 40.707965, 10.00000, 30.40373, 23.005780, 52.3, 28.183716, 65.33333),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Robert Lewandowski',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(87.850467, 45.48571, 47.222222, 63.26531, 62.09814, 62.26686, 62.686567, 77.453581, 9.090909, 66.003063, 64.601770, 46.66667, 28.13665, 19.653179, 71.4, 8.768267, 40.00000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Karim Benzema',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(84.112150, 52.45714, 50.000000, 61.22449, 39.08629, 42.18077, 10.447761, 14.854111, 4.545455, 35.68147, 41.592920, 33.33333, 46.89441, 16.531792, 34.9, 28.39248, 31.200000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Ciro Immobile',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(83.177570, 61.48571, 72.222222, 57.14286, 29.61083, 34.57676, 26.865672, 27.320955, 0.000000, 36.44717, 40.707965, 23.33333, 52.17391, 25.086705, 41.0, 17.745303, 35.20000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Wissam Ben Yedder',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(0.000000, 100.00000, 0.000000, 68.16327, 32.31810, 40.17217, 0.000000, 18.832891, 23.376623, 38.28484, 0.000000, 0.00000, 63.66460, 20.693642, 60.0, 29.853862, 30.800000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Przemysław Płacheta',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(0.000000, 25.37143, 0.000000, 63.67347, 18.78173, 24.67719, 17.910448, 19.628647, 0.000000, 37.82542, 22.123894, 0.00000, 72.98137, 25.664740, 33.3, 30.897704, 47.33333),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Dickson Abiama',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(0.000000, 25.37143, 0.000000, 58.77551, 21.15059, 27.40316, 26.865672, 18.567639, 0.000000, 34.915773, 30.973451, 0.00000, 33.22981, 20.231214, 80.0, 32.985386, 51.60000),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Carlos Bacca',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(0.000000, 38.05714, 0.000000, 78.36735, 50.59222, 52.51076, 40.298507, 14.323607, 9.090909, 47.62634, 47.787611, 46.66667, 27.26708, 73.410405, 51.1, 33.82046, 22.266667),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Jeremie Boga',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  add_trace(
+    r = c(0.000000, 47.65714, 0.000000, 72.24490, 23.18105, 30.27260, 0.000000, 31.564987, 35.714286, 37.97856, 0.000000, 0.00000, 68.01242, 25.433526, 54.2, 9.603340, 18.13333),
+    theta = c("Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"),
+    name = 'Mitchell van Bergen',
+    mode = 'lines+markers'
+  ) 
+
+fig <- fig %>%
+  layout(
+    polar = list(
+      radialaxis = list(
+        visible = T,
+        range = c(0,100)
+      )
+    ),
+    title = "Comparison of the best and worst Goals in each league in key statistics"
+  )
+
+fig
+```
+
+```{r à partir de là graph bonus: à voir si on met/remplace Graph 20}
+#| echo: false
+# Graph showing the number of players by nationality (10 most numerous)
+data1 %>%
+  count(Nation) %>%
+  arrange(desc(n)) %>%
+  head(10) %>%  
+  ggplot(aes(x = reorder(Nation, n), y = n)) +
+  geom_bar(stat = "identity", fill = "red", alpha = 0.7) +
+  labs(title = "Nationalities most represented",
+       subtitle = "Top 10 in 2021/22",
+       x = "Nation", y = "Number of players") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) -> gg 
+
+ggplotly(gg)
+```
+
+```{r voir si remplacé le Graph 12: Graph 21 sinon}
+#| echo: false
+# Création des histogrammes pour chaque championnat
+plotly_histogram <- function(data, name, color) {
+  plot_ly(data = data, x = ~Age, type = "histogram", name = name, marker = list(color = color))
+}
+
+plot_premier_league <- plotly_histogram(premier_league_players, "Premier League", "skyblue")
+plot_bundesliga <- plotly_histogram(bundesliga_players, "Bundesliga", "blue")
+plot_la_liga <- plotly_histogram(la_liga_players, "La Liga", "red")
+plot_serie_a <- plotly_histogram(serie_a_players, "Serie A", "orange")
+plot_ligue_1 <- plotly_histogram(ligue_1_players, "Ligue 1", "yellow")
+
+# Créer le graphique combiné avec des boutons pour sélectionner chaque ligue
+combined_plot <- subplot(plot_premier_league, plot_bundesliga, plot_la_liga, plot_serie_a, plot_ligue_1, nrows = 1) %>%
+  layout(
+    updatemenus = list(
+      list(
+        buttons = list(
+          list(args = list("visible", rep(TRUE, 5)), label = "All", method = "restyle"),
+          list(args = list("visible", c(TRUE, FALSE, FALSE, FALSE, FALSE)), label = "Premier League", method = "restyle"),
+          list(args = list("visible", c(FALSE, TRUE, FALSE, FALSE, FALSE)), label = "Bundesliga", method = "restyle"),
+          list(args = list("visible", c(FALSE, FALSE, TRUE, FALSE, FALSE)), label = "La Liga", method = "restyle"),
+          list(args = list("visible", c(FALSE, FALSE, FALSE, TRUE, FALSE)), label = "Serie A", method = "restyle"),
+          list(args = list("visible", c(FALSE, FALSE, FALSE, FALSE, TRUE)), label = "Ligue 1", method = "restyle")
+        ),
+        x = 0.1,
+        xanchor = "left",
+        y = 1.2,
+        yanchor = "top",
+        showactive = FALSE
+      )
+    )
+  )
+
+combined_plot
+```
+
+## Shiny: à intégrer ou non ?
+
+```{r Librairies}
+#| echo: false
+library(shiny)
+library(dplyr)
+library(plotly)
+```
+
+```{r Graph 1 Shiny}
+#| echo: false
+ui <- fluidPage(
+  selectInput("league", "Choisissez un championnat", 
+              choices = c("Premier League", "Bundesliga", "La Liga", "Serie A", "Ligue 1")),
+  plotlyOutput("top_players_plot")
+)
+
+server <- function(input, output) {
+  
+  output$top_players_plot <- renderPlotly({
+    data <- switch(input$league,
+                   "Premier League" = premier_league_players,
+                   "Bundesliga" = bundesliga_players,
+                   "La Liga" = la_liga_players,
+                   "Serie A" = serie_a_players,
+                   "Ligue 1" = ligue_1_players)
+    
+    top_players <- data %>%
+      top_n(10, Goals) %>%
+      arrange(desc(Goals))
+    
+    plot_ly(
+      data = top_players,
+      x = ~reorder(Player, Goals),
+      y = ~Goals,
+      type = "bar",
+      marker = list(color = switch(input$league,
+                                   "Premier League" = "skyblue",
+                                   "Bundesliga" = "blue",
+                                   "La Liga" = "red",
+                                   "Serie A" = "orange",
+                                   "Ligue 1" = "yellow"),
+                    opacity = 0.7)
+    ) %>%
+      layout(
+        title = paste("Top 10 goals statistics in", input$league),
+        xaxis = list(title = "Player"),
+        yaxis = list(title = "Goals"),
+        showlegend = FALSE,
+        xaxis = list(categoryorder = "total descending")
+      )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+```{r Graph 2 Shiny}
+#| echo: false
+# Interface Shiny
+ui <- fluidPage(
+  titlePanel("Age distribution of Football Players"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("league", "Select League",
+                  choices = c("Premier League", "Bundesliga", "La Liga", "Serie A", "Ligue 1"),
+                  selected = "Premier League")
+    ),
+    mainPanel(
+      plotOutput("age_plot")
+    )
+  )
+)
+
+# Server logic
+server <- function(input, output) {
+  
+  output$age_plot <- renderPlot({
+    league_data <- switch(input$league,
+                          "Premier League" = premier_league_players,
+                          "Bundesliga" = bundesliga_players,
+                          "La Liga" = la_liga_players,
+                          "Serie A" = serie_a_players,
+                          "Ligue 1" = ligue_1_players)
+    
+    ggplot(league_data, aes(x = Age)) +
+      geom_histogram(binwidth = 1, fill = switch(input$league,
+                                                 "Premier League" = "skyblue",
+                                                 "Bundesliga" = "blue",
+                                                 "La Liga" = "red",
+                                                 "Serie A" = "orange",
+                                                 "Ligue 1" = "yellow"),
+                     color = "black", alpha = 0.7) +
+      labs(title = paste("Age distribution of", input$league, "players"),
+           x = "Age", y = "Number of players") +
+      theme_minimal()
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
+```{r Graph 3 Shiny}
+#| echo: false
+salah_stats <- data.frame(
+  Player = "Mohamed Salah",
+  Goals = 70.093458,
+  "G/Sh" = 41.82857,
+  "G/SoT" = 36.111111,
+  ShoDist = 63.26531,
+  PasTotCmp = 47.88494,
+  PasTotAtt = 52.22382,
+  Assists = 62.686567,
+  PPA = 52.785146,
+  CrsPA = 16.883117,
+  SCA = 66.30934,
+  GCA = 71.681416,
+  GCADrib = 53.33333,
+  Press = 45.34161,
+  DriAtt = 51.213873,
+  "DriSucc%" = 41.9,
+  Fld = 20.459290,
+  "AerWon%" = 29.333333
+)
+
+lewandowski_stats <- data.frame(
+  Player = "Robert Lewandowski",
+  Goals = 100.000000,
+  "G/Sh" = 56.00000,
+  "G/SoT" = 52.777778,
+  ShoDist = 51.42857,
+  PasTotCmp = 30.45685,
+  PasTotAtt = 33.71593,
+  Assists = 13.432836,
+  PPA = 25.198939,
+  CrsPA = 5.844156,
+  SCA = 48.69832,
+  GCA = 40.707965,
+  GCADrib = 10.00000,
+  Press = 30.40373,
+  DriAtt = 23.005780,
+  "DriSucc%" = 52.3,
+  Fld = 28.183716,
+  "AerWon%" = 65.33333
+)
+
+benzema_stats <- data.frame(
+  Player = "Karim Benzema",
+  Goals = 87.850467,
+  "G/Sh" = 45.48571,
+  "G/SoT" = 47.222222,
+  ShoDist = 63.26531,
+  PasTotCmp = 62.09814,
+  PasTotAtt = 62.26686,
+  Assists = 62.686567,
+  PPA = 77.453581,
+  CrsPA = 9.090909,
+  SCA = 66.003063,
+  GCA = 64.601770,
+  GCADrib = 46.66667,
+  Press = 28.13665,
+  DriAtt = 19.653179,
+  "DriSucc%" = 71.4,
+  Fld = 8.768267,
+  "AerWon%" = 40.00000
+)
+
+immobile_stats <- data.frame(
+  Player = "Ciro Immobile",
+  Goals = 84.112150,
+  "G/Sh" = 52.45714,
+  "G/SoT" = 50.000000,
+  ShoDist = 61.22449,
+  PasTotCmp = 39.08629,
+  PasTotAtt = 42.18077,
+  Assists = 10.447761,
+  PPA = 14.854111,
+  CrsPA = 4.545455,
+  SCA = 35.68147,
+  GCA = 41.592920,
+  GCADrib = 33.33333,
+  Press = 46.89441,
+  DriAtt = 16.531792,
+  "DriSucc%" = 34.9,
+  Fld = 28.39248,
+  "AerWon%" = 31.200000
+)
+
+ben_yedder_stats <- data.frame(
+  Player = "Wissam Ben Yedder",
+  Goals = 83.177570,
+  "G/Sh" = 61.48571,
+  "G/SoT" = 72.222222,
+  ShoDist = 57.14286,
+  PasTotCmp = 29.61083,
+  PasTotAtt = 34.57676,
+  Assists = 26.865672,
+  PPA = 27.320955,
+  CrsPA = 0.000000,
+  SCA = 36.44717,
+  GCA = 40.707965,
+  GCADrib = 23.33333,
+  Press = 52.17391,
+  DriAtt = 25.086705,
+  "DriSucc%" = 41.0,
+  Fld = 17.745303,
+  "AerWon%" = 35.20000
+)
+
+combined_stats <- rbind(salah_stats, lewandowski_stats, benzema_stats, immobile_stats, ben_yedder_stats)
+
+# Mise en forme pour la visualisation
+combined_stats_long <- gather(combined_stats, key = "Statistic", value = "Value", -Player)
+
+# Création de l'application Shiny
+ui <- fluidPage(
+  titlePanel("Comparaison de statistiques entre les joueurs"),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxGroupInput("players", "Sélectionnez les joueurs à comparer :",
+                         choices = unique(combined_stats_long$Player),
+                         selected = c("Mohamed Salah", "Robert Lewandowski")
+      )
+    ),
+    mainPanel(
+      plotOutput("comparisonPlot")
+    )
+  )
+)
+
+server <- function(input, output) {
+  output$comparisonPlot <- renderPlot({
+    players_selected <- combined_stats_long %>%
+      filter(Player %in% input$players)
+    
+    ggplot(players_selected, aes(x = Statistic, y = Value, fill = Player)) +
+      geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+      labs(title = "Comparaison de statistiques entre les joueurs",
+           x = "Statistique", y = "Valeur (%)") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+```         
+```

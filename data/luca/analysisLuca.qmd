@@ -1,0 +1,13 @@
+---
+title: "Analysis Luca"
+format: html
+editor: visual
+---
+
+## How different cultural and economic indicators, such as a footballer's nationality, his country's GDP or his club revenue influence his individual performance and the overall performance of his team?
+
+```{}
+```
+
+```{}
+```

@@ -1,0 +1,77 @@
+library(plotly)
+library(dplyr)
+library(tidyverse)
+
+# Assuming 'demo_clean' is your dataset
+selected_columns <- demo_clean %>%
+  select(Country.Name, pop1990:pop2022)
+
+# Function to remove single quotes from numerical values
+remove_quotes <- function(x) {
+  as.numeric(gsub("'", "", x))
+}
+
+selected_columns <- selected_columns %>%
+  mutate_at(vars(pop1990:pop2022), ~ remove_quotes(.)) %>%
+  distinct(Country.Name, .keep_all = TRUE)
+
+# Assuming 'unique_countries' is the dataset containing unique country names
+world <- map_data("world")
+unique_countries <- selected_columns
+
+subset_world <- world %>%
+  filter(region %in% unique_countries$Country.Name)
+
+# Merge data with a world map
+map_data <- merge(subset_world, unique_countries, by.x = "region", by.y = "Country.Name", all.x = TRUE)
+
+frames <- lapply(1990:2022, function(year) {
+  frame_data <- map_data %>%
+    select(region, matches(paste0("pop", year))) %>%
+    rename(population = matches(paste0("pop", year))) %>%
+    mutate(population = as.numeric(population)) %>%
+    group_by(region) %>%
+    mutate(frame = year)
+  
+  frame_data
+})
+
+
+all_frames <- bind_rows(frames)
+
+
+library(plotly)
+
+unique_data <- all_frames %>%
+  arrange(region, frame) %>%
+  distinct(region, frame, .keep_all = TRUE)
+
+library(plotly)
+
+# Assuming 'all_frames' contains necessary columns: 'region', 'frame', 'date', 'population'
+
+plot_ly(
+  data = unique_data,
+  type = "choropleth",
+  locations = ~region,
+  z = ~population,
+  text = ~paste("Region: ", region, "<br>Date: ", frame, "<br>Population: ", population),
+  colorscale = "Viridis",
+  marker = list(line = list(color = "rgb(255,255,255)", width = 0.5)),
+  frame = ~frame,
+  ids = ~region
+) %>%
+  layout(
+    title = "World Population Heatmap",
+    geo = list(showframe = FALSE, showcoastlines = TRUE, projection = list(type = "mercator")),
+    coloraxis = list(colorbar = list(title = "Population", len = 0.7, y = 0.1, ticksuffix = ""))
+  ) %>%
+  animation_opts(frame = 100, redraw = FALSE) %>%
+  animation_slider(
+    currentvalue = list(prefix = "Year: "),
+    visible = TRUE,
+    steps = list(
+      list(args = list("frame", list(duration = 500)), from = min(all_frames$frame), to = max(all_frames$frame), by = 1)
+    )
+  )
+

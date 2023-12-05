@@ -1,0 +1,41 @@
+"0","create_histogram_height_with_average_contour <- function(data, title, color) {"
+"0","  avg_height <- round(mean(data$Height))"
+"0","  plot <- plot_ly(data, x = ~Height, type = ""histogram"", name = title,"
+"0","                  marker = list(color = color, line = list(color = 'white', width = 0.5))) %>%"
+"0","    add_trace(x = c(avg_height, avg_height), y = c(0, 35),"
+"0","              type = ""scatter"", mode = ""lines"", line = list(color = ""green"", width = 2), showlegend = FALSE,"
+"0","              text = avg_height, hoverinfo = ""text"") %>%"
+"0","    layout(title = ""Average height by league"", xaxis = list(title = ""Height""), yaxis = list(title = ""Density""),"
+"0","           bargap = 0.1, showlegend = TRUE)"
+"0","  return(plot)"
+"0","}"
+"0",""
+"0","plot_premier_league_height <- create_histogram_height_with_average_contour(premier_league_players, ""Premier League"", ""#1f77b4"")"
+"0","plot_bundesliga_height <- create_histogram_height_with_average_contour(bundesliga_players, ""Bundesliga"", ""#ff7f0e"")"
+"0","plot_la_liga_height <- create_histogram_height_with_average_contour(la_liga_players, ""La Liga"", ""#2ca02c"")"
+"0","plot_serie_a_height <- create_histogram_height_with_average_contour(serie_a_players, ""Serie A"", ""#d62728"")"
+"0","plot_ligue_1_height <- create_histogram_height_with_average_contour(ligue_1_players, ""Ligue 1"", ""#9467bd"")"
+"0",""
+"0","subplot("
+"0","  plot_premier_league_height,"
+"0","  plot_bundesliga_height,"
+"0","  plot_la_liga_height,"
+"0","  plot_serie_a_height,"
+"0","  plot_ligue_1_height,"
+"0","  nrows = 3"
+"0",")"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"

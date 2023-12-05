@@ -1,7 +1,0 @@
-"0",""
-"0","# Pour le poids"
-"0","ggplot(two_best, aes(x = Player, y = Weight, fill = Player)) +"
-"0","  geom_bar(stat = ""identity"", position = ""dodge"") +"
-"0","  labs(x = ""Player"", y = ""Weight"", "
-"0","       title = ""Weight comparison between Messi and Ronaldo"") +"
-"0","  theme_minimal()"

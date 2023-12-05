@@ -1,0 +1,2 @@
+data1cut <-read.csv("data1Ned.csv")
+data1cut <- data1cut(select(Player, Nation, Pos, Squad, Comp, Age, Born, Height, Weight,Goals, G/Sh, G/SoT, ShoDist, PasTotCmp, PasTotAtt, Assists, PPA, CrsPA, SCA, GCA, GCADrib, Press, DriAtt, DriSucc, Fld, AerWon))

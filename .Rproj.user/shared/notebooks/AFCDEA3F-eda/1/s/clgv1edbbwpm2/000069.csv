@@ -1,8 +1,0 @@
-"0",""
-"0","# évolution du poids"
-"0","ggplot(data_bo, aes(x = Year, y = Weight)) +"
-"0","  geom_point() +"
-"0","  geom_smooth(method = ""loess"", se = FALSE, color = ""red"") + "
-"0","  labs(x = ""Year"", y = ""Weight"", "
-"0","       title = ""Changes in player weight over time"") +"
-"0","  theme_minimal()"

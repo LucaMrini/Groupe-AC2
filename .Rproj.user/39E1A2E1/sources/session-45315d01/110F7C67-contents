@@ -1,0 +1,48 @@
+library(plotly)
+library(dplyr)
+
+# Assuming 'demo_clean' contains a column 'Country.Name'
+
+# Get unique country names from demo_clean
+unique_countries <- demo_clean$Country.Name
+
+# Filter world dataset based on the countries in demo_clean
+subset_world <- world %>%
+  filter(region %in% unique_countries)
+
+# Merge data with the subset of the world map
+map_data <- merge(subset_world, demo_clean, by.x = "region", by.y = "Country.Name", all.x = TRUE)
+
+# Extract one row per country (first row)
+one_row_per_country <- map_data %>%
+  group_by(region) %>%
+  slice(1) %>%
+  ungroup()
+
+# Extract population data for 1990
+population_1990 <- one_row_per_country$pop1990
+
+# Check for non-numeric values and convert to NA
+population_1990 <- as.numeric(population_1990)
+
+# Normalize the population values
+min_pop <- min(population_1990, na.rm = TRUE)
+max_pop <- max(population_1990, na.rm = TRUE)
+
+# Function to normalize data
+normalize <- function(x, min_val, max_val) {
+  (x - min_val) / (max_val - min_val)
+}
+
+# Normalize population values
+one_row_per_country$normalized_population <- normalize(population_1990, min_pop, max_pop)
+
+# Create the plot using the normalized data
+plot_ly(data = one_row_per_country, type = "choropleth", locations = ~region,
+        z = ~normalized_population,
+        text = ~paste("Country: ", region, "<br>Population (1990): ", pop1990),
+        color = ~normalized_population, colorscale = "Viridis",
+        marker = list(line = list(color = "rgb(255,255,255)", width = 0.5))) %>%
+  layout(title = "World Population Heatmap (Normalized Values)",
+         geo = list(showframe = FALSE, showcoastlines = TRUE, projection = list(type = "mercator")))
+

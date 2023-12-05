@@ -1,0 +1,534 @@
+## 2 Data
+
+```{r, echo = FALSE, message = FALSE,error=FALSE}
+source(here::here("scripts/setup.R"))
+source(here::here("scripts/dataload.R"))
+```
+
+# 2.1 Raw datasets
+
+## 2.1.1 Kaggle : football player stats 2021-2022
+
+This dataset serves as the primary source of information for our analysis. It forms the basis for most other databases, itcontains data on players, primarily targeting their skill. While some player names initially weren't recognized, we have addressed this issue through data wrangling (further details provided).
+
+```{r football player stats 2021-2022,echo=TRUE}
+rawskill<-(tibble(Variables = c("Rk","Player","Nation","Pos","Squad","Comp","Age","Born","MP","Starts","Min","90s","Goals", "G/Sh", "G/SoT", "ShoDist", "PasTotCmp", "PasTotAtt", "Assists", "PPA", "CrsPA", "SCA", "GCA", "GCADrib", "Press", "DriAtt", "DriSucc%", "Fld", "AerWon%"), 
+Meaning = c("Rank","Player name","Player nation","Position","Squad’s name","League that squad occupies","Player age","Year of birth","Matches played","Matches started","Minutes played","Minutes played divided by 90","Goals scored or allowed", "Goals per shot taken", "Goals per shot on target", "Average shot distance from the goal", "Total passes completed", "Total passes attempted", "Passes directly leading to goals", "Passes into the penalty area", "Completed crosses into the penalty area", "Actions creating shot attempts", "Actions leading to goals scored", "Goal-creating actions through dribbles", "Instances of pressuring opponents", "Attempted dribbles", "Percentage of successful dribbles", "Number of times fouled", "Percentage of aerial duels won"
+)))
+
+kbl(
+  rawskill, booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+
+```
+
+~Source : <https://www.kaggle.com/datasets/vivovinco/20212022-football-player-stats>~
+
+::: {.callout-caution collapse="true"}
+
+\## About this dataset
+Some of the variables were removed for readability but the full dataset that we worked on is available via the link provided.
+:::
+
+## 2.1.2 Fifa.csv
+
+Used to complete lacking information for example : *Height* and *weight* . It draws from the video game FIFA, which provides reliable and up-to-date statistics and details about football players originating from official sources.
+
+```{r Fifa,echo=TRUE}
+
+fifa<-(tibble(Variables = c(
+    "id", "Fullname", "current_rating", "potential_rating", "height", "weight",
+    "preferred_foot", "birth_date", "preferred_positions", "work_rate", "weak_foot",
+    "skill_moves", "value", "wage", "ball_control", "dribbling", "marking", "tackling",
+    "aggression", "composure", "reaction", "crossing", "short_pass", "long_pass",
+    "acceleration", "stamina", "strength", "spring_speed", "heading", "shot_power",
+    "finishing", "long_shots", "FK_Acc.", "reflexes", "handling", "gk_positioning", "gk_diving"
+  ),
+  Meaning =c("Unique identifier for a player","Full name of the player","Players current skill rating or performance level","Expected potential skill level or rating a player can achieve","Player's height","Player's weight","Player's preferred foot for kicking (left or right)",
+"Player's date of birth","Positions on the field the player prefers to play","Player's work rate or level of effort during matches","Player's weaker foot rating or ability","Player's skill move rating or ability to perform technical moves","Player's estimated market value",
+"Player's salary or wage","Player's skill in controlling the ball","Player's dribbling ability","Player's defensive marking ability","Player's ability to perform tackles","Player's level of aggression on the field","Player's composure under pressure","Player's reaction time","Player's ability to cross the ball into the box","Player's accuracy in short passes","Player's accuracy in long passes","Player's acceleration","Player's stamina or endurance","Player's physical strength","Player's sprinting speed","Player's heading ability","Player's power in shooting","Player's ability to finish goal-scoring opportunities","Player's ability to take long-range shots","Player's accuracy in free kicks","Goalkeeper's reflexes","Goalkeeper's handling ability","Goalkeeper's positioning on the field","Goalkeeper's diving ability")))
+kbl(
+fifa,booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+
+
+       
+```
+
+~Source : <https://www.kaggle.com/datasets/daguizer/fifa-2021-to-2005-complete-player-attributes>~
+
+## 2.1.3 **Ballon D'or-Golden Ball Winners**
+
+From this data set we extracted most of the information concerning *Ballon d'or winners .*
+
+```{r Ballon dor winners,echo=TRUE}
+ballon<-(tibble(Variables = c("Year","Rank","Player","Country","Team","Points","Source"),
+       Meaning = c("Year of assignment","winner,second,third","Player first and last Name","Country of birth/acquired citizenship","Football team at the time the prize was assigned","Score obtained","Source of the data")))
+kbl(
+ballon,booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+
+```
+
+^Source : <https://www.kaggle.com/datasets/marcellopaolo/ballon-dor-golden-ball-winners?select=BallonDor-GoldenBall_Winners_v2.csv>^
+
+## 2.1.4 **FIFA Players & Stats**
+
+Used to complete information concerning height, weight of *data of players clean* that weren't on the other *Fifa* database.
+
+```{r 2021,echo=TRUE}
+Fifaplayer<-(tibble(Variables = c("ID","Name","Natinality","Overal","Potential","Height","Weight","PreferredFoot","BirthDate","Age","PreferredPositions","PlayerWorkRate","WeakFoot","SkillMoves","Value","Wage","Nation","Nation_Position","Nation_KitNumber","Club","Club_Position","Club_KitNumber","Club_JoinedClub","Club_ContractLength","BallControl","Dribbling","Marking","SlideTackle","StandTackle","Aggression","Reactions","AttPosition","Interceptions","Vision","Composure","Crossing","ShortPass","LongPass","Acceleration","Stamina","Strength","Balance","SprintSpeed","Agility","Jumping","Heading","ShotPower","Finishing","LongShots","Curve","FKAcc","Penalties","Volleys","GKPositioning","GKDiving","GKHandling","GKKicking","GKReflexes","Traits","Specialities"),
+       Meaning = c("Unique identifier for the player",
+"Player's name","Player's nationality","Player's overall skill rating","Player's potential skill rating","Player's height","Player's weight","Player's preferred foot for kicking (left or right)","Player's date of birth","Player's current age","Positions on the field preferred by the player","Player's work rate or effort during matches","Player's weaker foot rating or ability","Player's skill move rating or ability to perform technical moves","Player's estimated market value","Player's salary or wage","Player's nation","Player's position within the national team","Player's kit number in the national team","Player's club","Player's position within the club team","Player's kit number in the club team","Date when the player joined the club","Length of the player's contract with the club","Player's skill in controlling the ball",
+"Player's dribbling ability","Player's marking ability","Player's sliding tackle ability","Player's standing tackle ability","Player's level of aggression on the field","Player's reaction time","Player's positioning for attacks","Player's ability to intercept passes","Player's vision on the field","Player's composure under pressure","Player's ability to cross the ball into the box","Player's accuracy in short passes","Player's accuracy in long passes","Player's acceleration","Player's stamina or endurance","Player's physical strength","Player's balance on the field","Player's sprinting speed","Player's agility","Player's jumping ability","Player's heading ability","Player's power in shooting","Player's ability to finish goal-scoring opportunities","Player's ability to take long-range shots","Player's ability to curve the ball","Player's accuracy in free kicks","Player's penalty-taking ability","Player's ability to hit volleys","Goalkeeper's positioning on the field","Goalkeeper's diving ability","Goalkeeper's handling ability","Goalkeeper's kicking ability","Goalkeeper's reflexes","Special traits associated with the player","Special abilities or skills the player possesses")))
+ kbl(
+  Fifaplayer, booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+```
+
+~Source : <https://www.kaggle.com/datasets/justdhia/fifa-players?select=2021.csv>~
+
+## 2.1.5 **World Population Dataset**
+
+This dataset contains the world population by country from 1960 until 2021 it will help us to analyze links between demography, gdp of a country and the skill of a forward player.
+
+```{r World Population Dataset,echo=TRUE}
+worldpop<-(tibble(Variables = c("Country Name","Country Code","Indicator Name","Indicator Code","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022"),
+       
+Meaning = c("Name of the country","Country Code","Indicator Name","Indicator Code","Population of Country in 1990","Population of Country in 1991","Population of Country in 1992","Population of Country in 1993","Population of Country in 1994","Population of Country in 1995","Population of Country in 1996","Population of Country in 1997","Population of Country in 1998","Population of Country in 1999","Population of Country in 2000","Population of Country in 2001","Population of Country in 2002","Population of Country in 2003","Population of Country in 2004","Population of Country in 2005","Population of Country in 2006","Population of Country in 2007","Population of Country in 2008","Population of Country in 2009","Population of Country in 2010","Population of Country in 2011","Population of Country in 2012","Population of Country in 2013","Population of Country in 2014","Population of Country in 2015","Population of Country in 2016","Population of Country in 2017","Population of Country in 2018","Population of Country in 2019","Population of Country in 2020","Population of Country in 2021","Population of Country 2022")))
+kbl(
+worldpop,booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+```
+
+~Source : <https://data.worldbank.org/indicator/SP.POP.TOTL>~
+
+## 2.1.6 **World GDP(GDP, GDP per capita, and annual growths)**
+
+This is a dataset from Kaggle that contains the GDP per capita by country for different countries it will be used to do analysis on the link of a nation's wealth and the skills of a player, we took values going from 1999 to 2020.
+
+```{r GDP By Country 1999 - 2022,echo=TRUE}
+GDPc<-(tibble(Variables = c("Country Name","Code","1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000","2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010","2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"),
+       Meaning = c("Country Name","Country code","GDP per capita in 1990", "GDP per capita in 1991", "GDP per capita in 1992", "GDP per capita in 1993", "GDP per capita in 1994", "GDP per capita in 1995", "GDP per capita in 1996", "GDP per capita in 1997", "GDP per capita in 1998", "GDP per capita in 1999", "GDP per capita in 2000",
+"GDP per capita in 2001", "GDP per capita in 2002", "GDP per capita in 2003", "GDP per capita in 2004", "GDP per capita in 2005", "GDP per capita in 2006", "GDP per capita in 2007", "GDP per capita in 2008", "GDP per capita in 2009", "GDP per capita in 2010",
+"GDP per capita in 2011", "GDP per capita in 2012", "GDP per capita in 2013", "GDP per capita in 2014", "GDP per capita in 2015", "GDP per capita in 2016", "GDP per capita in 2017", "GDP per capita in 2018", "GDP per capita in 2019", "GDP per capita in 2020")))
+kbl(
+GDPc,booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+ 
+```
+
+~Source :<https://www.kaggle.com/datasets/zgrcemta/world-gdpgdp-gdp-per-capita-and-annual-growths?select=gdp.csv>~
+
+## 2.1.7 **Revenue of the Big Five soccer leagues in Europe from 2012/13 to 2021/22, with a forecast to 2023/24, by league**
+
+Dataset done from statista that forecasts and reports the revenue of the five biggest leagues from 2012 to 2022.
+
+```{r Revenue of the Big Five soccer,echo=TRUE}
+rev5<-(tibble(Variables = c("Date","Bundesliga","LaLiga","SerieA","Ligue1","Premierleague"),
+       Meaning = c("Date","revenue Bundesliga","revenue La Liga","revenue Serie A","revenue Ligue 1","revenue Premier league")))
+kbl(
+rev5,booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+
+```
+
+~[Source : <https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/>]{.smallcaps}~
+
+::: {.callout-note}
+The **Big Five** refers to the association football markets of England, Germany, Spain, Italy and France. As of 2023, they are the five European leaders in size and popularity of the main domestic football leagues -- the [Premier League](https://en.wikipedia.org/wiki/Premier_League "Premier League"), [Bundesliga](https://en.wikipedia.org/wiki/Bundesliga "Bundesliga"), [La Liga](https://en.wikipedia.org/wiki/La_Liga "La Liga"), [Serie A](https://en.wikipedia.org/wiki/Serie_A "Serie A") and [Ligue 1](https://en.wikipedia.org/wiki/Ligue_1 "Ligue 1") respectively in men's football.
+:::
+
+## 2.1.8 **Revenue from broadcasting rights of European soccer leagues in 2019/20**
+
+Dataset made from scratches from Statista to create our own database focusing on the Big five.
+
+```{r broadcasting,echo=TRUE}
+broad<-(tibble(Variables = c("country","revenue"),
+       Meaning = c("country","revenue calculated in mio")))
+kbl(
+broad,booktabs = T) %>%
+kable_styling(full_width = T) %>%
+column_spec(1, width = "8cm")
+
+```
+
+~Source : <https://www.statista.com/statistics/627306/broadcasting-big-five-european-football-league-revenues/>~
+
+# 2.2 Data wrangling and cleaning
+
+## 2.2.1 Ballon d'or winners clean
+
+Now, it's time to clean up the Ballon d'Or database. This was less difficult than the previous database, although it still required some work. The *`dplyr`* and *`readr`* libraries were used during this data wrangling exercise. First, we needed to filter our database to keep only the winners from the last 20 years. This choice was made to observe the evolution of 21st-century football. It's important to note that there was no Ballon d'Or awarded in 2020, hence its absence. To do this, nothing was more efficient than using a *`filter()`* function.
+
+Next, we encountered a naming issue with a certain player. For some reason, Luka Modrić was listed as 'Croatia Luka Modric' so it was necessary to rename him using the *`mutate()`* function in conjunction with *`ifelse()`*.
+
+Now, we could start adding new columns that would be useful for the project's analysis. We aimed to add the following columns: **Age, Height, Weight, Preferred Foot, and Preferred Positions**.
+
+To achieve this, we needed other databases to join the missing columns. We chose FIFA05 and FIFA21 databases because the oldest winners are not present in the most modern game. To maximize our chances of having the necessary variables, we opted for two databases. To join two databases, we needed a common key. The **Player** column was the most suitable, so we aligned this name in the other databases using the *`rename()`* function. Having a common key allowed us to merge the databases using the *`left_join()`* function. However, this resulted in numerous unnecessary columns in our database. Using the *`select()`* function, we retained only the necessary columns. This process will be repeated while writing the code.
+
+New challenges arose. For the sake of our analysis, we needed new columns. Firstly, an **Age** column. We now had the birth date and wanted the age at the time of winning. As some players won multiple times, they needed different ages for each success. Therefore, retrieving age from other databases wasn't feasible; we had to do it ourselves. We used the *`sub()`* function to extract the birth year and then, with *`mutate()`*`,` created the **Age** column by subtracting the birth year from the Ballon d'Or's year.
+
+Next, to replace missing values in our columns, we used a combination of *\$* and *`ifelse(is.na())`* functions. *\$* was used to select the database and column we wanted to work on, while the latter function replaced missing values. Consequently, our columns were filled with values from the two external databases.
+
+However, we encountered an issue with the player **Kaka**, who had missing values for some columns. As he was the only player with this problem, we manually created a *`Kaka_values <- c()`* containing the different characteristics and used this in an *`ifelse()`* function to replace the missing values.
+
+Before finishing and selecting only the useful columns, we needed to standardize the **PreferredFoot** and **PreferredPositions** columns. **PreferredFoot** sometimes had values like *R* instead of *Right*, and **PreferredPositions** had '-' instead of '/'. The *`ifelse()`* and *`gsub()`* functions were instrumental in this process.
+
+Now, the Ballon d'Or database is cleaned up with the columns we intend to use for the analysis ahead.
+
+```{r Ballon dor winners clean,echo=TRUE}
+
+
+
+data_bo <- read_csv("data/bdor.csv",show_col_types = FALSE) %>%
+  filter(Year >= 2002 & Year <= 2022 & Rank == "1st") %>%
+  mutate(Player = ifelse(Player == "Croatia Luka Modric", "Luka Modrić", Player))
+
+data_fifa_21 <- read_csv("data/fifa21.csv",show_col_types = FALSE) %>%
+  rename(Player = Name)
+
+fifa05 <- read_delim("data/fifa5.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE,show_col_types = FALSE) %>%
+  rename(Player = Fullname)
+
+
+data_bo <- left_join(data_bo, data_fifa_21, by = "Player") %>%
+  left_join(., fifa05, by = "Player") %>%
+  select(
+    Year, Rank, Player, Country, Team, Height, Weight, PreferredFoot, BirthDate, PreferredPositions,
+    height, weight, preferred_foot, birth_date, preferred_positions
+  )
+
+
+data_bo <- data_bo %>%
+  mutate(
+    Year_Birth = as.numeric(sub(".*,(\\s\\d{4})", "\\1", BirthDate)),
+    Age = Year - Year_Birth,
+    Height = ifelse(is.na(Height), height, Height),
+    Weight = ifelse(is.na(Weight), weight, Weight),
+    PreferredFoot = ifelse(is.na(PreferredFoot), preferred_foot, PreferredFoot),
+    PreferredPositions = ifelse(is.na(PreferredPositions), preferred_positions, PreferredPositions),
+    year_birth = as.numeric(substr(birth_date, 7, 10)),
+    Year_Birth = ifelse(is.na(Year_Birth), year_birth, Year_Birth)
+  ) %>%
+  select(
+    Year, Rank, Player, Country, Team, Height, Weight,
+    PreferredFoot, PreferredPositions, Year_Birth, Age
+  )
+
+
+Kaka_values <- c(
+  Height = 186,
+  Weight = 82,
+  PreferredFoot = "Both",
+  PreferredPositions = "CAM",
+  Year_Birth = 1982,
+  Age = 25
+)
+
+for (col_name in names(Kaka_values)) {
+  data_bo[[col_name]] <- ifelse(data_bo$Player == "Kaka" & is.na(data_bo[[col_name]]), Kaka_values[[col_name]], data_bo[[col_name]])
+}
+
+
+data_bo$PreferredFoot <- ifelse(data_bo$PreferredFoot %in% c("L", "R"), ifelse(data_bo$PreferredFoot == "L", "Left", "Right"), data_bo$PreferredFoot)
+data_bo$PreferredPositions <- gsub("-", "/", data_bo$PreferredPositions)
+
+
+data_bo <- data_bo %>%
+  select(
+    Year, Rank, Player, Country, Team, Age, Height, Weight,
+    PreferredFoot, PreferredPositions
+  )
+reactable(
+  data_bo,
+  searchable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = TRUE,
+  theme = reactableTheme(
+    borderColor = "#dfe2e5",
+    stripedColor = "#f6f8fa",
+    highlightColor = "#f0f5f9",
+    cellPadding = "8px 12px",
+    style = list(
+      fontFamily = "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif",
+      ".rt-td" = list(
+        "min-width" = "200px",  
+        "max-width" = "400px"   
+      )
+    ),
+    searchInputStyle = list(width = "100%")
+  )
+)
+
+```
+
+## 2.2.2 Data of players clean
+
+Cleaning up the database of player performances and statistics was a very complex task. Several types of problem arose, and we had to make choices and take initiatives for the rest of our analysis.
+
+The *`dplyr`*`,` *readr, `stringr`, `tidyr` and `lubridate`* libraries were used during this data wrangling exercise.
+
+Firstly, when we downloaded our database, a major problem appeared. As soon as a player or team name contained a special character such as an acute accent, the accent changed to **?** and we realized that we had an encoding problem. To overcome this problem, we tested different encoding, in particular *'UTF-8'*, and others *'ISO'*, but the problem didn't go away. In fact, some names ended up with the wrong accent. Nevertheless, we found that the *'ISO-8859-1'* encoding was the most suitable, leaving us with a problem with Slavic and ex-Yugoslav family names in particular. We therefore tried to create a list of players with the remaining encoding problem.
+
+Understanding that special characters were indeed very special for these players, we took the initiative of manually renaming certain players such as *"Edin Džeko"*, using the *sub()* function, and then using the *gsub()* function, we replaced the last **?** with the letter **ć**, which was generally the letter most present in names with this problem. However, for some reason, the players *"Dušan Vlahović"* and *"Nikola Vlašić"* had spaces instead of the letter **"š"**, so we had to use another method to rename them. We used the *ifelse()* function, and as it wasn't possible to rename them using the basic written name, we had to use another common key: **Rk**.
+
+It was important first to explain how we renamed our players and teams in the first place, as this was a major problem. However, before beginning the steps above, we first sorted the database a little. First of all, we had duplicate players because, as our database covers an entire season, it's quite normal to have transfers in mid-season, which explains the presence of duplicate players with different characteristics such as the club. The *`distinct()`* function allows us to remove duplicates.
+
+Next, we had to filter the database for various reasons. For the rest of our analysis, certain columns will be important, such as the **Goals** column. However, when we were still getting to know our database, we noticed that this column produced some surprising results. In fact, this column represents the number of goals per 90 minutes, but some players had crazy statistics. *Pablo Sarabia*, for example, scored 5 goals every 90 minutes. The problem was that *Sarabia* hadn't played many minutes (22). We therefore realized that players who had been effective but had played few minutes would have disproportionately high statistics, because their statistics would then be weighted against the 90 minutes that our database covers.
+
+So, using the *`filter()`* function, we took the initiative of only keeping players who had played at least 9 matches **(MP \>= 9)** and who had played at least 405 minutes **(Min \>= 405)**. This choice was made because we assumed that our players had to have played at least half the matches in half a season, because as we said, some players were transferred during the middle of the season. Moreover, in terms of minutes, we wanted them to have played at least one half of the 9 matches they played (45 minutes), and by multiplying that by the number of matches, we arrived at our figures. Thus, we only want to keep the attacking players, so those whose positions begin with the letter **'F'** for Forward.
+
+Now that the database has been filtered, we are missing two columns for the rest of our project: **Height** and **Weight**. To do this, we decided to take a database from the FIFA21 game, the year of our statistics, which had the missing characteristics. However, here too we encountered a number of problems.
+
+Firstly, we needed a common key to join the two databases. To do this, *`rename()`* allowed us to rename **Name** to **Player** and then, thanks to *`left_join()`*, the two databases were joined. Now we needed to see which players didn't have values for **Height** and **Weight**, so we created a *height_na* list using *`filter(is.na())`*. So 85 players had missing values. For a start, we could have players who simply didn't have the same spelling, for example *Sehrou/Serhou Guirassy* depending on the database. Then there was the fact that the FIFA21 database had full names, meaning that some players had their 2nd and 3rd first names included, something that was not in our database. Finally, there were some players who simply didn't appear in the game.
+
+To overcome these problems, we tried various solutions. The one we kept was to separate the **Player** column into **Surname** and **Name**, using *`separate()`*`,` in order to be able to search and fill in via the **Name** common key. The problem with this solution was that we now had duplicates that we had to remove. This solution enabled us to reduce the number of missing values to 50.
+
+A final attempt was to use several common keys at the same time. To do this, we needed the year of birth and the team in which the player plays. Once we had made sure we had these common keys, a new *`left_join()`* with a *by = c("Born", "Squad")* inside was used, and we could try to fill in the missing NAs. This choice of common keys was made on the assumption that if we only had strikers, it was quite possible that the strikers in the same team would differ in age, which would help us to maximize our chances of replacements. That's how we got down to 38 values.
+
+However, we realized that it would be too complex to find the last missing values. So we stopped and looked at our *height_na* and realized that most of these players via the **Goals** column would not interest us for the rest of our analysis. We therefore took the initiative of manually replacing the **Height** and **Weight** of the best player from the **Goals** column for each of the 5 leagues, using *mutate()*, in order to keep players who might be of interest to us for the analysis. For the rest of the players, we decided to remove them from our database using *`filter(!is.na())`*`.`
+
+It was now necessary to re-join **Surname** and **Name** as **Player** to avoid NAs filling up in one of the columns because of Brazilian players, for example, who are only called by their name. To make sure that all data like "goals","assists", are easy to compare we had to normalize them around 100% of the best performance of the category.
+
+Before concluding, you should know that in our analysis we want to compare the statistical and physical trends between the different leagues. So, to finish with this database, we wanted to create 5 different databases in order to separate the players in each league, and to do this we had to create *"comp_players"* using the *`filter()`* function, we did this separation twice : One with the normalized data and the other with the raw datas.
+
+We now have the databases we need to approach the various remaining stages of this project.
+
+```{r Data of players clean,echo=TRUE}
+data1cut <- read.csv("data1Ned.csv")
+data1 <- read_delim("data/skill.csv", delim = ";", 
+                    escape_double = FALSE, 
+                    locale = locale(encoding = "ISO-8859-1"), 
+                    trim_ws = TRUE, show_col_types = FALSE)
+data_fifa_21 <- read_csv("data/fifa21.csv", show_col_types = FALSE)
+
+
+data1 <- data1 %>%
+  select(-Rk,everything()) %>%
+  filter(MP >= 9, Min >= 405, str_detect(Pos, "^F")) %>%
+  distinct(Player, .keep_all = TRUE)
+
+
+special_characters <- c("\\?", "Edin D\\?eko", "Alfre\\? Finnbogason", 
+                        "Albert Gu\\?mundsson", "Josip Ili\\?i\\?", 
+                        "Krzysztof Pi\\?tek", "Przemys\\?aw P\\?acheta")
+replacements <- c("ć", "Edin Džeko", "Alfreð Finnbogason", 
+                  "Albert Guðmundsson", "Josip Iličić", 
+                  "Krzysztof Piątek", "Przemysław Płacheta")
+
+for (i in seq_along(special_characters)) {
+  data1$Player <- str_replace_all(data1$Player, fixed(special_characters[i]), replacements[i])
+}
+
+
+data_fifa_21 <- data_fifa_21 %>%
+  rename(Player = Name)
+
+
+suppressWarnings({data1 <- data1 %>%
+  left_join(data_fifa_21 %>% select(Player, Height, Weight), by = "Player") %>%
+  separate(Player, into = c("Surname", "Name"), sep = " ", extra = "merge") %>%
+  left_join(data_fifa_21 %>% select(Player, Height, Weight), by = c("Name" = "Player")) %>%
+  mutate(
+    Height = coalesce(Height.x, Height.y),
+    Weight = coalesce(Weight.x, Weight.y)
+  ) %>%
+  select(-starts_with("Height"), -starts_with("Weight")) %>%
+  distinct(Surname, Name, .keep_all = TRUE)})  
+
+
+if ("Height" %in% colnames(data1) && "Weight" %in% colnames(data1)) {
+  data1 <- data1 %>%
+    filter(!is.na(Height), !is.na(Weight)) %>%
+    mutate(Player = paste(Surname, Name, sep = " "),
+           Age = 2022 - Born,
+           Height = ifelse(
+             Rk %in% c(1181, 1074, 2542, 1326, 21) ~ c(183, 187, 182, 200, 175),
+             TRUE ~ Height
+           ),
+           Weight = ifelse(
+             Rk %in% c(1181, 1074, 2542, 1326, 21) ~ c(76, 74, 70, 83, 75),
+             TRUE ~ Weight
+           )
+    )
+
+}
+
+reactable(
+  data1cut,
+  searchable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = TRUE,
+  theme = reactableTheme(
+    borderColor = "#dfe2e5",
+    stripedColor = "#f6f8fa",
+    highlightColor = "#f0f5f9",
+    cellPadding = "8px 12px",
+    style = list(
+      fontFamily = "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif",
+      ".rt-td" = list(
+        "min-width" = "200px",  
+        "max-width" = "400px"   
+      )
+    ),
+    searchInputStyle = list(width = "100%")
+  )
+)
+```
+
+## 2.2.3 Data leagues clean
+
+This database was created from multiple `tibbles` extracted from Statista as the information wasn't readily available in a CSV format. The first `tibble` comprises revenue data from the big 5 leagues spanning from 2012 to 2024, while the second [tibble]{.underline} focuses on the revenue generated from TV rights broadcasts for those leagues during the period of 2021-2022.
+
+The subsequent step involved merging these *`tibbles`* with selected information from our main database named '**data1**,' which contains cleaned player data for our analysis. We aimed to use the '*`left_join'`* function, using '**comp**' as a common key. However, an issue arose as the structure differed between the merged database and one of the *`tibbles`*; we sought to have dates as headers and the leagues as values for the '**comp**' column, which was the opposite of the structure in one of the *`tibbles`*. To address this, we transposed the '**Pibcomp**' database, aligning it with the merged database structure.
+
+With the problem resolved, we proceeded with the left join, employing the '*`select'`* function to optimize database readability and avoid unnecessary information cluttering while merging '**data1**,' thereby enhancing overall database clarity.
+
+```{r data clubs,echo=TRUE}
+data1<- read.csv("data/baseplayer.csv")
+tv<-tibble(
+`Comp`= c("Premier League","La Liga","Bundesliga","Serie A","Ligue 1"),
+`Revenue in Billion euros`= c(2.669, 1.711, 1.489, 1.190, 0.690)
+)
+
+Dates <- c("2012-2013", "2013-2014", "2014-2015", "2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020", "2020-2021", "2021-2022", "2022-2023", "2023-2024")
+Bundesliga <- c("2.018", "2.275", "2.392", "2.712", "2.793", "3.168", "3.345", "3.208", "3.005", "3.149", "3.550", "3.450")
+SerieA <- c("1.677", "1.700", "1.790", "1.917", "2.062", "2.239", "2.495", "2.057", "2.521", "2.350", "2.600", "2.050")
+LaLiga <- c("1.868", "1.933", "2.053", "2.437", "2.865", "3.073", "3.378", "3.114", "2.953", "3.277", "3.300", "3.400")
+Ligue1 <- c("1.297", "1.498", "1.418", "1.485", "1.643", "1.692", "1.902", "1.598", "1.614", "2.026", "2.100", "2.050")
+Premierleague <- c("2,946", "3.897", "4.403", "4.865", "5.301", "5.440", "5.843", "5.123", "5.498", "6.442", "6.605", "6.662")
+
+pib_comp <- data.frame(Bundesliga, LaLiga, SerieA, Ligue1, Premierleague, row.names = Dates)
+transposed_pib_comp <- t(pib_comp)
+colnames(transposed_pib_comp) <- row.names(pib_comp)
+combined_data <- bind_cols(tv, as_tibble(transposed_pib_comp))
+combined_data <- combined_data %>%
+left_join(data1%>%select(Player,Nation,Squad,Comp), by="Comp")
+combined_data <- combined_data %>%
+  select(Player,Nation,Squad,everything())
+
+reactable(
+  combined_data,
+  searchable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = TRUE,
+  theme = reactableTheme(
+    borderColor = "#dfe2e5",
+    stripedColor = "#f6f8fa",
+    highlightColor = "#f0f5f9",
+    cellPadding = "8px 12px",
+    style = list(
+      fontFamily = "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif",
+      ".rt-td" = list(
+        "min-width" = "200px",  
+        "max-width" = "400px"   
+      )
+    ),
+    searchInputStyle = list(width = "100%")
+  )
+)
+```
+
+~Source : <https://fr.statista.com/infographie/24103/montant-des-droits-tv-domestiques-ligue-1-et-grands-championnats-europeens/>~
+
+~<https://www.statista.com/statistics/261218/big-five-european-soccer-leagues-revenue/>~
+
+## 2.2.4 Nation info for players clean
+
+This database is the database linking information about the players and their country of origin like the evolution of the GDP or the demography.
+
+The constituting database are data1 which is the cleaned database of players, demo.csv which is the evolution of demography and GDP_per_capita.csv which is the evolution of GDP.
+
+To merge the 3 database we used *`left_join`* and *`rename`* to find a common pivot on the country code column. At this point we had 27% of NA across multiple categories, the problem was that the data1 database used a custom encoding for countries that wasn't recognized nor compatible with the *`countrycode`* package.
+
+![Missing data before cleaning](data/luca/demo_clean%20before.png){width="236"}
+
+To resolve this problem we searched for the rows with NA using this code : `subset(demo_clean, apply(is.na(demo_clean), 1, any)) to find the missing values,` after that we manually created a list that linked non recognized values to the correct one to drastically reduce the NAs.
+
+![Missing data after cleaning](data/luca/demo_clean%20end.png){fig-align="left" width="191" height="210"}
+
+```{r Read demo data,echo=TRUE}
+
+demo_raw <- read.csv("data/luca/demo.csv", header = TRUE, skip = 3)
+subset_demo_raw <- demo_raw[, c("Country.Name", "Country.Code", paste0("X", 1990:2022))]
+
+new_column_names <- gsub("^X", "pop", names(subset_demo_raw)[-(1:2)])  
+subset_demo_raw <- subset_demo_raw%>%
+  rename_with(~ new_column_names, matches("^X"))
+
+
+gdp_raw <- read.csv("data/luca/gdp_per_capita.csv") %>%
+  select(-ncol(.)) %>%
+  rename(Country.Code = Code)
+subset_gdp_raw <- gdp_raw[, c("Country.Name", "Country.Code", paste0("X", 1990:2020))]
+
+subset_country <- left_join(subset_demo_raw, subset_gdp_raw, by = "Country.Code") %>%
+  select(-matches("Country.Name.y"))
+
+data1 <- read.csv("data/baseplayer.csv")
+subset_data1 <- select(data1, Player, Nation) %>%
+rename(Country.Code = Nation)
+
+specific_codes <- c(
+  "ENG", "SCO", "REU","GAM", "GUI",  "TOG", "GER",
+  "ALG", "NED",  "CRO", "DEN", "URU", "ZAM", "MTQ",
+  "HON", "SUI", "POR", "PHI",  "WAL",   "ZIM",
+  "CTA",  "RSA", "KVX", "CHA", "ANG",  "PAR")
+
+actual_codes <- c(
+  "GBR","GBR","FRA","GMB","GIN","TGO",
+  "DEU","DZA","NLD","HRV","DNK","URY",
+  "ZMB","FRA","HND","CHE","PRT","PHL","GBR",
+  "ZWE","CAF","ZAF","XKX","TCD","AGO","PRY")
+
+lookup_table <- setNames(actual_codes, specific_codes)
+subset_data1$Country.Code <- ifelse(subset_data1$Country.Code %in% names(lookup_table), lookup_table[subset_data1$Country.Code], subset_data1$Country.Code)
+demo_clean <- left_join(subset_data1,subset_country,by = "Country.Code") %>%
+  rename(Country.Name = Country.Name.x)
+
+demo_clean <- demo_clean
+demo_clean[] <- lapply(demo_clean, function(x) {
+  if (is.numeric(x)) {
+    format(x, big.mark = "'", scientific = FALSE)
+  } else {
+    x
+  }
+})
+reactable(
+  demo_clean,
+  searchable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = TRUE,
+  theme = reactableTheme(
+    borderColor = "#dfe2e5",
+    stripedColor = "#f6f8fa",
+    highlightColor = "#f0f5f9",
+    cellPadding = "8px 12px",
+    style = list(
+      fontFamily = "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif",
+      ".rt-td" = list(
+        "min-width" = "200px",
+        "max-width" = "400px"   
+      )
+    ),
+    searchInputStyle = list(width = "100%")
+  )
+)
+
+```
+
+Source : ~<https://data.worldbank.org/indicator/SP.POP.TOTL>~
+
+~<https://www.kaggle.com/datasets/zgrcemta/world-gdpgdp-gdp-per-capita-and-annual-growths?select=gdp.csv>~

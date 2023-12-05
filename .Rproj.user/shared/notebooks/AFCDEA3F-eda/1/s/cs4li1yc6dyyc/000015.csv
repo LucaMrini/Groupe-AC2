@@ -1,0 +1,58 @@
+"0","ui <- fluidPage("
+"0","  selectInput(""plot_select"", ""Select Plot"", choices = c(""Age"", ""Weight"", ""Height"")),"
+"0","  plotlyOutput(""plot_output"")"
+"0",")"
+"0",""
+"0","server <- function(input, output) {"
+"0","  output$plot_output <- renderPlotly({"
+"0","    if (input$plot_select == ""Age"") {"
+"0","      subplot("
+"0","        plot_premier_league, "
+"0","        plot_bundesliga, "
+"0","        plot_la_liga, "
+"0","        plot_serie_a, "
+"0","        plot_ligue_1, "
+"0","        nrows = 3"
+"0","      )"
+"0","    } else if (input$plot_select == ""Weight"") {"
+"0","      subplot("
+"0","        plot_premier_league_weight, "
+"0","        plot_bundesliga_weight, "
+"0","        plot_la_liga_weight, "
+"0","        plot_serie_a_weight, "
+"0","        plot_ligue_1_weight, "
+"0","        nrows = 3"
+"0","      )"
+"0","    } else if (input$plot_select == ""Height"") {"
+"0","      "
+"0","      subplot("
+"0","        plot_premier_league_height, "
+"0","        plot_bundesliga_height, "
+"0","        plot_la_liga_height, "
+"0","        plot_serie_a_height, "
+"0","        plot_ligue_1_height, "
+"0","        nrows = 3"
+"0","      )"
+"0","    }"
+"0","  })"
+"0","}"
+"0",""
+"0","shinyApp(ui = ui, server = server)"
+"2","
+Listening on http://127.0.0.1:3071
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"

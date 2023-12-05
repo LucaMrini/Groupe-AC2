@@ -1,0 +1,32 @@
+{
+    "id": "DF3F3343",
+    "path": "~/Documents/GitHub/Groupe-AC2/eda.qmd",
+    "project_path": "eda.qmd",
+    "type": "quarto_markdown",
+    "hash": "4264900726",
+    "contents": "",
+    "dirty": false,
+    "created": 1701539302835.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "1,0",
+        "scrollLine": "812",
+        "rmdVisualMode": "true",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "43364:21751.5",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1",
+        "docOutlineSize": "171"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1701812662,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701812662370,
+    "read_only": false,
+    "read_only_alternatives": []
+}

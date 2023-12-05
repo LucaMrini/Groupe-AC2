@@ -1,0 +1,31 @@
+{
+    "id": "B2E3A976",
+    "path": "~/Documents/GitHub/Groupe-AC2/analysis.qmd",
+    "project_path": "analysis.qmd",
+    "type": "quarto_markdown",
+    "hash": "995555455",
+    "contents": "",
+    "dirty": false,
+    "created": 1701618342028.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "24,0",
+        "scrollLine": "0",
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "526:0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1701811704,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701811704959,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,121 @@
+create_histogram_weight_with_average_contour <- function(data, title, color) {
+  avg_weight <- round(mean(data$Weight))
+  plot <- plot_ly(data, x = ~Weight, type = "histogram", name = title,
+                  marker = list(color = color, line = list(color = 'white', width = 0.5))) %>%
+    add_trace(x = c(avg_weight, avg_weight), y = c(0, 30),
+              type = "scatter", mode = "lines", line = list(color = "green", width = 2), showlegend = FALSE,
+              text = avg_weight, hoverinfo = "text") %>%
+    layout(title = "Average weight by league", xaxis = list(title = "Weight"), yaxis = list(title = "Number of players"),
+           bargap = 0.1, showlegend = TRUE)
+  return(plot)
+}
+
+plot_premier_league_weight <- create_histogram_weight_with_average_contour(premier_league_players, "Premier League", "#1f77b4")
+plot_bundesliga_weight <- create_histogram_weight_with_average_contour(bundesliga_players, "Bundesliga", "#ff7f0e")
+plot_la_liga_weight <- create_histogram_weight_with_average_contour(la_liga_players, "La Liga", "#2ca02c")
+plot_serie_a_weight <- create_histogram_weight_with_average_contour(serie_a_players, "Serie A", "#d62728")
+plot_ligue_1_weight <- create_histogram_weight_with_average_contour(ligue_1_players, "Ligue 1", "#9467bd")
+
+subplot(
+  plot_premier_league_weight, 
+  plot_bundesliga_weight, 
+  plot_la_liga_weight, 
+  plot_serie_a_weight, 
+  plot_ligue_1_weight, 
+  nrows = 3
+)
+
+create_histogram_with_average <- function(data, title, color) {
+  avg_age <- round(mean(data$Age))
+  plot <- plot_ly(data, x = ~Age, type = "histogram", name = title,
+                  marker = list(color = color)) %>%
+    add_trace(x = c(avg_age, avg_age), y = c(0, 22),
+              type = "scatter", mode = "lines", line = list(color = "green", width = 2),showlegend = FALSE,
+              text = avg_age, hoverinfo = "text") %>%
+    layout(title = "Average age by League", xaxis = list(title = "Age"), yaxis = list(title = "Number of players"),bargap = 0.1, showlegend = TRUE)
+  return(plot)
+}
+
+plot_premier_league <- create_histogram_with_average(premier_league_players, "Premier League", "skyblue")
+plot_bundesliga <- create_histogram_with_average(bundesliga_players, "Bundesliga", "#ff7f0e")
+plot_la_liga <- create_histogram_with_average(la_liga_players, "La Liga", "#2ca02c")
+plot_serie_a <- create_histogram_with_average(serie_a_players, "Serie A", "#d62728")
+plot_ligue_1 <- create_histogram_with_average(ligue_1_players, "Ligue 1", "#9467bd")
+
+subplot(
+  plot_premier_league, 
+  plot_bundesliga, 
+  plot_la_liga, 
+  plot_serie_a, 
+  plot_ligue_1, 
+  nrows = 3
+)
+create_histogram_height_with_average_contour <- function(data, title, color) {
+  avg_height <- round(mean(data$Height))
+  plot <- plot_ly(data, x = ~Height, type = "histogram", name = title,
+                  marker = list(color = color, line = list(color = 'white', width = 0.5))) %>%
+    add_trace(x = c(avg_height, avg_height), y = c(0, 35),
+              type = "scatter", mode = "lines", line = list(color = "green", width = 2), showlegend = FALSE,
+              text = avg_height, hoverinfo = "text") %>%
+    layout(title = "Average height by league", xaxis = list(title = "Height"), yaxis = list(title = "Density"),
+           bargap = 0.1, showlegend = TRUE)
+  return(plot)
+}
+
+plot_premier_league_height <- create_histogram_height_with_average_contour(premier_league_players, "Premier League", "#1f77b4")
+plot_bundesliga_height <- create_histogram_height_with_average_contour(bundesliga_players, "Bundesliga", "#ff7f0e")
+plot_la_liga_height <- create_histogram_height_with_average_contour(la_liga_players, "La Liga", "#2ca02c")
+plot_serie_a_height <- create_histogram_height_with_average_contour(serie_a_players, "Serie A", "#d62728")
+plot_ligue_1_height <- create_histogram_height_with_average_contour(ligue_1_players, "Ligue 1", "#9467bd")
+
+subplot(
+  plot_premier_league_height,
+  plot_bundesliga_height,
+  plot_la_liga_height,
+  plot_serie_a_height,
+  plot_ligue_1_height,
+  nrows = 3
+)
+
+
+ui <- fluidPage(
+  selectInput("plot_select", "Select Plot", choices = c("Age", "Weight", "Height")),
+  plotlyOutput("plot_output")
+)
+
+server <- function(input, output) {
+  output$plot_output <- renderPlotly({
+    if (input$plot_select == "Age") {
+      subplot(
+        plot_premier_league, 
+        plot_bundesliga, 
+        plot_la_liga, 
+        plot_serie_a, 
+        plot_ligue_1, 
+        nrows = 3
+      )
+    } else if (input$plot_select == "Weight") {
+      subplot(
+        plot_premier_league_weight, 
+        plot_bundesliga_weight, 
+        plot_la_liga_weight, 
+        plot_serie_a_weight, 
+        plot_ligue_1_weight, 
+        nrows = 3
+      )
+    } else if (input$plot_select == "Height") {
+      # Add your third set of plots here
+      # For example:
+      subplot(
+        plot_premier_league_height, 
+        plot_bundesliga_height, 
+        plot_la_liga_height, 
+        plot_serie_a_height, 
+        plot_ligue_1_height, 
+        nrows = 3
+      )
+    }
+  })
+}
+
+shinyApp(ui, server)

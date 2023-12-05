@@ -1,0 +1,40 @@
+"0","create_histogram_with_average <- function(data, title, color) {"
+"0","  avg_age <- round(mean(data$Age))"
+"0","  plot <- plot_ly(data, x = ~Age, type = ""histogram"", name = title,"
+"0","                  marker = list(color = color)) %>%"
+"0","    add_trace(x = c(avg_age, avg_age), y = c(0, 22),"
+"0","              type = ""scatter"", mode = ""lines"", line = list(color = ""green"", width = 2),showlegend = FALSE,"
+"0","              text = avg_age, hoverinfo = ""text"") %>%"
+"0","    layout(title = ""Average age by League"", xaxis = list(title = ""Age""), yaxis = list(title = ""Number of players""),bargap = 0.1, showlegend = TRUE)"
+"0","  return(plot)"
+"0","}"
+"0",""
+"0","plot_premier_league <- create_histogram_with_average(premier_league_players, ""Premier League"", ""skyblue"")"
+"0","plot_bundesliga <- create_histogram_with_average(bundesliga_players, ""Bundesliga"", ""#ff7f0e"")"
+"0","plot_la_liga <- create_histogram_with_average(la_liga_players, ""La Liga"", ""#2ca02c"")"
+"0","plot_serie_a <- create_histogram_with_average(serie_a_players, ""Serie A"", ""#d62728"")"
+"0","plot_ligue_1 <- create_histogram_with_average(ligue_1_players, ""Ligue 1"", ""#9467bd"")"
+"0",""
+"0","subplot("
+"0","  plot_premier_league, "
+"0","  plot_bundesliga, "
+"0","  plot_la_liga, "
+"0","  plot_serie_a, "
+"0","  plot_ligue_1, "
+"0","  nrows = 3"
+"0",")"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"

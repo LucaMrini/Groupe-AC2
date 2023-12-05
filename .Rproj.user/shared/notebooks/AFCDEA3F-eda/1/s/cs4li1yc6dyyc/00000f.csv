@@ -1,0 +1,62 @@
+"0","source(here::here(""scripts/dataload.R""))"
+"2","[1mRows: [22m[34m2921[39m [1mColumns: [22m[34m143[39m"
+"2","[36m--[39m [1mColumn specification[22m [36m-----------------------------------------------------------------------------------------------------------------[39m
+[1mDelimiter:[22m "";""
+[31mchr[39m   (5): Player, Nation, Pos, Squad, Comp
+[32mdbl[39m (138): Rk, Age, Born, MP, Starts, Min, 90s, Goals, Shots, SoT, SoT%, G/Sh, G/SoT, ShoDist, ShoFK, ShoPK, PKatt, PasTotCmp, PasTot..."
+"2","
+[36mi[39m Use `spec()` to retrieve the full column specification for this data.
+[36mi[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."
+"2","[1mRows: [22m[34m19117[39m [1mColumns: [22m[34m60[39m"
+"2","[36m--[39m [1mColumn specification[22m [36m-----------------------------------------------------------------------------------------------------------------[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m (14): Name, Natinality, PreferredFoot, BirthDate, PreferredPositions, PlayerWorkRate, Nation, Nation_Position, Club, Club_Positio...
+[32mdbl[39m (46): ID, Overal, Potential, Height, Weight, Age, WeakFoot, SkillMoves, Value, Wage, Nation_KitNumber, Club_KitNumber, BallContro..."
+"2","
+[36mi[39m Use `spec()` to retrieve the full column specification for this data.
+[36mi[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."
+"2","Warning: Expected 2 pieces. Missing pieces filled with `NA` in 30 rows [12, 20, 39, 53, 86, 205, 206, 207, 211, 212, 215, 224, 264, 268, 284, 303, 327, 328, 329, 330, ...]."
+"2","Warning: Expected 2 pieces. Missing pieces filled with `NA` in 803 rows [6, 20, 31, 38, 45, 46, 52, 56, 72, 77, 80, 88, 89, 90, 93, 120, 122, 131, 132, 136, ...]."
+"2","Warning: Detected an unexpected many-to-many relationship between `x` and `y`."
+"2","Warning: Detected an unexpected many-to-many relationship between `x` and `y`."
+"0","create_histogram_weight_with_average_contour <- function(data, title, color) {"
+"0","  avg_weight <- round(mean(data$Weight))"
+"0","  plot <- plot_ly(data, x = ~Weight, type = ""histogram"", name = title,"
+"0","                  marker = list(color = color, line = list(color = 'white', width = 0.5))) %>%"
+"0","    add_trace(x = c(avg_weight, avg_weight), y = c(0, 30),"
+"0","              type = ""scatter"", mode = ""lines"", line = list(color = ""green"", width = 2), showlegend = FALSE,"
+"0","              text = avg_weight, hoverinfo = ""text"") %>%"
+"0","    layout(title = ""Average weight by league"", xaxis = list(title = ""Weight""), yaxis = list(title = ""Number of players""),"
+"0","           bargap = 0.1, showlegend = TRUE)"
+"0","  return(plot)"
+"0","}"
+"0",""
+"0","plot_premier_league_weight <- create_histogram_weight_with_average_contour(premier_league_players, ""Premier League"", ""#1f77b4"")"
+"0","plot_bundesliga_weight <- create_histogram_weight_with_average_contour(bundesliga_players, ""Bundesliga"", ""#ff7f0e"")"
+"0","plot_la_liga_weight <- create_histogram_weight_with_average_contour(la_liga_players, ""La Liga"", ""#2ca02c"")"
+"0","plot_serie_a_weight <- create_histogram_weight_with_average_contour(serie_a_players, ""Serie A"", ""#d62728"")"
+"0","plot_ligue_1_weight <- create_histogram_weight_with_average_contour(ligue_1_players, ""Ligue 1"", ""#9467bd"")"
+"0",""
+"0","subplot("
+"0","  plot_premier_league_weight, "
+"0","  plot_bundesliga_weight, "
+"0","  plot_la_liga_weight, "
+"0","  plot_serie_a_weight, "
+"0","  plot_ligue_1_weight, "
+"0","  nrows = 3"
+"0",")"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
+"2","A marker object has been specified, but markers is not in the mode
+Adding markers to the mode...
+"
